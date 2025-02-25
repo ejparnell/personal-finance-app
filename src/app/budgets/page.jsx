@@ -67,7 +67,7 @@ export default function BudgetsPage() {
                 // setBudgets(defaultData.budgets)
                 // setTransactions(defaultData.transactions)
             } catch (error) {
-                console.log(error)
+                console.error(error)
                 setError('An error occurred while fetching default data')
             } finally {
                 setLoading(false)

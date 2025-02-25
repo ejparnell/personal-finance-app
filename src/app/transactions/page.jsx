@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { fetchTransactions, deleteTransaction } from './transactionServices'
 import { defaultCategories } from '@/app/defaultData'
 import TransactionCreate from './TransactionCreate'
+import TransactionUpdate from './TransactionUpdate'
 import TransactionFilters from './TransactionFilters'
 import TransactionList from './TransactionList'
 import Pagination from './Pagination'
@@ -19,6 +20,8 @@ export default function TransactionsPage() {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0)
     const [isTransactionCreateOpen, setIsTransactionCreateOpen] = useState(false)
+    const [isTransactionUpdateOpen, setIsTransactionUpdateOpen] = useState(false)
+    const [transactionToUpdate, setTransactionToUpdate] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
     const [categories, setCategories] = useState([])
@@ -90,6 +93,12 @@ export default function TransactionsPage() {
         }
     }
 
+    // Handler to open the update modal
+    function handleEditTransaction(transaction) {
+        setTransactionToUpdate(transaction)
+        setIsTransactionUpdateOpen(true)
+    }
+
     if (status === 'loading' || isLoading) {
         return <div>Loading...</div>
     }
@@ -112,6 +121,18 @@ export default function TransactionsPage() {
                 />
             )}
 
+            {/* Transaction Update Modal */}
+            {isTransactionUpdateOpen && transactionToUpdate && (
+                <TransactionUpdate
+                    transaction={transactionToUpdate}
+                    setIsTransactionUpdateOpen={setIsTransactionUpdateOpen}
+                    setAllTransactions={setAllTransactions}
+                    setFilteredTransactions={setFilteredTransactions}
+                    session={session}
+                    categories={categories}
+                />
+            )}
+
             {/* Transaction Filters */}
             <TransactionFilters
                 allTransactions={allTransactions}
@@ -121,7 +142,12 @@ export default function TransactionsPage() {
             />
 
             {/* Displays transactions */}
-            <TransactionList transactions={currentTransactions} handleTransactionDelete={handleTransactionDelete} />
+            <TransactionList
+                transactions={currentTransactions}
+                handleTransactionDelete={handleTransactionDelete}
+                // Pass the edit handler so that the TransactionList component can call it when an update is requested
+                handleTransactionEdit={handleEditTransaction}
+            />
 
             {/* Pagination controls */}
             {totalPages > 1 && (

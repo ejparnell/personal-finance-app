@@ -55,3 +55,27 @@ export async function deleteTransaction(session, transactionId) {
         return { transactions: updatedTransactions }
     }
 }
+
+export async function updateTransaction(session, transactionId, formData) {
+    if (session) {
+        const response = await fetch(`/api/transactions/${transactionId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        })
+        if (!response.ok) {
+            throw new Error('Failed to update transaction')
+        }
+        return response.json()
+    } else {
+        const storedTransactions = JSON.parse(localStorage.getItem('defaultTransactions'))
+        const updatedTransactions = storedTransactions.map(transaction => {
+            if (transaction._id === transactionId) {
+                return { ...transaction, ...formData }
+            }
+            return transaction
+        })
+        localStorage.setItem('defaultTransactions', JSON.stringify(updatedTransactions))
+        return { transactions: updatedTransactions }
+    }
+}
