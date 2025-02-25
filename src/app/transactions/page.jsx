@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 
 import { fetchTransactions } from './transactionServices'
+import { defaultCategories } from '@/app/defaultData'
 import TransactionCreate from './TransactionCreate'
 import TransactionFilters from './TransactionFilters'
 import TransactionList from './TransactionList'
@@ -12,24 +13,27 @@ import Pagination from './Pagination'
 export default function TransactionsPage() {
     const PAGE_SIZE = 10
     const { data: session, status } = useSession()
-    const [transactions, setTransactions] = useState([])
-    const [categories, setCategories] = useState([])
+    const [allTransactions, setAllTransactions] = useState([])
+    const [filteredTransactions, setFilteredTransactions] = useState([])
     const [currentTransactions, setCurrentTransactions] = useState([])
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0)
     const [isTransactionCreateOpen, setIsTransactionCreateOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
+    const [categories, setCategories] = useState([])
 
-    // Get transactions from either local storage or the API
+    // Fetch transactions initially
     useEffect(() => {
         if (status === 'loading') return
-        async function handleFetchTransactions() {
+
+        async function fetchAndSetTransactions() {
             setIsLoading(true)
             setError(null)
             try {
                 const data = await fetchTransactions(session)
-                setTransactions(data.transactions)
+                setAllTransactions(data.transactions)
+                setFilteredTransactions(data.transactions)
             } catch (error) {
                 console.error(error)
                 setError(error.message || 'An error in transactions occurred.')
@@ -37,30 +41,28 @@ export default function TransactionsPage() {
                 setIsLoading(false)
             }
         }
-        handleFetchTransactions()
+
+        fetchAndSetTransactions()
     }, [session, status])
 
-    // Initial setup: update categories, currentTransactions, and totalPages when transactions change
+    // Update pagination whenever the filtered list changes
     useEffect(() => {
-        if (!transactions || transactions.length === 0) return
+        if (!filteredTransactions || filteredTransactions.length === 0) return
+        setCategories(defaultCategories)
+        setCurrentTransactions(filteredTransactions.slice(0, PAGE_SIZE))
+        setTotalPages(Math.ceil(filteredTransactions.length / PAGE_SIZE))
+    }, [filteredTransactions])
 
-        const uniqueCategories = [...new Set(transactions.map(tx => tx.category))]
-        setCategories(uniqueCategories)
-
-        setCurrentTransactions(transactions.slice(0, PAGE_SIZE))
-        setTotalPages(Math.ceil(transactions.length / PAGE_SIZE))
-    }, [transactions])
-
-    // Pagination: update currentTransactions when page changes
+    // Update currentTransactions when page changes
     useEffect(() => {
-        if (!transactions) return
+        if (!filteredTransactions) return
         const start = (page - 1) * PAGE_SIZE
         const end = page * PAGE_SIZE
-        setCurrentTransactions(transactions.slice(start, end))
-    }, [page, transactions])
+        setCurrentTransactions(filteredTransactions.slice(start, end))
+    }, [page, filteredTransactions])
 
-    // Pagination: handle page change
-    const handlePageChange = (direction) => {
+    // Handles pagination - prev/next page turning
+    function handlePageChange(direction) {
         if (direction === 'prev' && page > 1) {
             setPage(page - 1)
         } else if (direction === 'next' && page < totalPages) {
@@ -68,9 +70,9 @@ export default function TransactionsPage() {
         }
     }
 
-    // Filters: handle transactions update
+    // Handles updating transactions after filters are applied
     const handleTransactionsUpdate = (updatedTransactions) => {
-        setTransactions(updatedTransactions)
+        setFilteredTransactions(updatedTransactions)
         setPage(1)
         setCurrentTransactions(updatedTransactions.slice(0, PAGE_SIZE))
         setTotalPages(Math.ceil(updatedTransactions.length / PAGE_SIZE))
@@ -91,13 +93,17 @@ export default function TransactionsPage() {
             {isTransactionCreateOpen && (
                 <TransactionCreate
                     setIsTransactionCreateOpen={setIsTransactionCreateOpen}
-                    setTransactions={setTransactions}
+                    setAllTransactions={setAllTransactions}
+                    setFilteredTransactions={setFilteredTransactions}
+                    session={session}
+                    categories={categories}
                 />
             )}
 
-            {/* Transaction Filters - name input, sort by, categories */}
+            {/* Transaction Filters */}
             <TransactionFilters
-                transactions={transactions}
+                allTransactions={allTransactions}
+                transactions={filteredTransactions}
                 categories={categories}
                 onTransactionsUpdate={handleTransactionsUpdate}
             />
@@ -105,7 +111,7 @@ export default function TransactionsPage() {
             {/* Displays transactions */}
             <TransactionList transactions={currentTransactions} />
 
-            {/* Pagenation controls */}
+            {/* Pagination controls */}
             {totalPages > 1 && (
                 <Pagination
                     currentPage={page}

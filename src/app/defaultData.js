@@ -1,4 +1,7 @@
+export const defaultCategories = ['General', 'Dining Out', 'Groceries', 'Entertainment', 'Transportation', 'Lifestyle', 'Personal Care', 'Education', 'Bills', 'Shopping']
+
 export const defaultAccount = {
+    _id: 'a1',
     current: 4836.00,
     income: 3814.25,
     expenses: 1700.50,
@@ -6,6 +9,7 @@ export const defaultAccount = {
 
 export const defaultTransactions = [
     {
+        _id: 't1',
         avatar: "assets/images/avatars/emma-richardson.jpg",
         name: "Emma Richardson",
         category: "General",
@@ -14,6 +18,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't2',
         avatar: "assets/images/avatars/savory-bites-bistro.jpg",
         name: "Savory Bites Bistro",
         category: "Dining Out",
@@ -22,6 +27,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't3',
         avatar: "assets/images/avatars/daniel-carter.jpg",
         name: "Daniel Carter",
         category: "General",
@@ -30,6 +36,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't4',
         avatar: "assets/images/avatars/sun-park.jpg",
         name: "Sun Park",
         category: "General",
@@ -38,6 +45,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't5',
         avatar: "assets/images/avatars/urban-services-hub.jpg",
         name: "Urban Services Hub",
         category: "General",
@@ -46,6 +54,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't6',
         avatar: "assets/images/avatars/liam-hughes.jpg",
         name: "Liam Hughes",
         category: "Groceries",
@@ -54,6 +63,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't7',
         avatar: "assets/images/avatars/lily-ramirez.jpg",
         name: "Lily Ramirez",
         category: "General",
@@ -62,6 +72,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't8',
         avatar: "assets/images/avatars/ethan-clark.jpg",
         name: "Ethan Clark",
         category: "Dining Out",
@@ -70,6 +81,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't9',
         avatar: "assets/images/avatars/james-thompson.jpg",
         name: "James Thompson",
         category: "Entertainment",
@@ -78,6 +90,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't10',
         avatar: "assets/images/avatars/pixel-playground.jpg",
         name: "Pixel Playground",
         category: "Entertainment",
@@ -86,6 +99,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't11',
         avatar: "assets/images/avatars/ella-phillips.jpg",
         name: "Ella Phillips",
         category: "Dining Out",
@@ -94,6 +108,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't12',
         avatar: "assets/images/avatars/sofia-peterson.jpg",
         name: "Sofia Peterson",
         category: "Transportation",
@@ -102,6 +117,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't13',
         avatar: "assets/images/avatars/mason-martinez.jpg",
         name: "Mason Martinez",
         category: "Lifestyle",
@@ -110,6 +126,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't14',
         avatar: "assets/images/avatars/green-plate-eatery.jpg",
         name: "Green Plate Eatery",
         category: "Groceries",
@@ -118,6 +135,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't15',
         avatar: "assets/images/avatars/sebastian-cook.jpg",
         name: "Sebastian Cook",
         category: "Transportation",
@@ -126,6 +144,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't16',
         avatar: "assets/images/avatars/william-harris.jpg",
         name: "William Harris",
         category: "Personal Care",
@@ -134,6 +153,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't17',
         avatar: "assets/images/avatars/elevate-education.jpg",
         name: "Elevate Education",
         category: "Education",
@@ -142,6 +162,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't18',
         avatar: "assets/images/avatars/serenity-spa-and-wellness.jpg",
         name: "Serenity Spa & Wellness",
         category: "Personal Care",
@@ -150,6 +171,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't19',
         avatar: "assets/images/avatars/spark-electric-solutions.jpg",
         name: "Spark Electric Solutions",
         category: "Bills",
@@ -158,6 +180,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't20',
         avatar: "assets/images/avatars/rina-sato.jpg",
         name: "Rina Sato",
         category: "Bills",
@@ -166,6 +189,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't21',
         avatar: "assets/images/avatars/swift-ride-share.jpg",
         name: "Swift Ride Share",
         category: "Transportation",
@@ -174,6 +198,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't22',
         avatar: "assets/images/avatars/aqua-flow-utilities.jpg",
         name: "Aqua Flow Utilities",
         category: "Bills",
@@ -182,6 +207,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't23',
         avatar: "assets/images/avatars/ecofuel-energy.jpg",
         name: "EcoFuel Energy",
         category: "Bills",
@@ -190,6 +216,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't24',
         avatar: "assets/images/avatars/yuna-kim.jpg",
         name: "Yuna Kim",
         category: "Dining Out",
@@ -198,6 +225,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't25',
         avatar: "assets/images/avatars/flavor-fiesta.jpg",
         name: "Flavor Fiesta",
         category: "Dining Out",
@@ -206,6 +234,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't26',
         avatar: "assets/images/avatars/harper-edwards.jpg",
         name: "Harper Edwards",
         category: "Shopping",
@@ -214,6 +243,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't27',
         avatar: "assets/images/avatars/buzz-marketing-group.jpg",
         name: "Buzz Marketing Group",
         category: "General",
@@ -222,6 +252,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't28',
         avatar: "assets/images/avatars/technova-innovations.jpg",
         name: "TechNova Innovations",
         category: "Shopping",
@@ -230,6 +261,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't29',
         avatar: "assets/images/avatars/bytewise.jpg",
         name: "ByteWise",
         category: "Lifestyle",
@@ -238,6 +270,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't30',
         avatar: "assets/images/avatars/nimbus-data-storage.jpg",
         name: "Nimbus Data Storage",
         category: "Bills",
@@ -246,6 +279,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't31',
         avatar: "assets/images/avatars/emma-richardson.jpg",
         name: "Emma Richardson",
         category: "General",
@@ -254,6 +288,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't32',
         avatar: "assets/images/avatars/daniel-carter.jpg",
         name: "Daniel Carter",
         category: "General",
@@ -262,6 +297,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't33',
         avatar: "assets/images/avatars/sun-park.jpg",
         name: "Sun Park",
         category: "General",
@@ -270,6 +306,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't34',
         avatar: "assets/images/avatars/harper-edwards.jpg",
         name: "Harper Edwards",
         category: "Shopping",
@@ -278,6 +315,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't35',
         avatar: "assets/images/avatars/liam-hughes.jpg",
         name: "Liam Hughes",
         category: "Groceries",
@@ -286,6 +324,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't36',
         avatar: "assets/images/avatars/lily-ramirez.jpg",
         name: "Lily Ramirez",
         category: "General",
@@ -294,6 +333,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't37',
         avatar: "assets/images/avatars/ethan-clark.jpg",
         name: "Ethan Clark",
         category: "Dining Out",
@@ -302,6 +342,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't38',
         avatar: "assets/images/avatars/rina-sato.jpg",
         name: "Rina Sato",
         category: "Entertainment",
@@ -310,6 +351,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't39',
         avatar: "assets/images/avatars/james-thompson.jpg",
         name: "James Thompson",
         category: "Bills",
@@ -318,6 +360,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't40',
         avatar: "assets/images/avatars/ella-phillips.jpg",
         name: "Ella Phillips",
         category: "Dining Out",
@@ -326,6 +369,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't41',
         avatar: "assets/images/avatars/yuna-kim.jpg",
         name: "Yuna Kim",
         category: "Dining Out",
@@ -334,6 +378,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't42',
         avatar: "assets/images/avatars/sofia-peterson.jpg",
         name: "Sofia Peterson",
         category: "Transportation",
@@ -342,6 +387,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't43',
         avatar: "assets/images/avatars/mason-martinez.jpg",
         name: "Mason Martinez",
         category: "Lifestyle",
@@ -350,6 +396,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't44',
         avatar: "assets/images/avatars/sebastian-cook.jpg",
         name: "Sebastian Cook",
         category: "Transportation",
@@ -358,6 +405,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't45',
         avatar: "assets/images/avatars/william-harris.jpg",
         name: "William Harris",
         category: "General",
@@ -366,6 +414,7 @@ export const defaultTransactions = [
         recurring: false
     },
     {
+        _id: 't46',
         avatar: "assets/images/avatars/elevate-education.jpg",
         name: "Elevate Education",
         category: "Education",
@@ -374,6 +423,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't47',
         avatar: "assets/images/avatars/serenity-spa-and-wellness.jpg",
         name: "Serenity Spa & Wellness",
         category: "Personal Care",
@@ -382,6 +432,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't48',
         avatar: "assets/images/avatars/spark-electric-solutions.jpg",
         name: "Spark Electric Solutions",
         category: "Bills",
@@ -390,6 +441,7 @@ export const defaultTransactions = [
         recurring: true
     },
     {
+        _id: 't49',
         avatar: "assets/images/avatars/swift-ride-share.jpg",
         name: "Swift Ride Share",
         category: "Transportation",
@@ -401,21 +453,25 @@ export const defaultTransactions = [
 
 export const defaultBudgets = [
     {
+        _id: 'b1',
         category: "Entertainment",
         maximum: 50.00,
         theme: "#277C78"
     },
     {
+        _id: 'b2',
         category: "Bills",
         maximum: 750.00,
         theme: "#82C9D7"
     },
     {
+        _id: 'b3',
         category: "Dining Out",
         maximum: 75.00,
         theme: "#F2CDAC"
     },
     {
+        _id: 'b4',
         category: "Personal Care",
         maximum: 100.00,
         theme: "#626070"
@@ -424,30 +480,35 @@ export const defaultBudgets = [
 
 export const defaultPots = [
     {
+        _id: 'p1',
         name: "Savings",
         target: 2000.00,
         total: 159.00,
         theme: "#277C78"
     },
     {
+        _id: 'p2',
         name: "Concert Ticket",
         target: 150.00,
         total: 110.00,
         theme: "#626070"
     },
     {
+        _id: 'p3',
         name: "Gift",
         target: 150.00,
         total: 110.00,
         theme: "#82C9D7"
     },
     {
+        _id: 'p4',
         name: "New Laptop",
         target: 1000.00,
         total: 10.00,
         theme: "#F2CDAC"
     },
     {
+        _id: 'p5',
         name: "Holiday",
         target: 1440.00,
         total: 531.00,

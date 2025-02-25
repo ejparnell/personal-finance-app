@@ -1,59 +1,71 @@
+import { useState } from 'react'
 import Image from 'next/image'
 
-export default function TransactionFilters({ transactions, categories, onTransactionsUpdate }) {
-    const handleSortByChange = (event) => {
-        const sortBy = event.target.value
-        let sortedTransactions = []
+export default function TransactionFilters({ allTransactions, categories, onTransactionsUpdate }) {
+    const [sortBy, setSortBy] = useState('latest')
+    const [selectedCategory, setSelectedCategory] = useState('all')
+    const [searchTerm, setSearchTerm] = useState('')
 
-        switch (sortBy) {
-            case 'latest':
-                sortedTransactions = [...transactions].sort(
-                    (a, b) => new Date(b.date) - new Date(a.date)
-                )
-                break
-            case 'oldest':
-                sortedTransactions = [...transactions].sort(
-                    (a, b) => new Date(a.date) - new Date(b.date)
-                )
-                break
-            case 'aToZ':
-                sortedTransactions = [...transactions].sort((a, b) =>
-                    a.name.localeCompare(b.name)
-                )
-                break
-            case 'zToA':
-                sortedTransactions = [...transactions].sort((a, b) =>
-                    b.name.localeCompare(a.name)
-                )
-                break
-            case 'highest':
-                sortedTransactions = [...transactions].sort((a, b) => b.amount - a.amount)
-                break
-            case 'lowest':
-                sortedTransactions = [...transactions].sort((a, b) => a.amount - b.amount)
-                break
-            default:
-                sortedTransactions = transactions
+    // Update transactions based on filters
+    function updateTransactions(sort = sortBy, category = selectedCategory, search = searchTerm) {
+        let filteredTransactions = allTransactions
+
+        if (category !== 'all') {
+            filteredTransactions = filteredTransactions.filter(tx => tx.category === category)
         }
 
-        onTransactionsUpdate(sortedTransactions)
-    }
+        if (search) {
+            filteredTransactions = filteredTransactions.filter(tx =>
+                tx.name.toLowerCase().includes(search.toLowerCase())
+            )
+        }
 
-    const handleCategoryChange = (event) => {
-        const category = event.target.value
-        const filteredTransactions =
-            category === 'all'
-                ? transactions
-                : transactions.filter(tx => tx.category === category)
+        switch (sort) {
+            case 'latest':
+                filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
+                break
+            case 'oldest':
+                filteredTransactions.sort((a, b) => new Date(a.date) - new Date(b.date))
+                break
+            case 'aToZ':
+                filteredTransactions.sort((a, b) => a.name.localeCompare(b.name))
+                break
+            case 'zToA':
+                filteredTransactions.sort((a, b) => b.name.localeCompare(a.name))
+                break
+            case 'highest':
+                filteredTransactions.sort((a, b) => b.amount - a.amount)
+                break
+            case 'lowest':
+                filteredTransactions.sort((a, b) => a.amount - b.amount)
+                break
+            default:
+                break
+        }
+
+        // Return the newly filtered transactions
         onTransactionsUpdate(filteredTransactions)
     }
 
-    const handleSearchChange = (event) => {
-        const searchTerm = event.target.value.toLowerCase()
-        const filteredTransactions = transactions.filter(tx =>
-            tx.name.toLowerCase().includes(searchTerm)
-        )
-        onTransactionsUpdate(filteredTransactions)
+    // Sort by dropdown change handler
+    function handleSortByChange(event) {
+        const newSortBy = event.target.value
+        setSortBy(newSortBy)
+        updateTransactions(newSortBy, selectedCategory, searchTerm)
+    }
+
+    // Category dropdown change handler
+    function handleCategoryChange(event) {
+        const newCategory = event.target.value
+        setSelectedCategory(newCategory)
+        updateTransactions(sortBy, newCategory, searchTerm)
+    }
+
+    // Search input change handler
+    function handleSearchChange(event) {
+        const search = event.target.value.toLowerCase()
+        setSearchTerm(search)
+        updateTransactions(sortBy, selectedCategory, search)
     }
 
     return (
@@ -63,6 +75,7 @@ export default function TransactionFilters({ transactions, categories, onTransac
                 <input
                     type="text"
                     placeholder="Search transactions"
+                    value={searchTerm}
                     onChange={handleSearchChange}
                 />
                 <Image src="/assets/images/icon-search.svg" alt="Search" width={20} height={20} />
@@ -71,7 +84,7 @@ export default function TransactionFilters({ transactions, categories, onTransac
             {/* Sort Dropdown */}
             <div>
                 <label htmlFor="sortBy">Sort by</label>
-                <select id="sortBy" onChange={handleSortByChange}>
+                <select id="sortBy" value={sortBy} onChange={handleSortByChange}>
                     <option value="latest">Latest</option>
                     <option value="oldest">Oldest</option>
                     <option value="aToZ">A to Z</option>
@@ -86,7 +99,7 @@ export default function TransactionFilters({ transactions, categories, onTransac
                 {categories && categories.length > 0 ? (
                     <>
                         <label htmlFor="category">Category</label>
-                        <select id="category" onChange={handleCategoryChange}>
+                        <select id="category" value={selectedCategory} onChange={handleCategoryChange}>
                             <option value="all">All</option>
                             {categories.map(category => (
                                 <option key={category} value={category}>
