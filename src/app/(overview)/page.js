@@ -1,32 +1,71 @@
 'use client'
+
+import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { useApplicationData } from '@/context/ApplicationDataContext'
+import { fetchAllData } from './pageServices'
 
 export default function Home() {
-    const { data, isLoading } = useApplicationData()
-    const { account, pots, budgets, transactions, recurringBills } = data
+    const { data: session, status } = useSession()
+    const [account, setAccount] = useState({})
+    const [pots, setPots] = useState([])
+    const [budgets, setBudgets] = useState([])
+    const [transactions, setTransactions] = useState([])
+    const [recurringBills, setRecurringBills] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState(null)
+
+    // Fetch all data initially
+    useEffect(() => {
+        if (status === 'loading') return
+
+        async function fetchUserData() {
+            setIsLoading(true)
+            setError(null)
+            try {
+                const data = await fetchAllData(session)
+                console.log(data)
+                setAccount(data.account)
+                setPots(data.pots)
+                setBudgets(data.budgets)
+                setTransactions(data.transactions)
+                setRecurringBills(data.recurringBills)
+            } catch (error) {
+                console.error(error)
+                setError(error.message || 'An error occurred while fetching user data')
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        fetchUserData()
+    }, [session, status])
 
     if (isLoading) {
         return <div>Loading...</div>
     }
 
+    // Calculate total pot saved
     function calculateTotalPotSaved(potArr) {
         if (!potArr || potArr.length === 0) return 0
         return potArr.reduce((total, pot) => total + pot.total, 0)
     }
 
+    // Calculate total budget spent
     function calculateTotalBudgetSpent(transactionsArr) {
         if (!transactionsArr || transactionsArr.length === 0) return 0
         return transactionsArr.reduce((total, transaction) => total + transaction.amount, 0)
     }
 
+    // Calculate total budget
     function calculateTotalBudget(budgetArr) {
         if (!budgetArr || budgetArr.length === 0) return 0
         return budgetArr.reduce((total, budget) => total + budget.maximum, 0)
     }
 
+    // Calculate paid bills
     function calculatePaidBills(recurringBillsArr) {
         if (!recurringBillsArr || recurringBillsArr.length === 0) return 0
         const calculated = recurringBillsArr.reduce((total, bill) => {
@@ -39,6 +78,7 @@ export default function Home() {
         return Math.abs(calculated)
     }
 
+    // Calculate total upcoming
     function calculateTotalUpcoming(recurringBillsArr) {
         if (!recurringBillsArr || recurringBillsArr.length === 0) return 0
         const calculated = recurringBillsArr.reduce((total, bill) => {
@@ -51,6 +91,7 @@ export default function Home() {
         return Math.abs(calculated)
     }
 
+    // Calculate due soon
     function calculateDueSoon(recurringBillsArr) {
         if (!recurringBillsArr || recurringBillsArr.length === 0) return 0
         const calculated = recurringBillsArr.reduce((total, bill) => {
