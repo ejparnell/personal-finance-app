@@ -113,12 +113,12 @@ export default function Home() {
                     ) : (
                         topFiveTransactions.map((transaction) => (
                             <div key={transaction._id}>
-                                <Image
+                                {transaction.avatar && <Image
                                     src={`/${transaction.avatar}`}
                                     alt={transaction.name}
                                     width={50}
                                     height={50}
-                                />
+                                />}
                                 <p>{transaction.name}</p>
                                 <p>{transaction.amount}</p>
                                 <p>{transaction.date}</p>

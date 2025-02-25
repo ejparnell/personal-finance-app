@@ -20,7 +20,7 @@ import { useSession } from 'next-auth/react'
 import Modal from '@/components/Modal'
 import styles from './TransactionCreate.module.css'
 
-export function TransactionCreate({ setIsTransactionCreateOpen, setTransactions }) {
+export default function TransactionCreate({ setIsTransactionCreateOpen, setTransactions }) {
     const { data: session } = useSession()
     const [formData, setFormData] = useState({
         avatar: '',

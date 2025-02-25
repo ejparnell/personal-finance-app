@@ -1,188 +1,118 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
+import { useSession } from 'next-auth/react'
 
-import { useApplicationData } from '@/context/ApplicationDataContext'
-import { TransactionCreate } from './TransactionCreate'
+import { fetchTransactions } from './transactionServices'
+import TransactionCreate from './TransactionCreate'
+import TransactionFilters from './TransactionFilters'
+import TransactionList from './TransactionList'
+import Pagination from './Pagination'
 
 export default function TransactionsPage() {
     const PAGE_SIZE = 10
-    const { data: { transactions, setTransactions }, isLoading } = useApplicationData()
+    const { data: session, status } = useSession()
+    const [transactions, setTransactions] = useState([])
     const [categories, setCategories] = useState([])
-    const [currentTransaction, setCurrentTransaction] = useState([])
+    const [currentTransactions, setCurrentTransactions] = useState([])
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0)
     const [isTransactionCreateOpen, setIsTransactionCreateOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState(null)
 
-    // Initial setup
+    // Get transactions from either local storage or the API
     useEffect(() => {
-        if (!transactions) return
-        if (transactions.length > 0) {
-            // Creating a list of unique categories for the dropdown menu
-            const categories = transactions.map(transaction => transaction.category)
-            const uniqueCategories = [...new Set(categories)]
-            setCategories(uniqueCategories)
-
-            // Setting the first page of the pagination
-            const firstPage = transactions.slice(0, PAGE_SIZE)
-            setCurrentTransaction(firstPage)
-
-            // Setting the total number of pages
-            setTotalPages(Math.ceil(transactions.length / PAGE_SIZE))
+        if (status === 'loading') return
+        async function handleFetchTransactions() {
+            setIsLoading(true)
+            setError(null)
+            try {
+                const data = await fetchTransactions(session)
+                setTransactions(data.transactions)
+            } catch (error) {
+                console.error(error)
+                setError(error.message || 'An error in transactions occurred.')
+            } finally {
+                setIsLoading(false)
+            }
         }
+        handleFetchTransactions()
+    }, [session, status])
+
+    // Initial setup: update categories, currentTransactions, and totalPages when transactions change
+    useEffect(() => {
+        if (!transactions || transactions.length === 0) return
+
+        const uniqueCategories = [...new Set(transactions.map(tx => tx.category))]
+        setCategories(uniqueCategories)
+
+        setCurrentTransactions(transactions.slice(0, PAGE_SIZE))
+        setTotalPages(Math.ceil(transactions.length / PAGE_SIZE))
     }, [transactions])
 
-    // Pagination logic
+    // Pagination: update currentTransactions when page changes
     useEffect(() => {
         if (!transactions) return
         const start = (page - 1) * PAGE_SIZE
         const end = page * PAGE_SIZE
-        const newPage = transactions.slice(start, end)
-        setCurrentTransaction(newPage)
+        setCurrentTransactions(transactions.slice(start, end))
     }, [page, transactions])
 
-    // Handles the page turn
-    function handlePageChange(direction) {
-        if (direction === 'prev') {
-            if (page === 1) return
-            setPage(prevPage => prevPage - 1)
-        } else {
-            if (page === totalPages) return
-            setPage(prevPage => prevPage + 1)
+    // Pagination: handle page change
+    const handlePageChange = (direction) => {
+        if (direction === 'prev' && page > 1) {
+            setPage(page - 1)
+        } else if (direction === 'next' && page < totalPages) {
+            setPage(page + 1)
         }
     }
 
-    if (isLoading) {
+    // Filters: handle transactions update
+    const handleTransactionsUpdate = (updatedTransactions) => {
+        setTransactions(updatedTransactions)
+        setPage(1)
+        setCurrentTransactions(updatedTransactions.slice(0, PAGE_SIZE))
+        setTotalPages(Math.ceil(updatedTransactions.length / PAGE_SIZE))
+    }
+
+    if (status === 'loading' || isLoading) {
         return <div>Loading...</div>
-    }
-
-    // Handles sorting transactions - latest, oldest, a to z, z to a, highest, lowest
-    function handleSortBy(event) {
-        const sortBy = event.target.value
-        let sortedTransactions = []
-
-        switch (sortBy) {
-            case 'latest':
-                sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date))
-                break
-            case 'oldest':
-                sortedTransactions = [...transactions].sort((a, b) => new Date(a.date) - new Date(b.date))
-                break
-            case 'aToZ':
-                sortedTransactions = [...transactions].sort((a, b) => a.name.localeCompare(b.name))
-                break
-            case 'zToA':
-                sortedTransactions = [...transactions].sort((a, b) => b.name.localeCompare(a.name))
-                break
-            case 'highest':
-                sortedTransactions = [...transactions].sort((a, b) => b.amount - a.amount)
-                break
-            case 'lowest':
-                sortedTransactions = [...transactions].sort((a, b) => a.amount - b.amount)
-                break
-            default:
-                sortedTransactions = transactions
-        }
-
-        setTransactions(sortedTransactions)
-        setPage(1)
-        setCurrentTransaction(sortedTransactions.slice(0, PAGE_SIZE))
-        setTotalPages(Math.ceil(sortedTransactions.length / PAGE_SIZE))
-    }
-
-    // handles category change - all, or a specific category - based on transactions.category
-    function handleCategoryChange(event) {
-        const category = event.target.value
-        let filteredTransactions = []
-
-        if (category === 'all') {
-            filteredTransactions = transactions
-        } else {
-            filteredTransactions = transactions.filter(transaction => transaction.category === category)
-        }
-
-        setCurrentTransaction(filteredTransactions.slice(0, PAGE_SIZE))
-        setPage(1)
-        setTotalPages(Math.ceil(filteredTransactions.length / PAGE_SIZE))
-    }
-
-    // handles search by name
-    function handleNameSearch(event) {
-        const search = event.target.value
-        const filteredTransactions = transactions.filter(transaction => transaction.name.toLowerCase().includes(search.toLowerCase()))
-
-        setCurrentTransaction(filteredTransactions.slice(0, PAGE_SIZE))
-        setPage(1)
-        setTotalPages(Math.ceil(filteredTransactions.length / PAGE_SIZE))
-    }
-
-    function handleOpenTransactionCreate() {
-        setIsTransactionCreateOpen(true)
     }
 
     return (
         <>
             <h1>Transactions</h1>
-            <button onClick={handleOpenTransactionCreate}>+ Add New Transaction</button>
-            {isTransactionCreateOpen && <TransactionCreate setIsTransactionCreateOpen={setIsTransactionCreateOpen} setTransactions={setTransactions} />}
-            <div>
-                {/* Search by name */}
-                <input type='text' placeholder='Search transactions' onChange={handleNameSearch} />
-                <Image src='/assets/images/icon-search.svg' alt='Search' width={20} height={20} />
+            <button onClick={() => setIsTransactionCreateOpen(true)}>
+                + Add New Transaction
+            </button>
 
-                {/* Sort by dropdown menu */}
-                <label htmlFor='sortBy'>Sort by</label>
-                <select id='sortBy' onChange={handleSortBy}>
-                    <option value='latest'>Latest</option>
-                    <option value='oldest'>Oldest</option>
-                    <option value='aToZ'>A to Z</option>
-                    <option value='zToA'>Z to A</option>
-                    <option value='highest'>Highest</option>
-                    <option value='lowest'>Lowest</option>
-                </select>
+            {/* Transaction Create Modal */}
+            {isTransactionCreateOpen && (
+                <TransactionCreate
+                    setIsTransactionCreateOpen={setIsTransactionCreateOpen}
+                    setTransactions={setTransactions}
+                />
+            )}
 
-                {/* Category dropdown menu */}
-                {categories.length > 0 ?
-                    <>
-                        <label htmlFor='category'>Category</label>
-                        <select id='category' onChange={handleCategoryChange}>
-                            <option value='all'>All</option>
-                            {categories.map(category => (
-                                <option key={category} value={category}>{category}</option>
-                            ))}
-                        </select>
-                    </> : <p>Need to have transactions.</p>
-                }
-            </div>
+            {/* Transaction Filters - name input, sort by, categories */}
+            <TransactionFilters
+                transactions={transactions}
+                categories={categories}
+                onTransactionsUpdate={handleTransactionsUpdate}
+            />
 
-            <div>
-                {/* Current Transactions */}
-                <ul>
-                    {currentTransaction.map(transaction => (
-                        <li key={transaction.date}>
-                            <Image
-                                src={`/${transaction.avatar}`}
-                                alt={transaction.name}
-                                width={20}
-                                height={20}
-                            />
-                            <p>{transaction.name}</p>
-                            <p>{transaction.category}</p>
-                            <p>{transaction.date}</p>
-                            <p>{transaction.amount}</p>
-                        </li>
-                    ))}
-                </ul>
-                {totalPages > 1 && <div>
-                    <button onClick={() => handlePageChange('prev')}>Previous</button>
-                    {/* buttons for each page */}
-                    {Array.from({ length: totalPages }, (_, i) => (
-                        <p key={i}>{i + 1}</p>
-                    ))}
-                    <button onClick={() => handlePageChange('next')}>Next</button>
-                </div>}
-            </div>
+            {/* Displays transactions */}
+            <TransactionList transactions={currentTransactions} />
+
+            {/* Pagenation controls */}
+            {totalPages > 1 && (
+                <Pagination
+                    currentPage={page}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
+            )}
         </>
     )
 }
