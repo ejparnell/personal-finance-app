@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 
-import { fetchTransactions } from './transactionServices'
+import { fetchTransactions, deleteTransaction } from './transactionServices'
 import { defaultCategories } from '@/app/defaultData'
 import TransactionCreate from './TransactionCreate'
 import TransactionFilters from './TransactionFilters'
@@ -71,11 +71,23 @@ export default function TransactionsPage() {
     }
 
     // Handles updating transactions after filters are applied
-    const handleTransactionsUpdate = (updatedTransactions) => {
+    function handleTransactionsUpdate(updatedTransactions) {
         setFilteredTransactions(updatedTransactions)
         setPage(1)
         setCurrentTransactions(updatedTransactions.slice(0, PAGE_SIZE))
         setTotalPages(Math.ceil(updatedTransactions.length / PAGE_SIZE))
+    }
+
+    // Handles the delete action for a transaction
+    async function handleTransactionDelete(transactionId) {
+        try {
+            const data = await deleteTransaction(session, transactionId)
+            setAllTransactions(data.transactions)
+            setFilteredTransactions(data.transactions)
+        } catch (error) {
+            console.error(error)
+            setError(error.message || 'An error occurred while deleting the transaction.')
+        }
     }
 
     if (status === 'loading' || isLoading) {
@@ -109,7 +121,7 @@ export default function TransactionsPage() {
             />
 
             {/* Displays transactions */}
-            <TransactionList transactions={currentTransactions} />
+            <TransactionList transactions={currentTransactions} handleTransactionDelete={handleTransactionDelete} />
 
             {/* Pagination controls */}
             {totalPages > 1 && (

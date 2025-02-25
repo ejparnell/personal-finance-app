@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export default function TransactionList({ transactions }) {
+export default function TransactionList({ transactions, handleTransactionDelete }) {
     return (
         <ul>
             {transactions.map(tx => (
@@ -15,6 +15,8 @@ export default function TransactionList({ transactions }) {
                     <p>{tx.category}</p>
                     <p>{tx.date}</p>
                     <p>{tx.amount}</p>
+
+                    <button onClick={() => handleTransactionDelete(tx._id)}>Delete</button>
                 </li>
             ))}
         </ul>

@@ -1,4 +1,3 @@
-// Example: src/app/api/accounts/[id]/route.js
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import connectToDatabase from '@/lib/mongodb'

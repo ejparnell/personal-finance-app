@@ -38,3 +38,20 @@ export async function createTransaction(session, formData) {
         return { transaction: updatedTransactions }
     }
 }
+
+export async function deleteTransaction(session, transactionId) {
+    if (session) {
+        const response = await fetch(`/api/transactions/${transactionId}`, {
+            method: 'DELETE',
+        })
+        if (!response.ok) {
+            throw new Error('Failed to delete transaction')
+        }
+        return response.json()
+    } else {
+        const storedTransactions = JSON.parse(localStorage.getItem('defaultTransactions'))
+        const updatedTransactions = storedTransactions.filter(transaction => transaction._id !== transactionId)
+        localStorage.setItem('defaultTransactions', JSON.stringify(updatedTransactions))
+        return { transactions: updatedTransactions }
+    }
+}
