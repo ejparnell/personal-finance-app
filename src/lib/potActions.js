@@ -11,3 +11,14 @@ export async function getPotsByUser(userEmail) {
         return null
     }
 }
+
+export async function createPot(userEmail, pot) {
+    try {
+        const currentUser = await User.findOne({ email: userEmail })
+        const newPot = await Pot.create({ ...pot, user: currentUser._id })
+        return newPot
+    } catch (error) {
+        console.error(error)
+        return null
+    }
+}

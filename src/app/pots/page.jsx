@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 
 import { fetchPots } from './potServices'
+import PotCreate from './PotCreate'
 
 export default function PotsPage() {
     const { data: session, status } = useSession()
     const [pots, setPots] = useState([])
     const [selectValues, setSelectValues] = useState({})
+    const [isPotCreateOpen, setIsPotCreateOpen] = useState(false)
     const [isPotEditOpen, setIsPotEditOpen] = useState(false)
     const [isPotDeleteOpen, setIsPotDeleteOpen] = useState(false)
     const [potToEdit, setPotToEdit] = useState(null)
@@ -55,6 +57,16 @@ export default function PotsPage() {
     return (
         <>
             <h1>Pots</h1>
+            <button onClick={() => setIsPotCreateOpen(true)}>+ Add New Pot</button>
+
+            {/* Create pot modal */}
+            {isPotCreateOpen && (
+                <PotCreate
+                    setIsPotCreateOpen={setIsPotCreateOpen}
+                    setPots={setPots}
+                    session={session}
+                />
+            )}
 
             {/* Pots list */}
             <section>
