@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { fetchPots } from './potServices'
 import PotCreate from './PotCreate'
 import PotUpdate from './PotUpdate'
+import PotConfirmDelete from './PotConfirmDelete'
 
 export default function PotsPage() {
     const { data: session, status } = useSession()
@@ -84,7 +85,19 @@ export default function PotsPage() {
             )}
 
             {/* Delete pot modal */}
-
+            {isPotDeleteOpen && potToEdit && (
+                <PotConfirmDelete
+                    pot={potToEdit}
+                    setIsPotDeleteOpen={setIsPotDeleteOpen}
+                    setPots={setPots}
+                    session={session}
+                    onDeleteSuccess={() => {
+                        setSelectValues((prev) => ({ ...prev, [potToEdit._id]: '' }))
+                        setPotToEdit(null)
+                    }}
+                />
+            )}
+            
             {/* Pots list */}
             <section>
                 {pots.map((pot) => (

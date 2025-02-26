@@ -33,3 +33,30 @@ export async function PATCH(request, { params }) {
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
 }
+
+export async function DELETE(request, { params }) {
+    await connectToDatabase()
+    const session = await getServerSession(authOptions)
+    const { id } = await params
+
+    if (!session) {
+        return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
+    }
+
+    const currentUser = await User.findOne({ email: session.user.email })
+    const pot = await Pot.findById(id)
+
+    if (!pot || pot.user.toString() !== currentUser._id.toString()) {
+        return NextResponse.json({ error: 'Pot not found or not authorized' }, { status: 404 })
+    }
+
+    try {
+        await pot.deleteOne()
+        const pots = await Pot.find({ user: currentUser._id })
+        return NextResponse.json({ message: 'Pot deleted successfully', pots })
+    }
+    catch (error) {
+        console.error(error)
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    }
+}

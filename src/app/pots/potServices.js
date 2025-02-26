@@ -49,3 +49,20 @@ export async function updatePot(session, potId, formData) {
         return { pots: updatedPots }
     }
 }
+
+export async function deletePot(session, potId) {
+    if (session) {
+        const response = await fetch(`/api/pots/${potId}`, {
+            method: 'DELETE',
+        })
+        if (!response.ok) {
+            throw new Error('Failed to delete pot')
+        }
+        return response.json()
+    } else {
+        const storedPots = JSON.parse(localStorage.getItem('defaultPots'))
+        const updatedPots = storedPots.filter(pot => pot._id !== potId)
+        localStorage.setItem('defaultPots', JSON.stringify(updatedPots))
+        return { pots: updatedPots }
+    }
+}
