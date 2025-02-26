@@ -36,60 +36,26 @@
     --army-green: #7F9161;
     --gold: #CAB361;
     --orange: #BE6C49;
-    --white: #FFFFFF; 
-}
+    --white: #FFFFFF;
 
-/* Base text block */
-.text {
-    font-family: 'Public Sans', sans-serif;
-    margin: 0;
-}
+    /* Font Sizes */
+    --text-preset-1-size: 32px;
+    --text-preset-2-size: 20px;
+    --text-preset-3-size: 16px;
+    --text-preset-4-size: 14px;
+    --text-preset-5-size: 12px;
 
-/* General Preset Styles */
-.text__preset {
-    line-height: 120%;
-    letter-spacing: 0;
-}
+    /* Line Heights */
+    --text-preset-1-line-height: 120%;
+    --text-preset-2-line-height: 120%;
+    --text-preset-3-line-height: 150%;
+    --text-preset-4-line-height: 150%;
+    --text-preset-5-line-height: 150%;
 
-/* Modifiers for Sizes */
-.text__preset--1 {
-    font-size: 32px;
-    font-weight: bold;
-    line-height: 120%;
-    color: var(--grey-900);
-}
+    /* Font Weights */
+    --text-font-bold: bold;
+    --text-font-regular: normal;
 
-.text__preset--2 {
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 120%;
-    color: var(--grey-900);
-}
-
-.text__preset--3 {
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 150%;
-    color: var(--grey-900);
-}
-
-.text__preset--4 {
-    font-size: 14px;
-    line-height: 150%;
-    color: var(--grey-900);
-}
-
-.text__preset--5 {
-    font-size: 12px;
-    line-height: 150%;
-    color: var(--grey-900);
-}
-
-/* Modifiers for Weight */
-.text__preset--bold {
-    font-weight: bold;
-}
-
-.text__preset--regular {
-    font-weight: normal;
+    /* Colors */
+    --text-color-primary: var(--grey-900);
 }
