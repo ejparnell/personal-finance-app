@@ -30,3 +30,22 @@ export async function createPot(session, formData) {
         return { pots: updatedPots }
     }
 }
+
+export async function updatePot(session, potId, formData) {
+    if (session) {
+        const response = await fetch(`/api/pots/${potId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        })
+        if (!response.ok) {
+            throw new Error('Failed to update pot')
+        }
+        return response.json()
+    } else {
+        const storedPots = JSON.parse(localStorage.getItem('defaultPots'))
+        const updatedPots = storedPots.map(pot => pot._id === potId ? formData : pot)
+        localStorage.setItem('defaultPots', JSON.stringify(updatedPots))
+        return { pots: updatedPots }
+    }
+}
