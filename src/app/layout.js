@@ -1,6 +1,10 @@
-import './globals.css'
+import { Public_Sans } from 'next/font/google'
+
 import Providers from './providers'
 import Nav from '@/components/Nav'
+import './globals.css'
+
+const publicSans = Public_Sans({ subsets: ['latin'] })
 
 export const metadata = {
     title: 'Create Next App',
@@ -10,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang='en'>
-            <body>
+            <body className={publicSans.className}>
                 <Providers>
                     {children}
                     <Nav />

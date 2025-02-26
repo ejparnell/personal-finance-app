@@ -1,7 +1,95 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Colors */
+:root {
+    /* Beige Colors */
+    --beige-500: #98908B;
+    --beige-100: #F8F4F0;
+
+    /* Grey Colors */
+    --grey-900: #201F24;
+    --grey-500: #696868;
+    --grey-300: #B3B3B3;
+    --grey-100: #F2F2F2;
+
+    /* Secondary Colors */
+    --green: #277C78;
+    --yellow: #F2CDAC;
+    --cyan: #82C9D7;
+    --navy: #626070;
+    --red: #C94736;
+    --purple: #826CB0;
+
+    /* Other Colors */
+    --violet: #AF81BA;
+    --turquoise: #597C7C;
+    --brown: #93674F;
+    --magenta: #934F6F;
+    --blue: #3F82B2;
+    --navy-grey: #97A0AC;
+    --army-green: #7F9161;
+    --gold: #CAB361;
+    --orange: #BE6C49;
+    --white: #FFFFFF; 
+}
+
+/* Base text block */
+.text {
+    font-family: 'Public Sans', sans-serif;
+    margin: 0;
+}
+
+/* General Preset Styles */
+.text__preset {
+    line-height: 120%;
+    letter-spacing: 0;
+}
+
+/* Modifiers for Sizes */
+.text__preset--1 {
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 120%;
+    color: var(--grey-900);
+}
+
+.text__preset--2 {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 120%;
+    color: var(--grey-900);
+}
+
+.text__preset--3 {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 150%;
+    color: var(--grey-900);
+}
+
+.text__preset--4 {
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--grey-900);
+}
+
+.text__preset--5 {
+    font-size: 12px;
+    line-height: 150%;
+    color: var(--grey-900);
+}
+
+/* Modifiers for Weight */
+.text__preset--bold {
+    font-weight: bold;
+}
+
+.text__preset--regular {
+    font-weight: normal;
 }

@@ -1,0 +1,40 @@
+.nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--grey-900);
+    height: 52px;
+    align-items: flex-end;
+}
+
+.nav__link {
+    height: 44px;
+    width: 68px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+}
+
+.nav__link img {
+    flex-grow: 1;
+}
+
+.nav__link--active {
+    background-color: var(--beige-100);
+    color: var(--green);
+}
+
+.nav__link--active img {
+    filter: invert(39%) sepia(77%) saturate(352%) hue-rotate(128deg) brightness(90%) contrast(91%);
+}
+
+.nav__link--active div {
+    height: 5px;
+    width: 100%;
+    background-color: var(--green);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
