@@ -21,7 +21,7 @@ export default function Home() {
     useEffect(() => {
         if (status === 'loading') return
 
-        async function fetchUserData() {
+        async function getAllData() {
             setIsLoading(true)
             setError(null)
             try {
@@ -40,7 +40,7 @@ export default function Home() {
             }
         }
 
-        fetchUserData()
+        getAllData()
     }, [session, status])
 
     if (isLoading) {
@@ -114,15 +114,15 @@ export default function Home() {
             <section>
                 <div>
                     <p>Current Balance</p>
-                    <p>{account.current}</p>
+                    <p>{account?.current || 0}</p>
                 </div>
                 <div>
                     <p>Income</p>
-                    <p>{account.income}</p>
+                    <p>{account?.income || 0}</p>
                 </div>
                 <div>
                     <p>Expenses</p>
-                    <p>{account.expenses}</p>
+                    <p>{account?.expenses || 0}</p>
                 </div>
             </section>
 

@@ -1,10 +1,11 @@
 'use client'
+
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Image from 'next/image'
-import Cookies from 'js-cookie'
 
+import { fetchBudgetsAndTransaction } from './budgetServices'
 import BudgetCreate from './BudgetCreate'
 
 export default function BudgetsPage() {
@@ -13,179 +14,129 @@ export default function BudgetsPage() {
     const [transactions, setTransactions] = useState([])
     const [isBudgetCreateOpen, setIsBudgetCreateOpen] = useState(false)
     const [categories, setCategories] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
 
+    // Fetch budgets and transactions initially
     useEffect(() => {
-        async function fetchBudgets() {
-            try {
-                setLoading(true)
-                const res = await fetch('/api/budgets')
-                const data = await res.json()
-                if (!res.ok) {
-                    setError(data.error || 'Error fetching budgets')
-                }
-                else {
-                    setBudgets(data.budgets)
-                }
-            } catch (err) {
-                setError('An error occurred while fetching budgets')
-            } finally {
-                setLoading(false)
-            }
-        }
+        if (status === 'loading') return
 
-        async function fetchTransactions() {
+        async function getBudgetsAndTransaction() {
+            setLoading(true)
+            setError('')
             try {
-                setLoading(true)
-                const res = await fetch('/api/transactions')
-                const data = await res.json()
-                if (!res.ok) {
-                    setError(data.error || 'Error fetching transactions')
-                }
-                else {
-                    const sortedTransactions = data.transactions.sort((a, b) => new Date(b.date) - new Date(a.date))
-                    setTransactions(sortedTransactions)
-                }
-            } catch (err) {
-                setError('An error occurred while fetching transactions')
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        async function fetchDefaultData() {
-            try {
-                setLoading(true)
-                let defaultData = Cookies.get('defaultData')
-                if (!defaultData) {
-                    const res = await fetch('/api/default-data')
-                    defaultData = await res.json()
-                    Cookies.set('defaultData', JSON.stringify(defaultData))
-                }
-                
-                // setBudgets(defaultData.budgets)
-                // setTransactions(defaultData.transactions)
+                const data = await fetchBudgetsAndTransaction(session)
+                console.log(data)
+                setBudgets(data.budgets)
+                setTransactions(data.transactions)
             } catch (error) {
                 console.error(error)
-                setError('An error occurred while fetching default data')
+                setError(error.message || 'An error occurred while fetching user data')
             } finally {
                 setLoading(false)
             }
         }
 
-        if (status === 'authenticated') {
-            fetchBudgets()
-            fetchTransactions()
-        } else {
-            fetchDefaultData()
-        }
-    }, [])
+        getBudgetsAndTransaction()
+    }, [session, status])
 
-    useEffect(() => {
-        if (transactions.length > 0) {
-            // Creating a list of unique categories
-            const categories = transactions.map(transaction => transaction.category)
-            const uniqueCategories = [...new Set(categories)]
-            setCategories(uniqueCategories)
-        }
-    }, [transactions])
-
+    // Calculate total budget spent
     function calculateTotalBudgetSpent(transactionsArr) {
-        if (transactionsArr.length === 0) return 0
-        let totalSpent = 0
-        transactionsArr.forEach(transaction => {
-            totalSpent += transaction.amount
-        })
-        return totalSpent
+        if (!transactionsArr || transactionsArr.length === 0) return 0
+        return transactionsArr.reduce((total, transaction) => total + transaction.amount, 0)
     }
 
+    // Calculate total budget
     function calculateTotalBudget(budgetArr) {
-        if (budgetArr.length === 0) return 0
-        let totalBudget = 0
-        budgetArr.forEach(budget => {
-            totalBudget += budget.maximum
-        })
-        return totalBudget
+        if (!budgetArr || budgetArr.length === 0) return 0
+        return budgetArr.reduce((total, budget) => total + budget.maximum, 0)
     }
 
-    function calculateSpent(category) {
-        if (transactions.length === 0) return 0
-        let totalSpent = 0
-        transactions.forEach(transaction => {
-            if (transaction.category === category) {
-                totalSpent += transaction.amount
-            }
-        })
-        return Math.abs(totalSpent)
+    // Calculate spent budgets from transactions
+    function calculateSpentBudgets(transactionsArr, category) {
+        if (!transactionsArr || transactionsArr.length === 0) return 0
+        const filteredTransactions = transactionsArr.filter((transaction) => transaction.category.toLowerCase() === category.toLowerCase())
+        return Math.abs(filteredTransactions.reduce((total, transaction) => total + transaction.amount, 0))
     }
 
-    function handleOpenBudgetCreate() {
-        setIsBudgetCreateOpen(true)
+    // Get latest 3 transactions for a category
+    function getLatestTransactions(transactionsArr, category) {
+        if (!transactionsArr || transactionsArr.length === 0) return []
+        return transactionsArr.filter((transaction) => transaction.category.toLowerCase() === category.toLowerCase()).slice(0, 3)
     }
 
-    function handleCloseBudgetCreate() {
-        setIsBudgetCreateOpen(false)
-    }
-
-    function usedThemes() {
-        return budgets.map(budget => budget.theme)
+    if (status === 'loading' || loading) {
+        return <div>Loading...</div>
     }
 
     return (
         <>
             <h1>Budgets</h1>
-            <button onClick={handleOpenBudgetCreate}>+ Add New Button</button>
-            {isBudgetCreateOpen && <BudgetCreate session={session} usedThemes={usedThemes} categories={categories} setBudgets={setBudgets} onClose={handleCloseBudgetCreate} />}
+            <button onClick={() => setIsBudgetCreateOpen(true)}>
+                + Add New Budget
+            </button>
 
-            {/* Summary budget card */}
-            <div>
-                <p>{calculateTotalBudgetSpent(transactions)}</p>
-                <p>of {calculateTotalBudget(budgets)} limit</p>
+            {/* Budget Create Modal */}
+            {isBudgetCreateOpen && (
+                <BudgetCreate
+                    setIsBudgetCreateOpen={setIsBudgetCreateOpen}
+                    setBudgets={setBudgets}
+                    session={session}
+                />
+            )}
+
+            {/* Overall Spending Overview */}
+            <section>
+                <div>
+                    <p>${calculateTotalBudgetSpent(transactions)}</p>
+                    <p>of ${calculateTotalBudget(budgets)} limit</p>
+                </div>
 
                 <div>
-                    {budgets.length === 0 ? <p>No budgets</p> : budgets.map(budget => (<>
-                        {/* Budget overview */}
+                    {budgets.map((budget) => (
+                        <div key={budget._id}>
+                            <p>{budget.category}</p>
+                            <p>${calculateSpentBudgets(transactions, budget.category)} of {budget.maximum}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* Idividual Budget Breakdowns */}
+            <section>
+                {budgets.length > 0 ? budgets.map((budget) => (
+                    <div key={budget._id}>
                         <p>{budget.category}</p>
-                        <p>Maximum of {budget.maximum}</p>
+                        <p>Maximum of ${budget.maximum}</p>
 
-                        <p>
-                            <span>Spent</span>
-                            <span>{calculateSpent(budget.category)}</span>
-                        </p>
-                        <p>
-                            <span>Remaining</span>
-                            <span>{budget.maximum - calculateSpent(budget.category)}</span>
-                        </p>
+                        <p>Spent ${calculateSpentBudgets(transactions, budget.category)}</p>
+                        <p>Remaining ${calculateSpentBudgets(transactions, budget.category) - budget.maximum}</p>
 
-                        {/* Latest spending - top 3 transactions related to this budget category */}
                         <div>
                             <p>Latest Spending</p>
                             <Link href="/transactions">See All</Link>
-                            {transactions.length === 0 ? (
-                                <p>No transactions</p>
-                            ) : (
-                                transactions
-                                    .filter(transaction => transaction.category === budget.category)
-                                    .slice(0, 3)
-                                    .map(transaction => (
-                                        <div key={transaction.date}>
+
+                            <div>
+                                {getLatestTransactions(transactions, budget.category).map((transaction) => (
+                                    <div key={transaction._id}>
+                                        {transaction.avatar && (
                                             <Image
                                                 src={`/${transaction.avatar}`}
                                                 alt={transaction.name}
-                                                width={20}
-                                                height={20}
+                                                width={50}
+                                                height={50}
                                             />
-                                            <p>{transaction.name}</p>
-                                            <p>{transaction.amount}</p>
-                                            <p>{transaction.date}</p>
-                                        </div>
-                                    ))
-                            )}
+                                        )}
+                                        <p>{transaction.name}</p>
+                                        <p>{transaction.amount}</p>
+                                        <p>{transaction.date}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </>))}
-                </div>
-            </div>
+                    </div>
+                )) : <p>No budgets</p>}
+            </section>
         </>
     )
 }

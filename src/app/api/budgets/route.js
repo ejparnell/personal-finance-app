@@ -30,9 +30,10 @@ export async function POST(request) {
     }
 
     try {
-        const budget = await createBudget(session.user.email, await request.json())
+        await createBudget(session.user.email, await request.json())
+        const budgets = await getBudgetsByUser(session.user.email)
 
-        return NextResponse.json({ message: 'Budget created successfully', budget })
+        return NextResponse.json({ message: 'Budget created successfully', budgets })
     }
     catch (error) {
         console.error(error)

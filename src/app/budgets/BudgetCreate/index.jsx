@@ -1,22 +1,28 @@
 'use client'
+
 import { useState } from 'react'
 
+import { defaultCategories, defaultItemThemes } from '@/app/defaultData'
+import { createBudget } from '../budgetServices'
 import Modal from '@/components/Modal'
-import { itemThemes } from '@/app/themes'
 import styles from './BudgetCreate.module.css'
 
-export default function BudgetCreate({ session, usedThemes, categories, setBudgets, onClose }) {
+export default function BudgetCreate({
+    setIsBudgetCreateOpen,
+    setBudgets,
+    session,
+}) {
     const [formData, setFormData] = useState({
         category: '',
-        maximum: '',
+        maximum: 0,
         theme: '',
     })
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
 
     function handleCloseModal() {
-        onClose(false)
-        setFormData({ category: '', maximum: '', theme: '' })
+        setIsBudgetCreateOpen(false)
+        setFormData({ category: '', maximum: 0, theme: '' })
         setError(null)
     }
 
@@ -34,28 +40,11 @@ export default function BudgetCreate({ session, usedThemes, categories, setBudge
         setError(null)
 
         try {
-            if (session) {
-                const response = await fetch('/api/budgets', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData),
-                })
-    
-                if (!response.ok) {
-                    throw new Error('Failed to create budget')
-                }
-    
-                setBudgets((prev) => [...prev, formData])
-            } else {
-                const localBudgets = JSON.parse(localStorage.getItem('defaultBudgets'))
-                localBudgets.push(formData)
-                localStorage.setItem('defaultBudgets', JSON.stringify(localBudgets))
-                setBudgets(localBudgets)
-            }
-            
+            const data = await createBudget(session, formData)
+            setBudgets(data.budgets)
             handleCloseModal()
-        } catch (err) {
-            setError(err.message)
+        } catch (error) {
+            setError(error.message || 'An error occurred while adding a budget.')
         } finally {
             setIsLoading(false)
         }
@@ -78,7 +67,7 @@ export default function BudgetCreate({ session, usedThemes, categories, setBudge
                         required
                     >
                         <option value="" disabled>Select a category</option>
-                        {categories.map((category, index) => (
+                        {defaultCategories.map((category, index) => (
                             <option key={index} value={category}>
                                 {category}
                             </option>
@@ -105,10 +94,9 @@ export default function BudgetCreate({ session, usedThemes, categories, setBudge
                         required
                     >
                         <option value="" disabled>Select a theme</option>
-                        {itemThemes.map((theme, index) => (
-                            <option key={index} value={theme.name} disabled={usedThemes().includes(theme.color)}>
+                        {defaultItemThemes.map((theme, index) => (
+                            <option key={index} value={theme.name}>
                                 {theme.name}
-                                {usedThemes().includes(theme.color) ? ' (Already Used)' : ''}
                             </option>
                         ))}
                     </select>

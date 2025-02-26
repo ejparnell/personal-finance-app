@@ -17,7 +17,7 @@ export async function GET(request) {
     }
 
     try {
-        const accounts = await Account.findOne({ user: session.user._id })
+        const account = await Account.findOne({ user: session.user._id })
         const transactions = await Transaction.find({ user: session.user._id })
         const budgets = await Budget.find({ user: session.user._id })
         const pots = await Pot.find({ user: session.user._id })
