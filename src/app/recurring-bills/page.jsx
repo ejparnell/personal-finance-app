@@ -10,6 +10,7 @@ import RecurringBillList from './RecurringBillList'
 import RecurringBillCreate from './RecurringBillCreate'
 import Pagination from './Pagination'
 import RecurringBillUpdate from './RecurringBillUpdate'
+import RecurringBillConfirmDelete from './RecurringBillConfirmDelete'
 
 export default function RecurringBillsPage() {
     const PAGE_SIZE = 10
@@ -136,6 +137,11 @@ export default function RecurringBillsPage() {
         setIsRecurringBillUpdateOpen(true)
     }
 
+    function openRecurringBillDelete(recurringBill) {
+        setRecurringBillToUpdate(recurringBill)
+        setIsRecurringBillDeleteOpen(true)
+    }
+
     if (status === 'loading' || isLoading) {
         return <div>Loading...</div>
     }
@@ -168,6 +174,15 @@ export default function RecurringBillsPage() {
                 session={session}
             />}
 
+            {/* Recurring Bill Delete Modal */}
+            {isRecurringBillDeleteOpen && <RecurringBillConfirmDelete
+                recurringBill={recurringBillToUpdate}
+                setIsRecurringBillDeleteOpen={setIsRecurringBillDeleteOpen}
+                setAllRecurringBills={setAllRecurringBills}
+                handleRecurringBillsUpdate={handleRecurringBillsUpdate}
+                session={session}
+            />}
+
             {/* Total Bills Overview */}
             <section>
                 <p>Total Bills</p>
@@ -194,6 +209,7 @@ export default function RecurringBillsPage() {
             {allRecurringBills.length > 0 ? <RecurringBillList
                 recurringBills={currentRecurringBills}
                 openRecurringBillUpdate={openRecurringBillUpdate}
+                openRecurringBillDelete={openRecurringBillDelete}
             /> : <div>No recurring bills.</div>}
 
             {/* Pagination controls */}

@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export default function RecurringBillList({ recurringBills, openRecurringBillUpdate }) {
+export default function RecurringBillList({ recurringBills, openRecurringBillUpdate, openRecurringBillDelete }) {
     return (
         <ul>
             {recurringBills.map(bill => (
@@ -16,7 +16,7 @@ export default function RecurringBillList({ recurringBills, openRecurringBillUpd
                     <p>{bill.name}</p>
                     <p>{bill.date}</p>
                     <p>{Math.abs(bill.amount)}</p>
-                    <button>Delete</button>
+                    <button onClick={() => openRecurringBillDelete(bill)}>Delete</button>
                     <button onClick={() => openRecurringBillUpdate(bill)}>Edit</button>
                 </li>
             ))}

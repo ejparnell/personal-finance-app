@@ -58,3 +58,20 @@ export async function updateRecurringBill(session, recurringBillId, formData) {
         return { recurringBills: updatedRecurringBills }
     }
 }
+
+export async function deleteRecurringBill(session, recurringBillId) {
+    if (session) {
+        const response = await fetch(`/api/recurring-bills/${recurringBillId}`, {
+            method: 'DELETE',
+        })
+        if (!response.ok) {
+            throw new Error('Failed to delete recurring bill')
+        }
+        return response.json()
+    } else {
+        const storedRecurringBills = JSON.parse(localStorage.getItem('defaultRecurringBills'))
+        const updatedRecurringBills = storedRecurringBills.filter(recurringBill => recurringBill._id !== recurringBillId)
+        localStorage.setItem('defaultRecurringBills', JSON.stringify(updatedRecurringBills))
+        return { recurringBills: updatedRecurringBills }
+    }
+}

@@ -33,3 +33,30 @@ export async function PATCH(request, { params }) {
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
 }
+
+export async function DELETE(request, { params }) {
+    await connectToDatabase()
+    const session = await getServerSession(authOptions)
+    const { id } = await params
+
+    if (!session) {
+        return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
+    }
+
+    const currentUser = await User.findOne({ email: session.user.email })
+    const recurringBill = await RecurringBill.findById(id)
+
+    if (!recurringBill || recurringBill.user.toString() !== currentUser._id.toString()) {
+        return NextResponse.json({ error: 'Recurring bill not found or not authorized' }, { status: 404 })
+    }
+
+    try {
+        await recurringBill.deleteOne()
+        const recurringBills = await RecurringBill.find({ user: currentUser._id })
+        return NextResponse.json({ message: 'Recurring bill deleted successfully', recurringBills })
+    }
+    catch (error) {
+        console.error(error)
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    }
+}
