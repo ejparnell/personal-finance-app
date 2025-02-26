@@ -13,7 +13,6 @@ export default function RecurringBillCreate({
     handleRecurringBillsUpdate,
 }) {
     const [formData, setFormData] = useState({
-        avatar: '',
         name: '',
         category: '',
         date: '',
@@ -25,7 +24,7 @@ export default function RecurringBillCreate({
 
     function handleCloseModal() {
         setIsRecurringBillCreateOpen(false)
-        setFormData({ avatar: '', name: '', category: '', date: '', amount: 0, recurring: true })
+        setFormData({ name: '', category: '', date: '', amount: 0, recurring: true })
         setError(null)
     }
 

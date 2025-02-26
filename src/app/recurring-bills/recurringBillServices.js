@@ -34,3 +34,27 @@ export async function createRecurringBill(session, formData) {
         return { recurringBills: updatedRecurringBills }
     }
 }
+
+export async function updateRecurringBill(session, recurringBillId, formData) {
+    if (session) {
+        const response = await fetch(`/api/recurring-bills/${recurringBillId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        })
+        if (!response.ok) {
+            throw new Error('Failed to update recurring bill')
+        }
+        return response.json()
+    } else {
+        const storedRecurringBills = JSON.parse(localStorage.getItem('defaultRecurringBills'))
+        const updatedRecurringBills = storedRecurringBills.map(recurringBill => {
+            if (recurringBill._id === recurringBillId) {
+                return { ...recurringBill, ...formData }
+            }
+            return recurringBill
+        })
+        localStorage.setItem('defaultRecurringBills', JSON.stringify(updatedRecurringBills))
+        return { recurringBills: updatedRecurringBills }
+    }
+}
