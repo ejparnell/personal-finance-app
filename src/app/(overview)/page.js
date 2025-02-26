@@ -26,7 +26,6 @@ export default function Home() {
             setError(null)
             try {
                 const data = await fetchAllData(session)
-                console.log(data)
                 setAccount(data.account)
                 setPots(data.pots)
                 setBudgets(data.budgets)

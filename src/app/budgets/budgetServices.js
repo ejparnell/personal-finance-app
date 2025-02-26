@@ -3,7 +3,6 @@ import { defaultBudgets, defaultTransactions } from '../defaultData'
 // Fetch budgets and transactions from the API or localStorage
 export async function fetchBudgetsAndTransaction(session) {
     if (session) {
-        console.log('session', session)
         const budgets = await fetch('/api/budgets')
         const transactions = await fetch('/api/transactions')
         if (!budgets.ok || !transactions.ok) {
@@ -40,6 +39,42 @@ export async function createBudget(session, formData) {
         const storedBudgets = JSON.parse(localStorage.getItem('defaultBudgets'))
         formData._id = Math.random().toString(36).substr(2, 9)
         const updatedBudgets = [...storedBudgets, formData]
+        localStorage.setItem('defaultBudgets', JSON.stringify(updatedBudgets))
+        return { budgets: updatedBudgets }
+    }
+}
+
+export async function updateBudget(session, budgetId, formData) {
+    if (session) {
+        const response = await fetch(`/api/budgets/${budgetId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        })
+        if (!response.ok) {
+            throw new Error('Failed to update budget')
+        }
+        return response.json()
+    } else {
+        const storedBudgets = JSON.parse(localStorage.getItem('defaultBudgets'))
+        const updatedBudgets = storedBudgets.map(budget => budget._id === budgetId ? formData : budget)
+        localStorage.setItem('defaultBudgets', JSON.stringify(updatedBudgets))
+        return { budgets: updatedBudgets }
+    }
+}
+
+export async function deleteBudget(session, budgetId) {
+    if (session) {
+        const response = await fetch(`/api/budgets/${budgetId}`, {
+            method: 'DELETE',
+        })
+        if (!response.ok) {
+            throw new Error('Failed to delete budget')
+        }
+        return response.json()
+    } else {
+        const storedBudgets = JSON.parse(localStorage.getItem('defaultBudgets'))
+        const updatedBudgets = storedBudgets.filter(budget => budget._id !== budgetId)
         localStorage.setItem('defaultBudgets', JSON.stringify(updatedBudgets))
         return { budgets: updatedBudgets }
     }
