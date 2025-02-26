@@ -7,6 +7,8 @@ import { fetchPots } from './potServices'
 import PotCreate from './PotCreate'
 import PotUpdate from './PotUpdate'
 import PotConfirmDelete from './PotConfirmDelete'
+import PotAddMoney from './PotAddMoney'
+import PotWithdrawMoney from './PotWithdrawMoney'
 
 export default function PotsPage() {
     const { data: session, status } = useSession()
@@ -16,6 +18,8 @@ export default function PotsPage() {
     const [isPotEditOpen, setIsPotEditOpen] = useState(false)
     const [isPotDeleteOpen, setIsPotDeleteOpen] = useState(false)
     const [potToEdit, setPotToEdit] = useState(null)
+    const [isPotAddMoneyOpen, setIsPotAddMoneyOpen] = useState(false)
+    const [isPotWithdrawOpen, setIsPotWithdrawOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
 
@@ -50,6 +54,16 @@ export default function PotsPage() {
             setPotToEdit(pot)
             setIsPotDeleteOpen(true)
         }
+    }
+
+    function handleOpenAddMoney(pot) {
+        setPotToEdit(pot)
+        setIsPotAddMoneyOpen(true)
+    }
+
+    function handleOpenWithdraw(pot) {
+        setPotToEdit(pot)
+        setIsPotWithdrawOpen(true)
     }
 
     if (status === 'loading' || isLoading) {
@@ -97,7 +111,27 @@ export default function PotsPage() {
                     }}
                 />
             )}
-            
+
+            {/* Add money modal */}
+            {isPotAddMoneyOpen && (
+                <PotAddMoney
+                    setIsPotAddMoneyOpen={setIsPotAddMoneyOpen}
+                    setPots={setPots}
+                    session={session}
+                    pot={potToEdit}
+                />
+            )}
+
+            {/* Withdraw money modal */}
+            {isPotWithdrawOpen && (
+                <PotWithdrawMoney
+                    setIsPotWithdrawOpen={setIsPotWithdrawOpen}
+                    setPots={setPots}
+                    session={session}
+                    pot={potToEdit}
+                />
+            )}
+
             {/* Pots list */}
             <section>
                 {pots.map((pot) => (
@@ -116,8 +150,8 @@ export default function PotsPage() {
                         <p>Total Saved ${pot.total}</p>
                         <p>Target of ${pot.target}</p>
 
-                        <button>+ Add Money</button>
-                        <button>Withdraw</button>
+                        <button onClick={() => handleOpenAddMoney(pot)}>+ Add Money</button>
+                        <button onClick={() => handleOpenWithdraw(pot)}>Withdraw</button>
                     </div>
                 ))}
             </section>

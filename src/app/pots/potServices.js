@@ -1,3 +1,5 @@
+import { defaultPots } from '@/app/defaultData'
+
 export async function fetchPots(session) {
     if (session) {
         const response = await fetch('/api/pots')
@@ -7,6 +9,10 @@ export async function fetchPots(session) {
         return response.json()
     } else {
         const storedPots = JSON.parse(localStorage.getItem('defaultPots'))
+        if (!storedPots) {
+            localStorage.setItem('defaultPots', JSON.stringify(defaultPots))
+            return { pots: defaultPots }
+        }
         return { pots: storedPots || defaultPots }
     }
 }
@@ -44,7 +50,12 @@ export async function updatePot(session, potId, formData) {
         return response.json()
     } else {
         const storedPots = JSON.parse(localStorage.getItem('defaultPots'))
-        const updatedPots = storedPots.map(pot => pot._id === potId ? formData : pot)
+        const updatedPots = storedPots.map(pot => {
+            if (pot._id === potId) {
+                return { ...pot, ...formData }
+            }
+            return pot
+        })
         localStorage.setItem('defaultPots', JSON.stringify(updatedPots))
         return { pots: updatedPots }
     }

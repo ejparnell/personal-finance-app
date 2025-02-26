@@ -14,6 +14,7 @@ export default function PotCreate({
         name: '',
         target: 0,
         theme: '',
+        total: 0,
     })
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
