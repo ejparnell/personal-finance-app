@@ -13,6 +13,7 @@ export default function PotConfirmDelete({
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState(null)
 
+    // Handle deleting a pot
     async function handlePotDelete(potId) {
         setIsSubmitting(true)
         setError(null)
@@ -30,7 +31,7 @@ export default function PotConfirmDelete({
     }
 
     return (
-        <Modal onClose={() => (false)}>
+        <Modal onClose={() => setIsPotDeleteOpen(false)}>
             <div>
                 <h2>Delete {pot.name}? </h2>
                 <p>

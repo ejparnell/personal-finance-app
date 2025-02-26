@@ -10,10 +10,16 @@ export default function BudgetConfirmDelete({
     budget,
     onUpdateSuccess,
 }) {
-
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState(null)
 
+    function handleCloseModal() {
+        setIsBudgetDeleteOpen(false)
+        setError(null)
+        onUpdateSuccess()
+    }
+
+    // Handle budget deletion
     async function handleBudgetDelete(budgetId) {
         setIsSubmitting(true)
         setError(null)
@@ -31,7 +37,7 @@ export default function BudgetConfirmDelete({
     }
 
     return (
-        <Modal onClose={() => (false)}>
+        <Modal onClose={() => handleCloseModal()}>
             <div>
                 <h2>Delete {budget.name}? </h2>
                 <p>

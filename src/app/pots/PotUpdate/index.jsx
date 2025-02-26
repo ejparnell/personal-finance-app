@@ -30,12 +30,14 @@ export default function PotUpdate({
         }))
     }
 
+    // Handle modal close
     function handleCloseModal() {
         setIsPotEditOpen(false)
         setError(null)
         onUpdateSuccess()
     }
 
+    // Handle form submission for updating a pot
     async function handleSubmit(event) {
         event.preventDefault()
         setIsSubmitting(true)
@@ -54,59 +56,57 @@ export default function PotUpdate({
     }
 
     return (
-        <div>
-            <Modal onClose={handleCloseModal}>
+        <Modal onClose={handleCloseModal}>
 
-                <h2>Edit Pot</h2>
-                <p>If your saving targets change, feel free to update your pots.</p>
+            <h2>Edit Pot</h2>
+            <p>If your saving targets change, feel free to update your pots.</p>
 
-                <form className={styles.form} onSubmit={handleSubmit}>
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="name">Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="target">Target</label>
-                        <input
-                            type="number"
-                            id="target"
-                            name="target"
-                            value={formData.target}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="theme">Theme</label>
-                        <select
-                            id="theme"
-                            name="theme"
-                            value={formData.theme}
-                            onChange={handleChange}
-                            required
-                        >
-                            {defaultItemThemes.map((theme) => (
-                                <option key={theme.name} value={theme.name}>
-                                    {theme.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className={styles.inputGroup}>
-                        <button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? 'Saving Changes...' : 'Save Changes'}
-                        </button>
-                    </div>
-                    {error && <p>{error}</p>}
-                </form>
-            </Modal>
-        </div>
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <div className={styles.inputGroup}>
+                    <label htmlFor="name">Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label htmlFor="target">Target</label>
+                    <input
+                        type="number"
+                        id="target"
+                        name="target"
+                        value={formData.target}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label htmlFor="theme">Theme</label>
+                    <select
+                        id="theme"
+                        name="theme"
+                        value={formData.theme}
+                        onChange={handleChange}
+                        required
+                    >
+                        {defaultItemThemes.map((theme) => (
+                            <option key={theme.name} value={theme.name}>
+                                {theme.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className={styles.inputGroup}>
+                    <button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? 'Saving Changes...' : 'Save Changes'}
+                    </button>
+                </div>
+                {error && <p>{error}</p>}
+            </form>
+        </Modal>
     )
 }

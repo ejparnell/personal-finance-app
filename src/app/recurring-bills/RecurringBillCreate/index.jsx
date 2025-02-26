@@ -22,12 +22,14 @@ export default function RecurringBillCreate({
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
 
+    // handle modal close
     function handleCloseModal() {
         setIsRecurringBillCreateOpen(false)
         setFormData({ name: '', category: '', date: '', amount: 0, recurring: true })
         setError(null)
     }
 
+    // Handle form input changes
     function handleChange(event) {
         const { name, value } = event.target
         setFormData((prev) => ({
@@ -36,6 +38,7 @@ export default function RecurringBillCreate({
         }))
     }
 
+    // Handle form submission
     async function handleSubmit(event) {
         event.preventDefault()
         setIsLoading(true)
@@ -55,66 +58,64 @@ export default function RecurringBillCreate({
     }
 
     return (
-        <div>
-            <Modal onClose={handleCloseModal}>
-                <h2>Add New Recurring Bill</h2>
-                <p>Enter the details of your recurring bill.</p>
+        <Modal onClose={handleCloseModal}>
+            <h2>Add New Recurring Bill</h2>
+            <p>Enter the details of your recurring bill.</p>
 
-                <form className={styles.form} onSubmit={handleSubmit}>
-                    <label htmlFor="name">Name</label>
-                    <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <label htmlFor="name">Name</label>
+                <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                />
 
-                    <label htmlFor="category">Category</label>
-                    <select
-                        id="category"
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                        required
-                    >
-                        <option value="">Select a category</option>
-                        {defaultCategories.map((category) => (
-                            <option key={category} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </select>
+                <label htmlFor="category">Category</label>
+                <select
+                    id="category"
+                    name="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="">Select a category</option>
+                    {defaultCategories.map((category) => (
+                        <option key={category} value={category}>
+                            {category}
+                        </option>
+                    ))}
+                </select>
 
-                    <label htmlFor="date">Date</label>
-                    <input
-                        id="date"
-                        name="date"
-                        type="date"
-                        value={formData.date}
-                        onChange={handleChange}
-                        required
-                    />
+                <label htmlFor="date">Date</label>
+                <input
+                    id="date"
+                    name="date"
+                    type="date"
+                    value={formData.date}
+                    onChange={handleChange}
+                    required
+                />
 
-                    <label htmlFor="amount">Amount</label>
-                    <input
-                        id="amount"
-                        name="amount"
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        value={formData.amount}
-                        onChange={handleChange}
-                        required
-                    />
+                <label htmlFor="amount">Amount</label>
+                <input
+                    id="amount"
+                    name="amount"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={formData.amount}
+                    onChange={handleChange}
+                    required
+                />
 
-                    <button type="submit" disabled={isLoading}>
-                        {isLoading ? 'Loading...' : 'Add Recurring Bill'}
-                    </button>
-                    {error && <p className={styles.error}>{error}</p>}
-                </form>
-            </Modal>
-        </div>
+                <button type="submit" disabled={isLoading}>
+                    {isLoading ? 'Loading...' : 'Add Recurring Bill'}
+                </button>
+                {error && <p className={styles.error}>{error}</p>}
+            </form>
+        </Modal>
     )
 }

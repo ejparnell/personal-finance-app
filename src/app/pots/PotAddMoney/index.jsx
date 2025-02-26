@@ -15,6 +15,7 @@ export default function PotAddMoney({
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState(null)
 
+    // Handle adding money to a pot
     async function handleAddMoney(potId) {
         formData.total = Number(formData.total) + Number(pot.total)
         setIsSubmitting(true)
@@ -32,6 +33,7 @@ export default function PotAddMoney({
         }
     }
 
+    // Calculate the percentage of the pot target
     function calculatePercentage() {
         const total = Number(pot.total) + Number(formData.total)
         return (Number(total) / Number(pot.target)) * 100

@@ -93,21 +93,21 @@ export default function Home() {
     // Calculate due soon
     function calculateDueSoon(recurringBillsArr) {
         if (!recurringBillsArr || recurringBillsArr.length === 0) return 0
+        const dueSoonDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
         const calculated = recurringBillsArr.reduce((total, bill) => {
-            if (new Date(bill.date) < new Date() + 7) {
-                total += bill.amount
-            }
-            return total
+          if (new Date(bill.date) < dueSoonDate) {
+            total += bill.amount
+          }
+          return total
         }, 0)
-
         return Math.abs(calculated)
-    }
+      }
 
     const topFiveTransactions =
         transactions && transactions.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5)
 
     return (
-        <>
+        <main>
             {/* Account Overview */}
             <h1>Overview</h1>
             <section>
@@ -210,6 +210,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-        </>
+        </main>
     )
 }

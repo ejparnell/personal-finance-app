@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 
 import { defaultCategories, defaultItemThemes } from '@/app/defaultData'
@@ -20,12 +18,14 @@ export default function BudgetCreate({
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
 
+    // Handle modal close
     function handleCloseModal() {
         setIsBudgetCreateOpen(false)
         setFormData({ category: '', maximum: 0, theme: '' })
         setError(null)
     }
 
+    // Handle form input changes
     function handleChange(event) {
         const { name, value } = event.target
         setFormData((prev) => ({
@@ -34,6 +34,7 @@ export default function BudgetCreate({
         }))
     }
 
+    // Handle form submission
     async function handleSubmit(event) {
         event.preventDefault()
         setIsLoading(true)

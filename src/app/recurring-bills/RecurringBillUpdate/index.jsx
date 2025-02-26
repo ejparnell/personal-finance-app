@@ -57,70 +57,68 @@ export default function RecurringBillUpdate({
     }
 
     return (
-        <div>
-            <Modal onClose={handleCloseModal}>
-                <form className={styles.form} onSubmit={handleSubmit}>
-                    <h2 className={styles.title}>Edit Recurring Bill</h2>
-                    <label className={styles.label} htmlFor="name">
-                        Name
-                        <input
-                            className={styles.input}
-                            type="text"
-                            name="name"
-                            id="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <label className={styles.label} htmlFor="category">
-                        Category
-                        <select
-                            className={styles.input}
-                            name="category"
-                            id="category"
-                            value={formData.category}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="">Select a category</option>
-                            {defaultCategories.map((category) => (
-                                <option key={category} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-                    <label className={styles.label} htmlFor="amount">
-                        Amount
-                        <input
-                            className={styles.input}
-                            type="number"
-                            name="amount"
-                            id="amount"
-                            value={formData.amount}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <label className={styles.label} htmlFor="date">
-                        Date
-                        <input
-                            className={styles.input}
-                            type="date"
-                            name="date"
-                            id="date"
-                            value={formData.date}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <button className={styles.button} type="submit" disabled={isLoading}>
-                        {isLoading ? 'Loading...' : 'Update Recurring Bill'}
-                    </button>
-                    {error && <p className={styles.error}>{error}</p>}
-                </form>
-            </Modal>
-        </div>
+        <Modal onClose={handleCloseModal}>
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <h2 className={styles.title}>Edit Recurring Bill</h2>
+                <label className={styles.label} htmlFor="name">
+                    Name
+                    <input
+                        className={styles.input}
+                        type="text"
+                        name="name"
+                        id="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label className={styles.label} htmlFor="category">
+                    Category
+                    <select
+                        className={styles.input}
+                        name="category"
+                        id="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Select a category</option>
+                        {defaultCategories.map((category) => (
+                            <option key={category} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label className={styles.label} htmlFor="amount">
+                    Amount
+                    <input
+                        className={styles.input}
+                        type="number"
+                        name="amount"
+                        id="amount"
+                        value={formData.amount}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label className={styles.label} htmlFor="date">
+                    Date
+                    <input
+                        className={styles.input}
+                        type="date"
+                        name="date"
+                        id="date"
+                        value={formData.date}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <button className={styles.button} type="submit" disabled={isLoading}>
+                    {isLoading ? 'Loading...' : 'Update Recurring Bill'}
+                </button>
+                {error && <p className={styles.error}>{error}</p>}
+            </form>
+        </Modal>
     )
 }

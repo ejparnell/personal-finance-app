@@ -20,6 +20,7 @@ export async function fetchAllData(session) {
         const storedRecurringBills = JSON.parse(localStorage.getItem('defaultRecurringBills'))
         const defaultRecurringBills = defaultTransactions.filter(transaction => transaction.recurring)
         
+        // Setting default data in localStorage if it doesn't exist
         if (!storedAccount) {
             localStorage.setItem('defaultAccount', JSON.stringify(defaultAccount))
         }
@@ -35,8 +36,6 @@ export async function fetchAllData(session) {
         if (!storedRecurringBills) {
             localStorage.setItem('defaultRecurringBills', JSON.stringify(defaultRecurringBills))
         }
-
-         
 
         return {
             account: storedAccount || defaultAccount,

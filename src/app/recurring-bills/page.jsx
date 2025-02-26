@@ -73,6 +73,7 @@ export default function RecurringBillsPage() {
         }
     }
 
+    // Update recurring bills - For the pagination and filtering
     function handleRecurringBillsUpdate(updateRecurringBills) {
         setFilteredRecurringBills(updateRecurringBills)
         setPage(1)
@@ -132,11 +133,13 @@ export default function RecurringBillsPage() {
         return { count, total: Math.abs(calculated) }
     }
 
+    // Open Recurring Bill Update Modal and set the bill to update
     function openRecurringBillUpdate(recurringBill) {
         setRecurringBillToUpdate(recurringBill)
         setIsRecurringBillUpdateOpen(true)
     }
 
+    // Open Recurring Bill Delete Modal and set the bill to delete
     function openRecurringBillDelete(recurringBill) {
         setRecurringBillToUpdate(recurringBill)
         setIsRecurringBillDeleteOpen(true)
@@ -147,7 +150,7 @@ export default function RecurringBillsPage() {
     }
 
     return (
-        <>
+        <main>
             <h1>Recurring Bills</h1>
             <button onClick={() => setIsRecurringBillCreateOpen(true)}>
                 + Add New Recurring Bill
@@ -220,6 +223,6 @@ export default function RecurringBillsPage() {
                     onPageChange={handlePageChange}
                 />
             )}
-        </>
+        </main>
     )
 }

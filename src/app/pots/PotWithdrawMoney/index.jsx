@@ -15,6 +15,7 @@ export default function PotWithdrawMoney({
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState(null)
 
+    // Handle withdrawing money from a pot
     async function handleWithdrawMoney(potId) {
         formData.total = Number(pot.total) - Number(formData.total)
         setIsSubmitting(true)
@@ -32,6 +33,7 @@ export default function PotWithdrawMoney({
         }
     }
 
+    // Calculate the percentage of the pot target
     function calculatePercentage() {
         const total = Number(pot.total) - Number(formData.total)
         return (Number(total) / Number(pot.target)) * 100
