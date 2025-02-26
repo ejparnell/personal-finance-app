@@ -7,7 +7,6 @@ const RecurringBillSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        required: true
     },
     name: {
         type: String,

@@ -7,6 +7,8 @@ import { fetchRecurringBills } from './recurringBillServices'
 import { defaultCategories } from '@/app/defaultData'
 import RecurringBillFilters from './RecurringBillFilter'
 import RecurringBillList from './RecurringBillList'
+import RecurringBillCreate from './RecurringBillCreate'
+import Pagination from './Pagination'
 
 export default function RecurringBillsPage() {
     const PAGE_SIZE = 10
@@ -135,6 +137,23 @@ export default function RecurringBillsPage() {
     return (
         <>
             <h1>Recurring Bills</h1>
+            <button onClick={() => setIsRecurringBillCreateOpen(true)}>
+                + Add New Recurring Bill
+            </button>
+
+            {/* Recurring Bill Create Modal */}
+            {isRecurringBillCreateOpen && (
+                <RecurringBillCreate
+                    setIsRecurringBillCreateOpen={setIsRecurringBillCreateOpen}
+                    setAllRecurringBills={setAllRecurringBills}
+                    setFilteredRecurringBills={setFilteredRecurringBills}
+                    session={session}
+                    categories={defaultCategories}
+                    handleRecurringBillsUpdate={handleRecurringBillsUpdate}
+                />
+            )}
+
+            {/* Recurring Bill Update Modal */}
 
             {/* Total Bills Overview */}
             <section>
@@ -159,11 +178,20 @@ export default function RecurringBillsPage() {
             />
 
             {/* Recurring Bills List */}
-            {allRecurringBills.length < 0 ? <RecurringBillList
+            {allRecurringBills.length > 0 ? <RecurringBillList
                 recurringBills={currentRecurringBills}
                 onRecurringBillUpdate={setRecurringBillToUpdate}
                 onRecurringBillDelete={setIsRecurringBillDeleteOpen}
             /> : <div>No recurring bills.</div>}
+
+            {/* Pagination controls */}
+            {totalPages > 1 && (
+                <Pagination
+                    currentPage={page}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
+            )}
         </>
     )
 }
