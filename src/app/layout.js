@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
         <html lang='en'>
             <body className={publicSans.className}>
                 <Providers>
-                    {children}
+                    <main className="main-content">{children}</main>
                     <Nav />
                 </Providers>
             </body>

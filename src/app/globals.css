@@ -59,3 +59,10 @@
     /* Colors */
     --text-color-primary: var(--grey-900);
 }
+
+@media (min-width: 1024px) {
+    .main-content {
+        margin-left: 300px;
+        padding: 20px;
+    }
+}
