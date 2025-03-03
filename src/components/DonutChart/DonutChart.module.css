@@ -1,0 +1,30 @@
+.chart__container {
+    position: relative;
+    width: 303px;
+    height: 240px;
+    overflow: hidden;
+}
+
+.chart__details {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart__total {
+    font-size: var(--text-preset-2-size);
+    line-height: var(--text-preset-2-line-height);
+    font-weight: var(--text-font-bold);
+    color: var(--grey-900);
+}
+
+.chart__limit {
+    font-size: var(--text-preset-5-size);
+    line-height: var(--text-preset-5-line-height);
+    color: var(--grey-500);
+}

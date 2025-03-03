@@ -60,6 +60,11 @@
     --text-color-primary: var(--grey-900);
 }
 
+.main-content {
+    padding: 20px;
+    background-color: var(--beige-100);
+}
+
 @media (min-width: 1024px) {
     .main-content {
         margin-left: 300px;

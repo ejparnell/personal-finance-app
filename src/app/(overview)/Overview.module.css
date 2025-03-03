@@ -1,0 +1,264 @@
+/* Account Overview Styles */
+.overview__title {
+    font-size: var(--text-preset-1-size);
+    line-height: var(--text-preset-1-line-height);
+    font-weight: var(--text-font-bold);
+    color: var(--grey-900);
+    margin-bottom: 20px;
+}
+
+.overview__account-item {
+    width: 343px;
+    height: 111px;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 10px 0;
+}
+
+.overview__account-item--white {
+    background-color: var(--white);
+}
+
+.overview__account-item--grey {
+    background-color: var(--grey-900);
+}
+
+.overview__account-title {
+    font-size: var(--text-preset-4-size);
+    line-height: var(--text-preset-4-line-height);
+    margin-bottom: 13px;
+}
+
+.overview__account-title--white {
+    color: var(--white);
+}
+
+.overview__account-title--grey {
+    color: var(--grey-500)
+}
+
+.overview__account-amount {
+    font-size: var(--text-preset-1-size);
+    line-height: var(--text-preset-1-line-height);
+    font-weight: var(--text-font-bold);
+}
+
+.overview__account-amount--white {
+    color: var(--white);
+}
+
+.overview__account-amount--grey {
+    color: var(--grey-900);
+}
+
+/* Overview Card Styles */
+.overview__card {
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.overview__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 303px;
+    height: 24px;
+    margin-bottom: 10px;
+}
+
+.overview__card-title {
+    font-size: var(--text-preset-2-size);
+    line-height: var(--text-preset-2-line-height);
+    font-weight: var(--text-font-bold);
+    color: var(--grey-900);
+}
+
+.overview__card-link {
+    font-size: var(--text-preset-4-size);
+    line-height: var(--text-preset-4-line-height);
+    text-decoration: none;
+    color: var(--grey-500);
+}
+
+.overview__card-arrow {
+    margin-left: 10px;
+}
+
+.overview__card-text {
+    font-size: var(--text-preset-5-size);
+    line-height: var(--text-preset-5-line-height);
+    color: var(--grey-500);
+    margin-left: 20px;
+}
+
+.overview__card-list {
+    width: 303px;
+    height: 102px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.overview__card-item {
+    width: 143px;
+    height: 43px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.overview__card-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+}
+
+.overview__card-amount {
+    font-size: var(--text-preset-4-size);
+    line-height: var(--text-preset-4-line-height);
+    font-weight: var(--text-font-bold);
+    color: var(--grey-900);
+    margin-left: 20px;
+}
+
+/* Pots Styles */
+.overview__pots {
+    width: 343px;
+    height: 324px;
+    justify-content: space-between;
+}
+
+.overview__pots-saved {
+    width: 303px;
+    height: 110px;
+    background-color: var(--beige-100);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.overview__pots-image {
+    margin: 0 15px;
+}
+
+.overview__pots-text {
+    font-size: var(--text-preset-4-size);
+    line-height: var(--text-preset-4-line-height);
+    color: var(--grey-500);
+}
+
+.overview__pots-amount {
+    font-size: var(--text-preset-1-size);
+    line-height: var(--text-preset-1-line-height);
+    font-weight: var(--text-font-bold);
+    color: var(--grey-900);
+}
+
+/* Transactions Styles */
+.overview__transactions {
+    width: 343px;
+    max-height: 503px;
+    justify-content: space-around;
+}
+
+.overview__transactions-item {
+    width: 303px;
+    height: 47px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.overview__transactions-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overview__transactions-image {
+    border-radius: 50%;
+}
+
+.overview__transactions-name {
+    font-size: var(--text-preset-4-size);
+    line-height: var(--text-preset-4-line-height);
+    font-weight: var(--text-font-bold);
+    color: var(--grey-900);
+    margin-left: 10px;
+}
+
+.overview__transactions-breakdown {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.overview__transactions-amount {
+    font-size: var(--text-preset-4-size);
+    line-height: var(--text-preset-4-line-height);
+    font-weight: var(--text-font-bold);
+    color: var(--green);
+}
+
+.overview__transactions-date {
+    font-size: var(--text-preset-5-size);
+    line-height: var(--text-preset-5-line-height);
+    color: var(--grey-500);
+}
+
+.overview__transactions-hr {
+    width: 303px;
+    border: 1px solid var(--grey-100);
+    margin: 20px 0;
+}
+
+/* Budgets Styles */
+.overview__budgets {
+    width: 343px;
+    height: 466px;
+    justify-content: space-between;
+}
+
+/* Recurring Bills Styles */
+.overview__bills {
+    width: 343px;
+    height: 311px;
+    justify-content: space-around;
+}
+
+.overview__bills-item {
+    width: 303px;
+    height: 61px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--beige-100);
+    border-radius: 12px;
+    margin: 10px 0;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.overview__bills-text {
+    font-size: var(--text-preset-4-size);
+    line-height: var(--text-preset-4-line-height);
+    color: var(--grey-500);
+}
+
+.overview__bills-amount {
+    font-size: var(--text-preset-4-size);
+    line-height: var(--text-preset-4-line-height);
+    font-weight: var(--text-font-bold);
+    color: var(--grey-900);
+}
