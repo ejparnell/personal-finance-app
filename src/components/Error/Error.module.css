@@ -1,0 +1,23 @@
+.error__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.error__header {
+    font-size: var(--text-preset-2-size);
+    line-height: var(--text-preset-2-line-height);
+    font-weight: var(--text-font-bold);
+    color: var(--grey-900);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error__text {
+    font-size: var(--text-preset-3-size);
+    line-height: var(--text-preset-3-line-height);
+    font-weight: var(--text-font-bold);
+    color: var(--grey-900);
+}

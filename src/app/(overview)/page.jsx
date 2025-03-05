@@ -1,5 +1,5 @@
 'use client'
-
+// TODO: Add logging
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -10,6 +10,8 @@ import currencyFormatter from '@/utils/currencyFormatter'
 import formatDate from '@/utils/formatDate'
 import formatTransactionAmount from '@/utils/formatTransactionAmount'
 import DonutChart from '@/components/DonutChart'
+import LoadingPage from '@/components/LoadingPage'
+import ErrorPage from '@/components/Error'
 import styles from './Overview.module.css'
 
 export default function OverviewPage() {
@@ -21,6 +23,7 @@ export default function OverviewPage() {
     const [transactions, setTransactions] = useState([])
     const [recurringBills, setRecurringBills] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    // TODO: Add error handling
     const [error, setError] = useState(null)
 
     // Fetch all data initially
@@ -48,10 +51,17 @@ export default function OverviewPage() {
         getAllData()
     }, [session, status])
 
-    if (isLoading) {
-        return <div>Loading...</div>
+    // TODO: Make a loading component
+    if (status === 'loading' && isLoading) {
+        return <LoadingPage loading={isLoading} />
     }
 
+    // TODO: Make an error component
+    if (error) {
+        return <ErrorPage error={error} />
+    }
+
+    // TODO: Move these functions to a utils file
     // Calculate total pot saved
     function calculateTotalPotSaved(potArr) {
         if (!potArr || potArr.length === 0) return 0
