@@ -338,3 +338,67 @@
         width: 624px;
     }
 }
+
+@media screen and (min-width: 1440px) {
+    .overview__account-item {
+        width: 337px;
+        height: 119px;
+    }
+
+    .overview__deatials {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+    }
+
+    .overview__deatial {
+        /* Half the screen width minus the sidebar width and padding */
+        width: calc(50vw - 150px - 40px);
+    }
+
+    .overview__pots {
+        margin-right: 20px;
+    }
+
+    .overview__pots-saved {
+        width: 220px;
+    }
+
+    .overview__card-header {
+        min-width: 470px;
+    }
+
+    .overview__transactions {
+        margin-right: 20px;
+    }
+
+    .overview__card-list {
+        min-width: 200px;
+    }
+
+    .overview__card-item {
+        width: 100px;
+    }
+
+    .overview__transactions-items {
+        min-width: 450px;
+    }
+
+    .overview__budgets-list {
+        margin-left: 40px;
+    }
+
+    .overview__bills-items {
+        width: 450px;
+    }
+
+    .overview__bills-item {
+        width: 100%;
+    }
+
+    .overview__bills {
+        height: 355px;
+    }
+}

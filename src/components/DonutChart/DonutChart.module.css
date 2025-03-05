@@ -34,3 +34,9 @@
         width: 507px;
     }
 }
+
+@media screen and (min-width: 1024px) {
+    .chart__container {
+        width: 247px;
+    }
+}
