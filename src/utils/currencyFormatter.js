@@ -7,13 +7,17 @@ const defaultOptions = {
 }
 
 export default function currencyFormatter(value, options) {
-    if (typeof value !== 'number') value = 0.0
-    options = { ...defaultOptions, ...options }
-    value = value.toFixed(options.significantDigits)
+    if (typeof value !== 'number') value = 0.0;
+    options = { ...defaultOptions, ...options };
 
-    const [currency, decimal] = value.split('.')
-    return `${options.symbol} ${currency.replace(
-        /\B(?=(\d{3})+(?!\d))/g,
-        options.thousandsSeparator
-    )}${options.decimalSeparator}${decimal}`
+    const formattedValue = value.toFixed(options.significantDigits);
+    const parts = formattedValue.split('.');
+    const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, options.thousandsSeparator);
+
+    if (options.significantDigits === 0) {
+        return `${options.symbol} ${integerPart}`;
+    }
+    
+    const decimalPart = parts[1];
+    return `${options.symbol} ${integerPart}${options.decimalSeparator}${decimalPart}`;
 }

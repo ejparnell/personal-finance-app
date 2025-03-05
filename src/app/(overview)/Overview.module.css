@@ -345,7 +345,7 @@
         height: 119px;
     }
 
-    .overview__deatials {
+    .overview__details {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: 1fr;
@@ -353,7 +353,7 @@
         grid-row-gap: 0px;
     }
 
-    .overview__deatial {
+    .overview__detail {
         /* Half the screen width minus the sidebar width and padding */
         width: calc(50vw - 150px - 40px);
     }

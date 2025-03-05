@@ -1,5 +1,5 @@
 'use client'
-// TODO: Add logging
+
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -9,6 +9,14 @@ import { fetchAllData } from './pageServices'
 import currencyFormatter from '@/utils/currencyFormatter'
 import formatDate from '@/utils/formatDate'
 import formatTransactionAmount from '@/utils/formatTransactionAmount'
+import {
+    calculateTotalPotSaved,
+    calculateTotalBudgetSpent,
+    calculateTotalBudget,
+    calculatePaidBills,
+    calculateTotalUpcoming,
+    calculateDueSoon,
+} from '@/utils/totalsFunctions'
 import DonutChart from '@/components/DonutChart'
 import LoadingPage from '@/components/LoadingPage'
 import ErrorPage from '@/components/Error'
@@ -23,7 +31,6 @@ export default function OverviewPage() {
     const [transactions, setTransactions] = useState([])
     const [recurringBills, setRecurringBills] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    // TODO: Add error handling
     const [error, setError] = useState(null)
 
     // Fetch all data initially
@@ -51,72 +58,12 @@ export default function OverviewPage() {
         getAllData()
     }, [session, status])
 
-    // TODO: Make a loading component
     if (status === 'loading' && isLoading) {
         return <LoadingPage loading={isLoading} />
     }
 
-    // TODO: Make an error component
     if (error) {
         return <ErrorPage error={error} />
-    }
-
-    // TODO: Move these functions to a utils file
-    // Calculate total pot saved
-    function calculateTotalPotSaved(potArr) {
-        if (!potArr || potArr.length === 0) return 0
-        return potArr.reduce((total, pot) => total + pot.total, 0)
-    }
-
-    // Calculate total budget spent
-    function calculateTotalBudgetSpent(transactionsArr) {
-        if (!transactionsArr || transactionsArr.length === 0) return 0
-        return transactionsArr.reduce((total, transaction) => total + transaction.amount, 0)
-    }
-
-    // Calculate total budget
-    function calculateTotalBudget(budgetArr) {
-        if (!budgetArr || budgetArr.length === 0) return 0
-        return budgetArr.reduce((total, budget) => total + budget.maximum, 0)
-    }
-
-    // Calculate paid bills
-    function calculatePaidBills(recurringBillsArr) {
-        if (!recurringBillsArr || recurringBillsArr.length === 0) return 0
-        const calculated = recurringBillsArr.reduce((total, bill) => {
-            if (new Date(bill.date) < new Date()) {
-                total += bill.amount
-            }
-            return total
-        }, 0)
-
-        return Math.abs(calculated)
-    }
-
-    // Calculate total upcoming
-    function calculateTotalUpcoming(recurringBillsArr) {
-        if (!recurringBillsArr || recurringBillsArr.length === 0) return 0
-        const calculated = recurringBillsArr.reduce((total, bill) => {
-            if (new Date(bill.date) > new Date()) {
-                total += bill.amount
-            }
-            return total
-        }, 0)
-
-        return Math.abs(calculated)
-    }
-
-    // Calculate due soon
-    function calculateDueSoon(recurringBillsArr) {
-        if (!recurringBillsArr || recurringBillsArr.length === 0) return 0
-        const dueSoonDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-        const calculated = recurringBillsArr.reduce((total, bill) => {
-            if (new Date(bill.date) < dueSoonDate) {
-                total += bill.amount
-            }
-            return total
-        }, 0)
-        return Math.abs(calculated)
     }
 
     const topFiveTransactions =
@@ -141,8 +88,8 @@ export default function OverviewPage() {
                 </div>
             </section>
 
-            <div className={styles.overview__deatials}>
-                <div className={styles.overview__deatial}>
+            <div className={styles.overview__details}>
+                <div className={styles.overview__detail}>
                     {/* Pots Overview */}
                     <section className={`${styles.overview__card} ${styles.overview__pots}`}>
                         <div className={`${styles['overview__card-header']} ${styles['overview__pots-header']}`}>
@@ -158,7 +105,7 @@ export default function OverviewPage() {
                             <Image className={styles['overview__pots-image']} src='/assets/images/icon-pot.svg' alt='Pot' width={40} height={40} />
                             <div>
                                 <p className={styles['overview__pots-text']}>Total Saved</p>
-                                <p className={styles['overview__pots-amount']}>{currencyFormatter(calculateTotalPotSaved(pots))}</p>
+                                <p className={styles['overview__pots-amount']}>{currencyFormatter(calculateTotalPotSaved(pots), { significantDigits: 0 })}</p>
                             </div>
                         </div>
                         <div className={styles['overview__card-list']}>
@@ -167,7 +114,7 @@ export default function OverviewPage() {
                                 <div className={styles['overview__card-item']} key={pot._id}>
                                     <span style={{ backgroundColor: pot.theme }} className={styles['overview__card-indicator']}></span>
                                     <p className={styles['overview__card-text']}>{pot.name}</p>
-                                    <p className={styles['overview__card-amount']}>{currencyFormatter(pot.total)}</p>
+                                    <p className={styles['overview__card-amount']}>{currencyFormatter(pot.total,  { significantDigits: 0 })}</p>
                                 </div>
                             )) : <p className={styles['overview__card-text']}>No pots</p>}
                         </div>
@@ -212,7 +159,7 @@ export default function OverviewPage() {
                         </div>
                     </section>
                 </div>
-                <div className={styles.overview__deatial}>
+                <div className={styles.overview__detail}>
                     {/* Budgets Overview */}
                     <section className={`${styles.overview__card} ${styles.overview__budgets}`}>
                         <div className={styles['overview__card-header']}>
