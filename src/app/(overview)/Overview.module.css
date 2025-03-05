@@ -66,7 +66,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 303px;
+    min-width: 303px;
     height: 24px;
     margin-bottom: 10px;
 }
@@ -97,9 +97,10 @@
 }
 
 .overview__card-list {
-    width: 303px;
+    min-width: 303px;
     height: 102px;
     display: grid;
+    margin-top: 20px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 0px;
@@ -133,7 +134,7 @@
 
 /* Pots Styles */
 .overview__pots {
-    width: 343px;
+    min-width: 343px;
     height: 324px;
     justify-content: space-between;
 }
@@ -166,13 +167,13 @@
 
 /* Transactions Styles */
 .overview__transactions {
-    width: 343px;
+    min-width: 343px;
     max-height: 503px;
     justify-content: space-around;
 }
 
 .overview__transactions-item {
-    width: 303px;
+    min-width: 303px;
     height: 47px;
     display: flex;
     align-items: center;
@@ -217,21 +218,32 @@
 }
 
 .overview__transactions-hr {
-    width: 303px;
+    min-width: 303px;
     border: 1px solid var(--grey-100);
     margin: 20px 0;
 }
 
 /* Budgets Styles */
 .overview__budgets {
-    width: 343px;
+    min-width: 343px;
     height: 466px;
     justify-content: space-between;
 }
 
+.overview__budgets-list {
+    min-width: 303px;
+    height: 102px;
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
 /* Recurring Bills Styles */
 .overview__bills {
-    width: 343px;
+    min-width: 343px;
     height: 311px;
     justify-content: space-around;
 }
@@ -261,4 +273,68 @@
     line-height: var(--text-preset-4-line-height);
     font-weight: var(--text-font-bold);
     color: var(--grey-900);
+}
+
+@media screen and (min-width: 768px) {
+    .overview__account {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .overview__account-item {
+        width: 213px;
+        height: 119px;
+    }
+
+    .overview__pots {
+        height: 218px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        padding-top: 0px;
+    }
+
+    .overview__pots-header {
+        grid-area: 1 / 1 / 2 / 3;
+    }
+
+    .overview__card-header {
+        min-width: 624px;
+    }
+
+    .overview__transactions-items {
+        min-width: 624px;
+    }
+
+    .overview__transactions-header {
+        margin-bottom: 20px;
+    }
+
+    .overview__budgets {
+        height: 350px;
+    }
+
+    .overview__budgets-chart {
+       display: flex;
+       justify-content: space-around;
+       align-items: center;
+    }
+
+    .overview__budgets-list {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        flex-direction: column;
+        min-width: auto;
+        height: auto;
+        margin-top: 0;
+        height: 250px;
+    }
+
+    .overview__bills-item {
+        width: 624px;
+    }
 }

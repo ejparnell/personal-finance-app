@@ -28,3 +28,9 @@
     line-height: var(--text-preset-5-line-height);
     color: var(--grey-500);
 }
+
+@media screen and (min-width: 768px) {
+    .chart__container {
+        width: 507px;
+    }
+}

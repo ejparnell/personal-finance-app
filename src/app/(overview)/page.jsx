@@ -116,7 +116,7 @@ export default function OverviewPage() {
         <>
             {/* Account Overview */}
             <h1 className={styles.overview__title}>Overview</h1>
-            <section>
+            <section className={styles.overview__account}>
                 <div className={`${styles['overview__account-item']} ${styles['overview__account-item--grey']}`}>
                     <p className={`${styles['overview__account-title']} ${styles['overview__account-title--white']}`}>Current Balance</p>
                     <p className={`${styles['overview__account-amount']} ${styles['overview__account-amount--white']}`}>{currencyFormatter(account?.current || 0)}</p>
@@ -133,7 +133,7 @@ export default function OverviewPage() {
 
             {/* Pots Overview */}
             <section className={`${styles.overview__card} ${styles.overview__pots}`}>
-                <div className={styles['overview__card-header']}>
+                <div className={`${styles['overview__card-header']} ${styles['overview__pots-header']}`}>
                     <h2 className={styles['overview__card-title']}>Pots</h2>
                     <Link className={styles['overview__card-link']} href='/pots'>
                         See Details
@@ -163,7 +163,7 @@ export default function OverviewPage() {
 
             {/* Transactions Overview */}
             <section className={`${styles.overview__card} ${styles.overview__transactions}`}>
-                <div className={styles['overview__card-header']}>
+                <div className={`${styles['overview__card-header']} ${styles['overview__transactions-header']}`}>
                     <h2 className={styles['overview__card-title']}>Transactions</h2>
                     <Link className={styles['overview__card-link']} href='/transactions'>
                         View All
@@ -175,7 +175,7 @@ export default function OverviewPage() {
                 <div>
                     {/* Only Showing 5 Transactions - Sorted */}
                     {transactions.length > 0 ? topFiveTransactions.map((transaction, index) => (
-                        <div key={transaction._id}>
+                        <div className={styles['overview__transactions-items']} key={transaction._id}>
                             <div className={styles['overview__transactions-item']}>
                                 <div className={styles['overview__transactions-details']}>
                                     <Image
@@ -212,25 +212,26 @@ export default function OverviewPage() {
                         </span>
                     </Link>
                 </div>
-                <DonutChart
-                    data={budgets}
-                    height={240}
-                    innerRadius={70}
-                    total={calculateTotalBudgetSpent(transactions)}
-                    limit={calculateTotalBudget(budgets)}
-                />
-                <div className={styles['overview__card-list']}>
-                    {/* Only Showing 4 Budgets */}
-                    {budgets.length > 0 ? budgets.slice(0, 4).map((budget) => (
-                        <div className={styles['overview__card-item']} key={budget._id}>
-                            <span style={{ backgroundColor: budget.theme }} className={styles['overview__card-indicator']}></span>
-                            <p className={styles['overview__card-text']}>{budget.category}</p>
-                            <p className={styles['overview__card-amount']}>{currencyFormatter(budget.maximum)}</p>
-                        </div>
-                    )) : <p className={styles['overview__card-text']}>No budgets</p>}
+                <div className={styles['overview__budgets-chart']}>
+                    <DonutChart
+                        data={budgets}
+                        height={240}
+                        innerRadius={70}
+                        total={calculateTotalBudgetSpent(transactions)}
+                        limit={calculateTotalBudget(budgets)}
+                    />
+                    <div className={styles['overview__budgets-list']}>
+                        {/* Only Showing 4 Budgets */}
+                        {budgets.length > 0 ? budgets.slice(0, 4).map((budget) => (
+                            <div className={styles['overview__card-item']} key={budget._id}>
+                                <span style={{ backgroundColor: budget.theme }} className={styles['overview__card-indicator']}></span>
+                                <p className={styles['overview__card-text']}>{budget.category}</p>
+                                <p className={styles['overview__card-amount']}>{currencyFormatter(budget.maximum)}</p>
+                            </div>
+                        )) : <p className={styles['overview__card-text']}>No budgets</p>}
+                    </div>
                 </div>
             </section>
-
 
             {/* Recurring Bills */}
             <section className={`${styles.overview__card} ${styles.overview__bills}`}>
@@ -245,17 +246,17 @@ export default function OverviewPage() {
                 </div>
                 <div>
                     <div className={styles['overview__bills-item']}>
-                    <span style={{ backgroundColor: '#277C78' }} className={styles['overview__card-indicator']}></span>
+                        <span style={{ backgroundColor: '#277C78' }} className={styles['overview__card-indicator']}></span>
                         <p className={styles['overview__bills-text']}>Paid Bills</p>
                         <p className={styles['overview__bills-amount']}>{currencyFormatter(calculatePaidBills(recurringBills))}</p>
                     </div>
                     <div className={styles['overview__bills-item']}>
-                    <span style={{ backgroundColor: '#F2CDAC' }} className={styles['overview__card-indicator']}></span>
+                        <span style={{ backgroundColor: '#F2CDAC' }} className={styles['overview__card-indicator']}></span>
                         <p className={styles['overview__bills-text']}>Total Upcoming</p>
                         <p className={styles['overview__bills-amount']}>{currencyFormatter(calculateTotalUpcoming(recurringBills))}</p>
                     </div>
                     <div className={styles['overview__bills-item']}>
-                    <span style={{ backgroundColor: '#82C9D7' }} className={styles['overview__card-indicator']}></span>
+                        <span style={{ backgroundColor: '#82C9D7' }} className={styles['overview__card-indicator']}></span>
                         <p className={styles['overview__bills-text']}>Due Soon</p>
                         <p className={styles['overview__bills-amount']}>{currencyFormatter(calculateDueSoon(recurringBills))}</p>
                     </div>
