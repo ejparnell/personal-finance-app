@@ -5,15 +5,18 @@ import { useSession } from 'next-auth/react'
 
 import { fetchTransactions, deleteTransaction } from './transactionServices'
 import { defaultCategories } from '@/app/defaultData'
+import useWindowSize from '@/hooks/useWindowSize'
 import TransactionCreate from './TransactionCreate'
 import TransactionUpdate from './TransactionUpdate'
 import TransactionFilters from './TransactionFilters'
 import TransactionList from './TransactionList'
 import Pagination from './Pagination'
+import styles from './Transactions.module.css'
 
 export default function TransactionsPage() {
     const PAGE_SIZE = 10
     const { data: session, status } = useSession()
+    const { width } = useWindowSize()
     const [allTransactions, setAllTransactions] = useState([])
     const [filteredTransactions, setFilteredTransactions] = useState([])
     const [currentTransactions, setCurrentTransactions] = useState([])
@@ -105,10 +108,9 @@ export default function TransactionsPage() {
 
     return (
         <>
-            <h1>Transactions</h1>
-            <button onClick={() => setIsTransactionCreateOpen(true)}>
-                + Add New Transaction
-            </button>
+            <header className={styles.transactions__header}>
+                <h1>Transactions</h1>
+            </header>
 
             {/* Transaction Create Modal */}
             {isTransactionCreateOpen && (
@@ -132,31 +134,31 @@ export default function TransactionsPage() {
                     categories={categories}
                 />
             )}
-
-            {/* Transaction Filters */}
-            <TransactionFilters
-                allTransactions={allTransactions}
-                transactions={filteredTransactions}
-                categories={categories}
-                onTransactionsUpdate={handleTransactionsUpdate}
-            />
-
-            {/* Displays transactions */}
-            <TransactionList
-                transactions={currentTransactions}
-                handleTransactionDelete={handleTransactionDelete}
-                // Pass the edit handler so that the TransactionList component can call it when an update is requested
-                handleTransactionEdit={handleEditTransaction}
-            />
-
-            {/* Pagination controls */}
-            {totalPages > 1 && (
-                <Pagination
-                    currentPage={page}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
+            <section className={styles.transactions__detail}>
+                {/* Transaction Filters */}
+                <TransactionFilters
+                    allTransactions={allTransactions}
+                    transactions={filteredTransactions}
+                    categories={categories}
+                    onTransactionsUpdate={handleTransactionsUpdate}
                 />
-            )}
+
+                {/* Displays transactions */}
+                <TransactionList
+                    transactions={currentTransactions}
+                    handleTransactionDelete={handleTransactionDelete}
+                    handleTransactionEdit={handleEditTransaction}
+                />
+
+                {/* Pagination controls */}
+                {totalPages > 1 && (
+                    <Pagination
+                        currentPage={page}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                )}
+            </section>
         </>
     )
 }

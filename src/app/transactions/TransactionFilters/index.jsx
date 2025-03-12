@@ -1,10 +1,24 @@
 import { useState } from 'react'
 import Image from 'next/image'
 
+import useWindowSize from '@/hooks/useWindowSize'
+import Dropdown from '@/components/Dropdown'
+import styles from './TransactionFilters.module.css'
+
+const sortOptions = [
+    { value: 'latest', label: 'Latest' },
+    { value: 'oldest', label: 'Oldest' },
+    { value: 'aToZ', label: 'A to Z' },
+    { value: 'zToA', label: 'Z to A' },
+    { value: 'highest', label: 'Highest' },
+    { value: 'lowest', label: 'Lowest' },
+]
+
 export default function TransactionFilters({ allTransactions, categories, onTransactionsUpdate }) {
     const [sortBy, setSortBy] = useState('latest')
     const [selectedCategory, setSelectedCategory] = useState('all')
     const [searchTerm, setSearchTerm] = useState('')
+    const { width } = useWindowSize()
 
     // Update transactions based on filters
     function updateTransactions(sort = sortBy, category = selectedCategory, search = searchTerm) {
@@ -48,15 +62,13 @@ export default function TransactionFilters({ allTransactions, categories, onTran
     }
 
     // Sort by dropdown change handler
-    function handleSortByChange(event) {
-        const newSortBy = event.target.value
+    function handleSortByChange(newSortBy) {
         setSortBy(newSortBy)
         updateTransactions(newSortBy, selectedCategory, searchTerm)
     }
 
     // Category dropdown change handler
-    function handleCategoryChange(event) {
-        const newCategory = event.target.value
+    function handleCategoryChange(newCategory) {
         setSelectedCategory(newCategory)
         updateTransactions(sortBy, newCategory, searchTerm)
     }
@@ -69,48 +81,51 @@ export default function TransactionFilters({ allTransactions, categories, onTran
     }
 
     return (
-        <div>
+        <div className={styles.filter__container}>
             {/* Search Input */}
             <div>
                 <input
-                    type="text"
-                    placeholder="Search transactions"
+                    className={styles.search__input}
+                    type='text'
+                    placeholder={(width >= 768 && width < 1024) ? 'Search tran...' : 'Search transaction'}
                     value={searchTerm}
                     onChange={handleSearchChange}
                 />
-                <Image src="/assets/images/icon-search.svg" alt="Search" width={20} height={20} />
+                <Image
+                    className={styles.search__icon}
+                    src='/assets/images/icon-search.svg'
+                    alt='Search'
+                    width={15} 
+                    height={15}
+                />
             </div>
 
             {/* Sort Dropdown */}
-            <div>
-                <label htmlFor="sortBy">Sort by</label>
-                <select id="sortBy" value={sortBy} onChange={handleSortByChange}>
-                    <option value="latest">Latest</option>
-                    <option value="oldest">Oldest</option>
-                    <option value="aToZ">A to Z</option>
-                    <option value="zToA">Z to A</option>
-                    <option value="highest">Highest</option>
-                    <option value="lowest">Lowest</option>
-                </select>
-            </div>
+            <div className={styles.transactions__dropdowns}>
+                <Dropdown
+                    options={sortOptions}
+                    onSelect={handleSortByChange}
+                    image='/assets/images/icon-sort-mobile.svg'
+                    alt='Sort by'
+                    label={width >= 768 ? 'Sort by' : ''}
+                />
 
-            {/* Category Filter Dropdown */}
-            <div>
-                {categories && categories.length > 0 ? (
-                    <>
-                        <label htmlFor="category">Category</label>
-                        <select id="category" value={selectedCategory} onChange={handleCategoryChange}>
-                            <option value="all">All</option>
-                            {categories.map(category => (
-                                <option key={category} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                        </select>
-                    </>
-                ) : (
-                    <p>Need to have transactions.</p>
-                )}
+                {/* Category Filter Dropdown */}
+                <div>
+                    {categories && categories.length > 0 ? (
+                        <>
+                            <Dropdown
+                                options={[{ value: 'all', label: 'All' }, ...categories.map(category => ({ value: category, label: category }))]}
+                                onSelect={handleCategoryChange}
+                                image='/assets/images/icon-filter-mobile.svg'
+                                alt='Category'
+                                label={width >= 768 ? 'Category' : ''}
+                            />
+                        </>
+                    ) : (
+                        <p>No transactions</p>
+                    )}
+                </div>
             </div>
         </div>
     )
