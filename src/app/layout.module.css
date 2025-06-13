@@ -1,0 +1,11 @@
+.navWrapper {
+    grid-area: header;
+}
+
+.mainWrapper {
+    grid-area: main;
+}
+
+.footerWrapper {
+    grid-area: footer;
+}

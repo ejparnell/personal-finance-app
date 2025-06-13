@@ -1,0 +1,8 @@
+.messageWrapper {
+    position: absolute;
+    top: var(--spacing-700);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

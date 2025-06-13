@@ -1,0 +1,35 @@
+@import './variables.module.css';
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --background-color: white;
+    --color-primary: var(--text-primary);
+    --font-family: 'Montserrat', sans-serif;
+}
+
+[data-theme='dark'] {
+    --background-color: #121212;
+}
+
+body {
+    font-family: var(--font-family);
+    height: 100vh;
+    color: var(--color-primary);
+
+    width: 100%;
+
+    display: grid;
+    grid:
+        'header' auto
+        'main' 1fr
+        'footer' auto
+        / 1fr;
+    gap: var(--spacing-100);
+}

@@ -1,0 +1,33 @@
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-100);
+}
+
+.inputField {
+    height: 56px;
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+    color: var(--color-primary);
+    background-color: var(--grey-100);
+    border: none;
+    text-indent: var(--spacing-100);
+}
+
+.inputField:focus {
+    outline: 2px solid var(--color-purple);
+}
+
+.errorWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-050);
+}
+
+.errorText {
+    margin-left: var(--spacing-100);
+}
+
+.errorInput {
+    outline: 2px solid var(--color-error);
+}

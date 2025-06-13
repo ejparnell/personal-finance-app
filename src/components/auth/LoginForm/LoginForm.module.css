@@ -1,0 +1,8 @@
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-200);
+    min-width: 320px;
+    padding: var(--spacing-200);
+    border-radius: var(--border-radius);
+}
