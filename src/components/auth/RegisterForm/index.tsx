@@ -7,12 +7,14 @@ import {
     useState,
     useTransition,
 } from 'react';
+import Link from 'next/link';
 import { registerAndLogin, type RegisterState } from '@/actions/auth';
 import { registerSchema, RegisterInput } from '@/schemas/user';
 import { FormErrors } from '@/types/validators';
 import { getClientErrors, getErrorMessage } from '@/lib/utils';
 import { useMessage } from '@/context/MessageProvider';
 import Input from '@/components/shared/Input';
+import Button from '@/components/shared/Button';
 import presets from '@/styles/presets.module.css';
 import styles from './RegisterForm.module.css';
 
@@ -134,13 +136,30 @@ export default function RegisterForm() {
                 />
             ))}
 
-            <button
-                className={presets.submitBtn}
+            <Button
+                className="submit"
                 type="submit"
-                disabled={isPending}
+                disabled={
+                    isPending ||
+                    Object.values(clientErrors).some(
+                        (errors) => errors.length > 0
+                    )
+                }
             >
                 {isPending ? 'Creating…' : 'Create account'}
-            </button>
+            </Button>
+
+            <div className={styles.registerLink}>
+                <p className={presets.textPreset4}>
+                    Already have an account?{' '}
+                    <Link
+                        href="/login"
+                        className={`${presets.textPreset4Bold} ${styles.registerLinkText}`}
+                    >
+                        Login
+                    </Link>
+                </p>
+            </div>
         </form>
     );
 }

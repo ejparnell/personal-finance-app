@@ -33,7 +33,7 @@ export default function Input({
 
     return (
         <div className={styles.inputWrapper}>
-            <label className={presets.fontSizeBody} htmlFor={id}>
+            <label className={presets.textPreset5Bold} htmlFor={id}>
                 {displayName}
             </label>
             <input
@@ -45,7 +45,9 @@ export default function Input({
                 placeholder={placeholder}
                 required={required}
                 disabled={disabled}
-                className={`${styles.inputField} ${presets.fontSizeBody} ${clientErrors.length > 0 ? styles.errorInput : ''}`}
+                className={`${styles.inputField} ${presets.fontSizeBody} ${
+                    clientErrors.length > 0 ? styles.errorInput : ''
+                }`}
             />
 
             {backIcon && (
@@ -62,7 +64,9 @@ export default function Input({
                     <p className={presets.fontSizeBody}>Opps! Gotta fix: </p>
                     {clientErrors.map((error, index) => (
                         <p
-                            className={`${presets.fontSizeCaption} ${styles.errorText}`}
+                            className={`${presets.fontSizeCaption} ${
+                                styles.errorText
+                            }`}
                             key={index}
                         >
                             {error}

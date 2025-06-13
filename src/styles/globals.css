@@ -1,4 +1,7 @@
 @import './variables.module.css';
+@import './colors.module.css';
+@import './typography.module.css';
+@import './spacing.module.css';
 
 *,
 *::before,
@@ -8,28 +11,17 @@
     padding: 0;
 }
 
-:root {
-    --background-color: white;
-    --color-primary: var(--text-primary);
-    --font-family: 'Montserrat', sans-serif;
+html,
+body {
+    height: 100vh;
+    width: 100vw;
 }
 
-[data-theme='dark'] {
-    --background-color: #121212;
+:root {
+    --background-color: var(--white);
 }
 
 body {
     font-family: var(--font-family);
-    height: 100vh;
-    color: var(--color-primary);
-
-    width: 100%;
-
-    display: grid;
-    grid:
-        'header' auto
-        'main' 1fr
-        'footer' auto
-        / 1fr;
-    gap: var(--spacing-100);
+    background-color: var(--beige-100);
 }

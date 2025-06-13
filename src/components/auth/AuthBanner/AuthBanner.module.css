@@ -1,0 +1,61 @@
+.authBannerSm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-250) var(--spacing-400);
+    background-color: var(--grey-900);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.authBannerLg {
+    display: none;
+}
+
+@media screen and (min-width: 1440px) {
+    .authBannerSm {
+        display: none;
+    }
+
+    .authBannerLg {
+        top: var(--spacing-200);
+        left: var(--spacing-200);
+        bottom: var(--spacing-200);
+        right: auto;
+        border-radius: var(--border-radius);
+        display: block;
+        width: 560px;
+        position: fixed;
+        overflow: hidden;
+        background-image: url('../../../assets/illustration-authentication.svg');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .logoSmall {
+        position: absolute;
+        top: var(--spacing-300);
+        left: var(--spacing-300);
+    }
+
+    .illustration {
+        position: absolute;
+        top: 0;
+        left: -36px;
+        z-index: -1;
+    }
+
+    .bannerText {
+        position: absolute;
+        bottom: var(--spacing-300);
+        right: var(--spacing-300);
+        color: var(--white);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-250);
+        width: 420px;
+    }
+}

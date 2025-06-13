@@ -1,74 +1,9 @@
 :root {
-    /* Colors */
-
-    /* Base Colors */
-    --color-green: #94ffcf;
-    --color-purple: #f6d6fe;
-    --color-blue: #b5f1ff;
-    --color-yellow: #fdffab;
-    --color-red: #f8a4a3;
-
-    --grey-300: #757575;
-    --grey-200: #e9e9e9;
-    --grey-100: #f4f4f4;
-
-    /* Information Colors */
-    --color-success: var(--color-green);
-    --color-error: var(--color-red);
-    --color-info: var(--color-blue);
-    --color-warning: var(--color-yellow);
-
-    /* Text Colors - Primary */
-    --text-primary: #1a1a1a;
-    --text-secondary: #333333;
-    --text-hint: #555555;
-    --text-inverse: #ffffff;
-
-    /* Text Colors - Accents */
-    --text-green-accent: #10745a;
-    --text-purple-accent: #7a3899;
-    --text-blue-accent: #0d6c91;
-    --text-yellow-accent: #735e00;
-    --text-red-accent: #b72928;
-
-    /* Typography */
-
-    /* Font Sizes */
-    --font-size-caption: 12px;
-    --font-size-body: 14px;
-    --font-size-body-lg: 18px;
-    --font-size-heading: 24px;
-    --font-size-heading-lg: 32px;
-
-    /* Line Heights */
-    --line-height-caption: 16px;
-    --line-height-body: 24px;
-    --line-height-heading: 32px;
-    --line-height-heading-lg: 40px;
-
-    /* Font Weights */
-    --font-weight-extra-light: 200;
-    --font-weight-light: 300;
-    --font-weight-normal: 400;
-    --font-weight-medium: 500;
-    --font-weight-semi-bold: 600;
-    --font-weight-bold: 700;
-
-    /* Spacing */
-    --spacing-050: 4px;
-    --spacing-100: 8px;
-    --spacing-200: 16px;
-    --spacing-300: 32px;
-    --spacing-400: 40px;
-    --spacing-500: 48px;
-    --spacing-600: 56px;
-    --spacing-700: 64px;
-
     /* Borders */
-    --border-radius: 8px;
+    --border-radius: 12px;
 
-    /* Shadows */
+    /* Shadows for filter */
     --box-shadow-bottom: 0px 8px 16px rgba(0, 0, 0, 0.5);
-    --box-shadow-top: 0px -8px 16px rgba(0, 0, 0, 0.58);
+    --box-shadow-top: 0px -8px 16px rgba(0, 0, 0, 0.5);
     --box-shadow-center: 0px 0px 16px rgba(0, 0, 0, 0.5);
 }

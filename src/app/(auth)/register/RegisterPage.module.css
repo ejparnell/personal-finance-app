@@ -2,5 +2,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     height: 100%;
+}
+
+@media screen and (min-width: 1440px) {
+    .registerPage {
+        align-items: flex-end;
+    }
+
+    .registerFormContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60%;
+    }
 }

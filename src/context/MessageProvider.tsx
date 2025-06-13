@@ -35,15 +35,18 @@ const MessageContext = createContext<MessageContextType>({
 export function MessageProvider({ children }: { children: ReactNode }) {
     const [messages, setMessages] = useState<Message[]>([]);
 
-    useEffect(() => {
-        messages.forEach((message) => {
-            const timeout = setTimeout(() => {
-                handleRemoveMessage(message.id);
-            }, 5000);
+    useEffect(
+        () => {
+            messages.forEach(message => {
+                const timeout = setTimeout(() => {
+                    handleRemoveMessage(message.id);
+                }, 5000);
 
-            return () => clearTimeout(timeout);
-        });
-    }, [messages]);
+                return () => clearTimeout(timeout);
+            });
+        },
+        [messages]
+    );
 
     function handleSetMessages(
         content: string,
@@ -56,13 +59,11 @@ export function MessageProvider({ children }: { children: ReactNode }) {
             created: new Date(),
         };
 
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        setMessages(prevMessages => [...prevMessages, newMessage]);
     }
 
     function handleRemoveMessage(id: string) {
-        setMessages((prevMessages) =>
-            prevMessages.filter((msg) => msg.id !== id)
-        );
+        setMessages(prevMessages => prevMessages.filter(msg => msg.id !== id));
     }
 
     return (

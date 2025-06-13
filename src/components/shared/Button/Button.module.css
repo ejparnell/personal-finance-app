@@ -1,0 +1,10 @@
+.btn {
+    border-radius: var(--border-radius);
+    width: 100%;
+    padding: var(--spacing-200);
+}
+
+.submit {
+    background-color: var(--grey-900);
+    color: var(--white);
+}

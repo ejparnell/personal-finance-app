@@ -1,0 +1,17 @@
+:root {
+    --font-family: 'Public Sans', sans-serif;
+
+    --font-size-xl: 32px;
+    --font-size-lg: 20px;
+    --font-size-md: 16px;
+    --font-size-sm: 14px;
+    --font-size-xs: 12px;
+
+    --line-height-sm: 120%;
+    --line-height-lg: 150%;
+
+    --letter-spacing: 0px;
+
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+}

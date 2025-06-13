@@ -4,7 +4,6 @@ export default withAuth({
     pages: { signIn: '/login' },
     callbacks: {
         authorized({ token, req }) {
-            console.log('Middleware token:', token);
             const { pathname } = req.nextUrl;
 
             if (
