@@ -85,7 +85,7 @@ export default function LoginForm() {
                 setForm(defaultState);
             } else {
                 handleSetMessages('Login successful!', 'success');
-                router.replace('/');
+                router.replace('/overview');
             }
         });
     }

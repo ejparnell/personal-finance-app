@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Public_Sans } from 'next/font/google';
 import Providers from '@/context/Providers';
 import MessageList from '@/components/MessageList';
+import Nav from '@/components/Nav';
 import '@/styles/globals.css';
 
 const publicSans = Public_Sans({
@@ -34,7 +35,8 @@ export default function RootLayout({
             <Providers>
                 <body className={publicSans.variable}>
                     <MessageList />
-                    {children}
+                    <Nav />
+                    <main className='main'>{children}</main>
                 </body>
             </Providers>
         </html>

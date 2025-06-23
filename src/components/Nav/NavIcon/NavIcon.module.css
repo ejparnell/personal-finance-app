@@ -1,0 +1,84 @@
+.navIconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-050);
+    flex-direction: column;
+    padding: var(--spacing-100) 0 var(--spacing-150) 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    width: 68px;
+    height: 44px;
+}
+
+.navIconText {
+    display: none;
+    color: var(--grey-300);
+    composes: textPreset5Bold from '../../../styles/presets.module.css';
+}
+
+.navIconActiveImage {
+    filter: brightness(0) saturate(100%) invert(41%) sepia(19%) saturate(1314%)
+        hue-rotate(128deg) brightness(95%) contrast(88%);
+}
+
+.navIconWrapperActive {
+    background-color: var(--beige-100);
+    position: relative;
+    bottom: 0;
+}
+
+.navIconWrapperActive::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: var(--spacing-050);
+    background-color: var(--green);
+}
+
+@media screen and (min-width: 768px) {
+    .navIconText {
+        display: block;
+    }
+
+    .navIconTextActive {
+        color: var(--grey-900);
+    }
+
+    .navIconWrapper {
+        width: 104px;
+        height: 66px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .navIconWrapper {
+        flex-direction: row;
+        gap: var(--spacing-200);
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        height: 56px;
+        justify-content: flex-start;
+        padding: 0 var(--spacing-300);
+    }
+
+    .navIconWrapperActive::after {
+        width: var(--spacing-050);
+        height: 100%;
+        bottom: 0;
+        left: 0;
+    }
+
+    .navIconText {
+        font-size: var(--font-size-md);
+        line-height: var(--line-height-lg);
+    }
+
+    .navIconWrapperOpen {
+        width: 276px;
+    }
+
+    .navIconWrapperClosed {
+        width: 72px;
+    }
+}

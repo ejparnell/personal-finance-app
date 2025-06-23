@@ -64,6 +64,5 @@ export async function registerAndLogin(
         maxAge: 60 * 60 * 24, // 1 day
     });
 
-    redirect('/');
-    return { success: true };
+    redirect('/overview');
 }

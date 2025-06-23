@@ -19,9 +19,29 @@ body {
 
 :root {
     --background-color: var(--white);
+
+    --nav-h-mobile: 76px;
+    --nav-w-open: 300px;
+    --nav-w-closed: 80px;
 }
 
 body {
     font-family: var(--font-family);
     background-color: var(--beige-100);
+}
+
+.main {
+    padding-bottom: var(--nav-h-mobile);
+}
+
+@media screen and (min-width: 1024px) {
+    .main {
+        padding-bottom: 0;
+        padding-left: var(--nav-w-open);
+        transition: padding-left .25s ease; 
+    }
+
+    body.nav-closed .main {
+        padding-left: var(--nav-w-closed);
+    }
 }

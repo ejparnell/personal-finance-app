@@ -1,0 +1,68 @@
+.navWrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--grey-900);
+    padding: var(--spacing-100) var(--spacing-200) 0 var(--spacing-200);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    transition: padding-left .25s ease; 
+}
+
+.navHeader {
+    display: none;
+}
+
+.minimizeButton {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .navWrapper {
+        padding: var(--spacing-100) var(--spacing-400) 0 var(--spacing-400);
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .navWrapper {
+        top: 0;
+        bottom: auto;
+        height: 100vh;
+        display: block;
+        padding: 0 0 var(--spacing-250) 0;
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+
+    .navHeader {
+        display: block;
+        padding: var(--spacing-400) var(--spacing-300);
+    }
+
+    .minimizeButton {
+        display: flex;
+        position: absolute;
+        bottom: var(--spacing-500);
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        color: var(--grey-300);
+        gap: var(--spacing-200);
+        margin-left: var(--spacing-300);
+        composes: textPreset3 from '../../styles/presets.module.css';
+    }
+
+    .navMenuOpen {
+        width: 300px;
+    }
+
+    .navMenuClosed {
+        width: 80px;
+    }
+
+    .navMinizeRotated {
+        transform: rotate(180deg);
+    }
+}
