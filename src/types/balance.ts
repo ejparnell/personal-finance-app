@@ -1,12 +1,13 @@
 export type BalanceType = {
     _id: string;
-    userId: string;
+    user: string;
     currentBalance: number;
     income: number;
     expenses: number;
 };
 
 export type BalancesState = {
-    error?: string | null;
+    balanceError?: string | null;
+    success?: boolean;
     balances?: BalanceType[];
 };

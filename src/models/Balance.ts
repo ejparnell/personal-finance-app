@@ -11,4 +11,5 @@ const BalanceSchema = new Schema(
 );
 
 export type BalanceDoc = InferSchemaType<typeof BalanceSchema>;
-export const Balance = models.Balance<BalanceDoc> || model<BalanceDoc>('Balance', BalanceSchema);
+export const Balance =
+    models.Balance<BalanceDoc> || model<BalanceDoc>('Balance', BalanceSchema);

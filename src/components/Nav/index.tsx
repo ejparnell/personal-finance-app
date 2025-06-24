@@ -1,6 +1,7 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+
+import { usePathname, useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import NavIcon from './NavIcon';
 import styles from './Nav.module.css';
@@ -9,79 +10,53 @@ const navItems = [
     {
         iconPath: '/icons/icon-nav-overview.svg',
         altText: 'Overview',
+        slug: 'overview',
     },
     {
         iconPath: '/icons/icon-nav-budgets.svg',
         altText: 'Budgets',
+        slug: 'budgets',
     },
-    {
-        iconPath: '/icons/icon-nav-pots.svg',
-        altText: 'Pots',
-    },
+    { iconPath: '/icons/icon-nav-pots.svg', altText: 'Pots', slug: 'pots' },
     {
         iconPath: '/icons/icon-nav-recurring-bills.svg',
         altText: 'Recurring Bills',
+        slug: 'recurring-bills',
     },
     {
         iconPath: '/icons/icon-nav-transactions.svg',
         altText: 'Transactions',
+        slug: 'transactions',
     },
-];
-
-type SelectedState =
-    | 'Overview'
-    | 'Budgets'
-    | 'Pots'
-    | 'Recurring Bills'
-    | 'Transactions'
-    | null;
+] as const;
 
 export default function Nav() {
     const iconSize = 24;
     const router = useRouter();
-    const [selected, setSelected] = useState<SelectedState>('Overview');
-    // Setting initial Menu state to open to match the design.
-    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(true);
+    const pathname = usePathname();
 
-    useEffect(
-        () => {
-            document.body.classList.toggle('nav-closed', !isMenuOpen);
-        },
-        [isMenuOpen]
-    );
+    const slug = pathname.split('/')[1] || '';
+    const activeTab =
+        navItems.find((item) => item.slug === slug)?.altText ?? 'Overview';
+    // Default menu state is set to open to match the design
+    const [isMenuOpen, setIsMenuOpen] = useState(true);
+    useEffect(() => {
+        document.body.classList.toggle('nav-closed', !isMenuOpen);
+    }, [isMenuOpen]);
 
     function handleSelect(altText: string) {
-        setSelected(altText as SelectedState);
-        switch (altText) {
-            case 'Overview':
-                router.push('/overview');
-                break;
-            case 'Budgets':
-                router.push('/budgets');
-                break;
-            case 'Pots':
-                router.push('/pots');
-                break;
-            case 'Recurring Bills':
-                router.push('/recurring-bills');
-                break;
-            case 'Transactions':
-                router.push('/transactions');
-                break;
-            default:
-                console.error('Unknown navigation item selected:', altText);
-        }
+        const item = navItems.find((item) => item.altText === altText);
+        if (!item) return;
+        router.push('/' + item.slug);
     }
 
     function toggleMenu() {
-        setIsMenuOpen(prev => !prev);
+        setIsMenuOpen((prev) => !prev);
     }
 
     return (
         <nav
-            className={`${styles.navWrapper} ${
-                isMenuOpen ? styles.navMenuOpen : styles.navMenuClosed
-            }`}
+            className={`${styles.navWrapper} ${isMenuOpen ? styles.navMenuOpen : styles.navMenuClosed}`}
         >
             <div className={styles.navHeader}>
                 {isMenuOpen ? (
@@ -102,12 +77,13 @@ export default function Nav() {
                     />
                 )}
             </div>
-            {navItems.map((icon, index) => (
+
+            {navItems.map((item) => (
                 <NavIcon
-                    key={index}
-                    iconPath={icon.iconPath}
-                    altText={icon.altText}
-                    active={selected === icon.altText}
+                    key={item.altText}
+                    iconPath={item.iconPath}
+                    altText={item.altText}
+                    active={activeTab === item.altText}
                     handleSelect={handleSelect}
                     isMenuOpen={isMenuOpen}
                 />

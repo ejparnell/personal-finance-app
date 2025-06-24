@@ -36,7 +36,7 @@ export default function RootLayout({
                 <body className={publicSans.variable}>
                     <MessageList />
                     <Nav />
-                    <main className='main'>{children}</main>
+                    <main className="main">{children}</main>
                 </body>
             </Providers>
         </html>

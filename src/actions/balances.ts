@@ -10,7 +10,7 @@ import { BalanceType, BalancesState } from '@/types/balance';
 export async function getBalances(): Promise<BalancesState | never> {
     const session = await getServerSession(authOptions);
     if (!session) {
-        return { error: 'Unauthorized', balances: [] };
+        return { balanceError: 'Unauthorized', balances: [] };
     }
 
     try {
@@ -20,19 +20,19 @@ export async function getBalances(): Promise<BalancesState | never> {
             createdAt: -1,
         });
         const formattedBalances = balances.map(
-            balance =>
+            (balance) =>
                 ({
                     _id: balance._id.toString(),
-                    userId: balance.userId.toString(),
+                    user: balance.user.toString(),
                     currentBalance: toCents(balance.currentBalance),
                     income: toCents(balance.income),
                     expenses: toCents(balance.expenses),
-                } as BalanceType)
+                }) as BalanceType
         );
 
-        return { balances: formattedBalances, error: null };
+        return { balances: formattedBalances, balanceError: null };
     } catch (error) {
         console.error('Error fetching balances:', error);
-        return { error: 'Failed to fetch balances', balances: [] };
+        return { balanceError: 'Failed to fetch balances', balances: [] };
     }
 }

@@ -10,7 +10,7 @@ export default function MessageList() {
 
     return (
         <div className={styles.messageWrapper}>
-            {messages.map(message => (
+            {messages.map((message) => (
                 <Message
                     key={message.id}
                     content={message.content}

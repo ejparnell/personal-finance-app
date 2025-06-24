@@ -1,0 +1,11 @@
+.arrowLink {
+    text-decoration: none;
+    color: var(--grey-500);
+    composes: textPreset4 from '../../../styles/presets.module.css';
+}
+
+.arrowLinkContent {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-150);
+}

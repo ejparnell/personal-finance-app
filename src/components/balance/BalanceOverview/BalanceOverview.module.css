@@ -9,6 +9,9 @@
     width: 100%;
     padding: var(--spacing-250);
     border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-150);
 }
 
 .balanceCardDark {
@@ -23,7 +26,6 @@
 
 .balanceCardTitle {
     composes: textPreset4 from '../../../styles/presets.module.css';
-    margin-bottom: var(--spacing-200);
 }
 
 .balanceCardTitleDark {
@@ -35,5 +37,4 @@
 
 .balanceCardValue {
     composes: textPreset1 from '../../../styles/presets.module.css';
-    margin-bottom: var(--spacing-200);
 }

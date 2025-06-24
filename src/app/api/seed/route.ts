@@ -28,7 +28,7 @@ export async function POST() {
     await Pot.deleteMany({ user: user._id });
 
     // Seed Transactions
-    const txDocs = seed.transactions.map(t => ({
+    const txDocs = seed.transactions.map((t) => ({
         user: user._id,
         avatar: t.avatar,
         name: t.name,
@@ -38,14 +38,14 @@ export async function POST() {
         recurring: t.recurring,
     }));
 
-    const budgetDocs = seed.budgets.map(b => ({
+    const budgetDocs = seed.budgets.map((b) => ({
         user: user._id,
         category: b.category,
         maximumCents: toCents(b.maximum),
         theme: b.theme,
     }));
 
-    const potDocs = seed.pots.map(p => ({
+    const potDocs = seed.pots.map((p) => ({
         user: user._id,
         name: p.name,
         targetCents: toCents(p.target),
