@@ -38,7 +38,7 @@ body {
     .main {
         padding-bottom: 0;
         padding-left: var(--nav-w-open);
-        transition: padding-left .25s ease; 
+        transition: padding-left 0.25s ease;
     }
 
     body.nav-closed .main {

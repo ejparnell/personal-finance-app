@@ -1,0 +1,39 @@
+.balanceOverviewContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-150);
+    width: 100%;
+}
+
+.balanceCard {
+    width: 100%;
+    padding: var(--spacing-250);
+    border-radius: var(--border-radius);
+}
+
+.balanceCardDark {
+    background-color: var(--grey-900);
+    color: var(--white);
+}
+
+.balanceCardLight {
+    background-color: var(--white);
+    color: var(--grey-900);
+}
+
+.balanceCardTitle {
+    composes: textPreset4 from '../../../styles/presets.module.css';
+    margin-bottom: var(--spacing-200);
+}
+
+.balanceCardTitleDark {
+    color: var(--white);
+}
+.balanceCardTitleLight {
+    color: var(--grey-500);
+}
+
+.balanceCardValue {
+    composes: textPreset1 from '../../../styles/presets.module.css';
+    margin-bottom: var(--spacing-200);
+}

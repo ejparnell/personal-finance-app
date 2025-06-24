@@ -9,7 +9,7 @@
     background-color: var(--grey-900);
     padding: var(--spacing-100) var(--spacing-200) 0 var(--spacing-200);
     border-radius: var(--border-radius) var(--border-radius) 0 0;
-    transition: padding-left .25s ease; 
+    transition: padding-left 0.25s ease;
 }
 
 .navHeader {

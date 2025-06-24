@@ -43,9 +43,12 @@ export default function Nav() {
     // Setting initial Menu state to open to match the design.
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(true);
 
-    useEffect(() => {
-        document.body.classList.toggle('nav-closed', !isMenuOpen)
-    }, [isMenuOpen]);
+    useEffect(
+        () => {
+            document.body.classList.toggle('nav-closed', !isMenuOpen);
+        },
+        [isMenuOpen]
+    );
 
     function handleSelect(altText: string) {
         setSelected(altText as SelectedState);
