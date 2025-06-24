@@ -26,11 +26,14 @@ export default async function OverviewPage() {
 
             <div className={styles.overviewContent}>
                 <PotsOverview pots={pots} error={potError} />
-                <TransactionsOverview transactions={transactions} error={transactionError} />
+                <TransactionsOverview
+                    transactions={transactions}
+                    error={transactionError}
+                />
                 <BudgetsOverview budgets={budgets} error={budgetError} />
-                <RecurringBillsOverview 
-                    paidBills={paidBills} 
-                    upcomingBills={upcomingBills} 
+                <RecurringBillsOverview
+                    paidBills={paidBills}
+                    upcomingBills={upcomingBills}
                     dueSoon={dueSoon}
                 />
             </div>

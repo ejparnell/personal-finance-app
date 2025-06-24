@@ -51,6 +51,6 @@
     padding: var(--spacing-250) var(--spacing-200);
     background-color: var(--beige-100);
     border-radius: var(--border-radius);
-    left: 8px;
-    width: calc(100% - 8px);
+    left: var(--spacing-050);
+    width: calc(100% - var(--spacing-050));
 }

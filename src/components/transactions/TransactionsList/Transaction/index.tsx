@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 interface TransactionProps {
     avatar: string;
@@ -7,7 +7,12 @@ interface TransactionProps {
     date: string;
 }
 
-export default function Transaction({ avatar, name, amount, date }: TransactionProps) {
+export default function Transaction({
+    avatar,
+    name,
+    amount,
+    date,
+}: TransactionProps) {
     const avatarSize = 32;
 
     return (

@@ -6,10 +6,13 @@ interface OverviewCardProps {
     theme?: 'overviewLight' | 'overviewDark';
 }
 
-export default function OverviewCard({ children, theme = 'overviewLight' }: OverviewCardProps) {
+export default function OverviewCard({
+    children,
+    theme = 'overviewLight',
+}: OverviewCardProps) {
     return (
         <div className={`${styles.overviewCard} ${styles[theme]}`}>
             {children}
         </div>
-    )
+    );
 }

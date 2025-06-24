@@ -1,15 +1,20 @@
-import { TransactionType } from "@/types/transaction";
-import Transaction from "./Transaction";
-import styles from "./TransactionsList.module.css";
+import { TransactionType } from '@/types/transaction';
+import Transaction from './Transaction';
+import styles from './TransactionsList.module.css';
 
 interface TransactionsOverviewProps {
     transactions?: TransactionType[];
 }
 
-export default function TransactionsList({ transactions }: TransactionsOverviewProps) {
-
+export default function TransactionsList({
+    transactions,
+}: TransactionsOverviewProps) {
     if (!transactions || transactions.length === 0) {
-        return <div className={styles.transactionsListText}>No transactions found</div>;
+        return (
+            <div className={styles.transactionsListText}>
+                No transactions found
+            </div>
+        );
     }
 
     return (

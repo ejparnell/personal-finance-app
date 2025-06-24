@@ -7,7 +7,11 @@ interface OverviewCardHeaderProps {
     linkText: string;
 }
 
-export default function OverviewCardHeader({ name, href, linkText }: OverviewCardHeaderProps) {
+export default function OverviewCardHeader({
+    name,
+    href,
+    linkText,
+}: OverviewCardHeaderProps) {
     return (
         <div className={styles.overviewCardHeader}>
             <h2 className={styles.overviewCardHeaderText}>{name}</h2>

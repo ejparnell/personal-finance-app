@@ -15,7 +15,9 @@ export async function getTransactions(): Promise<TransactionsState | never> {
     try {
         await dbConnect();
 
-        const transactions = await Transaction.find({ userId: session.user.id }).sort({
+        const transactions = await Transaction.find({
+            userId: session.user.id,
+        }).sort({
             createdAt: -1,
         });
         const formattedTransactions = transactions.map(
@@ -35,6 +37,9 @@ export async function getTransactions(): Promise<TransactionsState | never> {
         return { transactions: formattedTransactions, transactionError: null };
     } catch (error) {
         console.error('Error fetching transactions:', error);
-        return { transactionError: 'Failed to fetch transactions', transactions: [] };
+        return {
+            transactionError: 'Failed to fetch transactions',
+            transactions: [],
+        };
     }
 }
