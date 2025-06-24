@@ -1,0 +1,10 @@
+.overviewCardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.overviewCardHeaderText {
+    composes: textPreset2 from '../../../styles/presets.module.css';
+    color: var(--grey-900);
+}

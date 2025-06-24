@@ -1,0 +1,4 @@
+.transactionsListText {
+    composes: textPreset5 from '../../../styles/presets.module.css';
+    color: var(--grey-500);
+}

@@ -1,0 +1,56 @@
+.rbOverviewContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-150);
+    width: 100%;
+}
+
+.rbOverviewItem {
+    position: relative;
+    height: 68px;
+}
+
+.rbOverviewText {
+    composes: textPreset4 from '../../../styles/presets.module.css';
+    color: var(--grey-500);
+}
+
+.rbOverviewAmount {
+    composes: textPreset4Bold from '../../../styles/presets.module.css';
+    color: var(--grey-900);
+}
+
+.rbOverviewIndicator {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    width: var(--spacing-350);
+    height: 100%;
+    z-index: 1;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.indicatorPaid {
+    background-color: var(--green);
+}
+
+.indicatorUpcoming {
+    background-color: var(--yellow);
+}
+
+.indicatorDueSoon {
+    background-color: var(--cyan);
+}
+
+.rbOverviewContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    z-index: 2;
+    padding: var(--spacing-250) var(--spacing-200);
+    background-color: var(--beige-100);
+    border-radius: var(--border-radius);
+    left: 8px;
+    width: calc(100% - 8px);
+}
