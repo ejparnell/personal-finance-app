@@ -15,9 +15,7 @@ export async function getPots(): Promise<PotsState | never> {
     try {
         await dbConnect();
 
-        const pots = await Pot.find({ userId: session.user.id }).sort({
-            createdAt: -1,
-        });
+        const pots = await Pot.find({ user: session.user.id });
         const formattedPots = pots.map(
             (pot) =>
                 ({

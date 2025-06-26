@@ -1,0 +1,11 @@
+.newBtn {
+    background-color: var(--grey-900);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-200);
+    cursor: pointer;
+    position: absolute;
+    top: var(--spacing-200);
+    right: var(--spacing-200);
+}

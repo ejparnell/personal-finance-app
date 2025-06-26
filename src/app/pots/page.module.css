@@ -1,0 +1,11 @@
+.potsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-300);
+    padding: var(--spacing-250) var(--spacing-200);
+}
+
+.potsTitle {
+    composes: textPreset1 from '../../styles/presets.module.css';
+    color: var(--grey-900);
+}

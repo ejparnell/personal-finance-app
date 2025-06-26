@@ -1,0 +1,131 @@
+.dropdownContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-050);
+}
+
+.dropdownLabel {
+    composes: textPreset5Bold from '../../../styles/presets.module.css';
+    color: var(--grey-500);
+}
+
+.dropdownSelected {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-150);
+}
+
+.dropDownColorIndicator {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+}
+
+.dropdownSelector {
+    border: 1px solid var(--beige-500);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-150) var(--spacing-250);
+    color: var(--grey-900);
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdownOptions {
+    position: absolute;
+    top: calc(100% + var(--spacing-050));
+    left: 0;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-center);
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-150);
+    padding: var(--spacing-150) var(--spacing-250);
+}
+
+.dropdownOptionText {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-150);
+    composes: textPreset4 from '../../../styles/presets.module.css';
+    color: var(--grey-900);
+}
+
+.dropdownOption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdownDivider {
+    height: 1px;
+    background-color: var(--grey-100);
+    margin-top: var(--spacing-150);
+    width: 100%;
+}
+
+/** Color Tag Indicator colors */
+.green {
+    background-color: var(--green);
+}
+
+.yellow {
+    background-color: var(--yellow);
+}
+
+.cyan {
+    background-color: var(--cyan);
+}
+
+.navy {
+    background-color: var(--navy);
+}
+
+.red {
+    background-color: var(--red);
+}
+
+.purple {
+    background-color: var(--purple);
+}
+
+.light-purple {
+    background-color: var(--light-purple);
+}
+
+.turquoise {
+    background-color: var(--turquoise);
+}
+
+.brown {
+    background-color: var(--brown);
+}
+
+.magenta {
+    background-color: var(--magenta);
+}
+
+.blue {
+    background-color: var(--blue);
+}
+
+.navy-grey {
+    background-color: var(--navy-grey);
+}
+
+.army-green {
+    background-color: var(--army-green);
+}
+
+.gold {
+    background-color: var(--gold);
+}
+
+.orange {
+    background-color: var(--organge);
+}

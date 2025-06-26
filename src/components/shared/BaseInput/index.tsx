@@ -5,8 +5,8 @@ interface BaseInputProps {
     type: string;
     name: string;
     label: string;
-    value?: string | number;
-    handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    value: string | number;
+    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
     required?: boolean;
     disabled?: boolean;
