@@ -1,0 +1,10 @@
+.submitBtn {
+    width: 100%;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-200);
+    background-color: var(--grey-900);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    composes: textPreset4Bold from '../../../styles/presets.module.css';
+}

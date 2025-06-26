@@ -4,7 +4,6 @@ import { getServerSession } from 'next-auth';
 import { Balance } from '@/models/Balance';
 import { dbConnect } from '@/lib/dbConnect';
 import { authOptions } from '@/lib/authOptions';
-import { toCents } from '@/lib/utils';
 import { BalanceType, BalancesState } from '@/types/balance';
 
 export async function getBalances(): Promise<BalancesState | never> {
@@ -16,17 +15,15 @@ export async function getBalances(): Promise<BalancesState | never> {
     try {
         await dbConnect();
 
-        const balances = await Balance.find({ userId: session.user.id }).sort({
-            createdAt: -1,
-        });
+        const balances = await Balance.find({ user: session.user.id })
         const formattedBalances = balances.map(
             (balance) =>
                 ({
                     _id: balance._id.toString(),
                     user: balance.user.toString(),
-                    currentBalance: toCents(balance.currentBalance),
-                    income: toCents(balance.income),
-                    expenses: toCents(balance.expenses),
+                    currentBalance: balance.currentBalance,
+                    income: balance.income,
+                    expenses: balance.expenses,
                 }) as BalanceType
         );
 

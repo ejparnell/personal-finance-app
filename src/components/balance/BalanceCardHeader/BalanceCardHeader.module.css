@@ -1,0 +1,21 @@
+.balanceCardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.balanceCardTitle {
+    composes: textPreset4 from '../../../styles/presets.module.css';
+}
+
+.balanceCardTitleDark {
+    color: var(--white);
+}
+
+.balanceCardTitleLight {
+    color: var(--grey-500);
+}
+
+.balanceCardEdit {
+    position: absolute;
+}

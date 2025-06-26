@@ -41,3 +41,35 @@ export function getErrorMessage(error: string) {
 
 export const toCents = (value: number) => Math.round(value * 100);
 export const fromCents = (value: number) => value / 100;
+
+type ApiResponse<T> =
+  | { success: true;  data: T }
+  | { success: false; error: string };
+
+export async function fetchWrapper<T = unknown>(
+  url: string,
+  options: RequestInit = {}
+): Promise<ApiResponse<T>> {
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    return { success: false, error: json?.error ?? 'An error occurred' };
+  }
+
+  return { success: true, data: json as T };
+}
+
+export function formatCurrency(value: number): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(value);
+}

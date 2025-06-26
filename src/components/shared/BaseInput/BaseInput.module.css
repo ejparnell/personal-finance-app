@@ -1,0 +1,31 @@
+.baseInputWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--spacing-050);
+}
+
+.baseInputLabel {
+    composes: textPreset5Bold from '../../../styles/presets.module.css';
+    color: var(--grey-500);
+}
+
+.baseInputField {
+    padding: var(--spacing-150) var(--spacing-250);
+    border-radius: var(--border-radius);
+    background-color: var(--white);
+    border: 1px solid var(--beige-500);
+    composes: textPreset4 from '../../../styles/presets.module.css';
+    color: var(--grey-900);
+    width: 100%;
+}
+
+.baseInputField::placeholder {
+    color: var(--beige-500);
+}
+
+.baseInputHelperText {
+    composes: textPreset5 from '../../../styles/presets.module.css';
+    color: var(--grey-500);
+    align-self: flex-end;
+}

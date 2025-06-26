@@ -1,0 +1,34 @@
+.dotEditorContainer {
+    position: relative;
+}
+
+.dotEditorSelector {
+
+}
+
+.dotEditorText {
+    composes: textPreset4 from '../../../styles/presets.module.css';
+    color: var(--grey-900);
+    cursor: pointer;
+}
+
+.dotEditorMenu {
+    position: absolute;
+    padding: var(--spacing-150) var(--spacing-250);
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-150);
+    width: max-content;
+}
+
+/** Positioning the menu to the left directly under the selector - even though right:0; */
+.dotEditorLeft {
+    right: 0;
+}
+
+/** Positioning the menu to the right and offset under the menu - even though left:0; */
+.dotEditorRight {
+    left: 0;
+}
