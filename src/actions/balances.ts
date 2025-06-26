@@ -15,7 +15,7 @@ export async function getBalances(): Promise<BalancesState | never> {
     try {
         await dbConnect();
 
-        const balances = await Balance.find({ user: session.user.id })
+        const balances = await Balance.find({ user: session.user.id });
         const formattedBalances = balances.map(
             (balance) =>
                 ({

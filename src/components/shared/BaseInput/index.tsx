@@ -43,7 +43,9 @@ export default function BaseInput({
                 disabled={disabled}
                 className={styles.baseInputField}
             />
-            {helperText && <p className={styles.baseInputHelperText}>{helperText}</p>}
+            {helperText && (
+                <p className={styles.baseInputHelperText}>{helperText}</p>
+            )}
         </div>
     );
 }

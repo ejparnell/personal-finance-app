@@ -9,15 +9,24 @@ interface BalanceCardHeaderProps {
     handleOpenEdit?: () => void;
 }
 
-export default function BalanceCardHeader({ name, handleOpenEdit, theme = 'light' }: BalanceCardHeaderProps) {
-
+export default function BalanceCardHeader({
+    name,
+    handleOpenEdit,
+    theme = 'light',
+}: BalanceCardHeaderProps) {
     return (
         <div className={styles.balanceCardHeader}>
-            <p className={`${styles.balanceCardTitle} ${theme === 'dark' ? styles.balanceCardTitleDark : styles.balanceCardTitleLight}`}>
+            <p
+                className={`${styles.balanceCardTitle} ${theme === 'dark' ? styles.balanceCardTitleDark : styles.balanceCardTitleLight}`}
+            >
                 {name}
             </p>
 
-            <DotEditor name={name} side='left' handleOpenEdit={handleOpenEdit} />
+            <DotEditor
+                name={name}
+                side="left"
+                handleOpenEdit={handleOpenEdit}
+            />
         </div>
-    )
+    );
 }

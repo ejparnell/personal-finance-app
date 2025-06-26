@@ -10,4 +10,3 @@ export const currentBalanceSchema = z.object({
 });
 
 export type CurrentBalanceType = z.infer<typeof currentBalanceSchema>;
-

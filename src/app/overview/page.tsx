@@ -9,7 +9,6 @@ import BudgetsOverview from '@/components/budgets/BudgetsOverview';
 import RecurringBillsOverview from '@/components/recurringBills/RecurringBillsOverview';
 import styles from './page.module.css';
 
-
 export default async function OverviewPage() {
     const { balances = [], balanceError } = await getBalances();
     const { pots = [], potError } = await getPots();

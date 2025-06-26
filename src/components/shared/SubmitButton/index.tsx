@@ -11,16 +11,8 @@ export default function SubmitButton({
     disabled = false,
 }: SubmitButtonProps) {
     return (
-        <button
-            type="submit"
-            disabled={disabled}
-            className={styles.submitBtn}
-        >
-            {disabled ? (
-                'Submitting...'
-            ) : (
-                text
-            )}
+        <button type="submit" disabled={disabled} className={styles.submitBtn}>
+            {disabled ? 'Submitting...' : text}
         </button>
     );
 }

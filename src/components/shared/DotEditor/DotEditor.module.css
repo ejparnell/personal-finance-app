@@ -2,10 +2,6 @@
     position: relative;
 }
 
-.dotEditorSelector {
-
-}
-
 .dotEditorText {
     composes: textPreset4 from '../../../styles/presets.module.css';
     color: var(--grey-900);
@@ -21,6 +17,7 @@
     flex-direction: column;
     gap: var(--spacing-150);
     width: max-content;
+    composes: boxShadowCenter from '../../../styles/presets.module.css';
 }
 
 /** Positioning the menu to the left directly under the selector - even though right:0; */

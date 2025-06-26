@@ -24,14 +24,14 @@ export default function DotEditor({
         setIsOpen((prev) => !prev);
     }
 
-    function handleOpen(openFun: (() => void)) {
+    function handleOpen(openFun: () => void) {
         toggleMenu();
         openFun();
     }
 
     return (
         <div className={styles.dotEditorContainer}>
-            <div className={styles.dotEditorSelector}>
+            <div>
                 <Image
                     src="/icons/icon-ellipsis.svg"
                     alt="Dot Editor"
@@ -42,9 +42,22 @@ export default function DotEditor({
             </div>
 
             {isOpen && (
-                <div className={`${styles.dotEditorMenu} ${side === 'left' ? styles.dotEditorLeft : styles.dotEditorRight}`}>
-                    {handleOpenEdit && <p onClick={() => handleOpen(handleOpenEdit)} className={styles.dotEditorText}>Edit {name}</p>}
-                    {onDelete && <p className={styles.dotEditorText} onClick={onDelete}>Delete {name}</p>}
+                <div
+                    className={`${styles.dotEditorMenu} ${side === 'left' ? styles.dotEditorLeft : styles.dotEditorRight}`}
+                >
+                    {handleOpenEdit && (
+                        <p
+                            onClick={() => handleOpen(handleOpenEdit)}
+                            className={styles.dotEditorText}
+                        >
+                            Edit {name}
+                        </p>
+                    )}
+                    {onDelete && (
+                        <p className={styles.dotEditorText} onClick={onDelete}>
+                            Delete {name}
+                        </p>
+                    )}
                 </div>
             )}
         </div>

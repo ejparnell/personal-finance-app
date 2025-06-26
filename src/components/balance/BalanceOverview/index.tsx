@@ -1,6 +1,8 @@
 import { BalanceType } from '@/types/balance';
-import styles from './BalanceOverview.module.css';
 import CurrentBalance from '../CurrentBalance';
+import IncomeBalance from '../IncomeBalance';
+import ExpensesBalance from '../ExpensesBalance';
+import styles from './BalanceOverview.module.css';
 
 interface BalanceOverviewProps {
     balances: BalanceType[];
@@ -20,34 +22,8 @@ export default function BalanceOverview({
     return (
         <div className={styles.balanceOverviewContainer}>
             <CurrentBalance currentBalance={currentBalance} />
-
-            {/* <div className={`${styles.balanceCard} ${styles.balanceCardLight}`}>
-                <div className={styles.balanceCardHeader}>
-                    <p
-                        className={`${styles.balanceCardTitle} ${
-                            styles.balanceCardTitleLight
-                        }`}
-                    >
-                        Income
-                    </p>
-                    <DotEditor />
-                </div>
-                <p className={styles.balanceCardValue}>${income || '0.00'}</p>
-            </div>
-
-            <div className={`${styles.balanceCard} ${styles.balanceCardLight}`}>
-                <div className={styles.balanceCardHeader}>
-                    <p
-                        className={`${styles.balanceCardTitle} ${
-                            styles.balanceCardTitleLight
-                        }`}
-                    >
-                        Expenses
-                    </p>
-                    <DotEditor />
-                </div>
-                <p className={styles.balanceCardValue}>${expenses || '0.00'}</p>
-            </div> */}
+            <IncomeBalance income={income} />
+            <ExpensesBalance expenses={expenses} />
         </div>
     );
 }
