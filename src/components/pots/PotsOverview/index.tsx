@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { PotType } from '@/types/pot';
 import ArrowLink from '@/components/shared/ArrowLink';
 import styles from './PotsOverview.module.css';
+import { formatCurrency } from '@/lib/utils';
 
 interface PotsOverviewProps {
     pots: PotType[];
@@ -37,14 +38,24 @@ export default function PotsOverview({ pots, error }: PotsOverviewProps) {
                 </div>
             </div>
 
-            <div>
+            <div className={styles.potsOverviewList}>
                 {pots.length === 0 ? (
                     <p className={styles.potsOverviewText}>No pots available</p>
                 ) : (
                     pots.map((pot) => (
-                        <div key={pot._id}>
-                            <p>{pot.name}</p>
-                            <p>${pot.total?.toFixed(2) || '0.00'}</p>
+                        <div key={pot._id} className={styles.potItemContainer}>
+                            <div
+                                className={styles.potIcon}
+                                style={{
+                                    backgroundColor: `var(--${pot.theme || 'default'})`,
+                                }}
+                            />
+                            <div className={styles.potItem}>
+                                <p className={styles.potName}>{pot.name}</p>
+                                <p className={styles.potTotal}>
+                                    {formatCurrency(pot.total)}
+                                </p>
+                            </div>
                         </div>
                     ))
                 )}

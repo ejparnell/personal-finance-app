@@ -42,3 +42,37 @@
     composes: textPreset5 from '../../../styles/presets.module.css';
     color: var(--grey-500);
 }
+
+.potName {
+    composes: textPreset5 from '../../../styles/presets.module.css';
+    color: var(--grey-500);
+}
+
+.potTotal {
+    composes: textPreset4Bold from '../../../styles/presets.module.css';
+    color: var(--grey-900);
+}
+
+.potItemContainer {
+    display: flex;
+    overflow: hidden;
+    min-width: 143px;
+    margin-bottom: var(--spacing-200);
+}
+
+.potItem {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-050);
+}
+
+.potIcon {
+    height: 100%;
+    width: var(--spacing-050);
+    margin-right: var(--spacing-200);
+}
+
+.potsOverviewList {
+    display: flex;
+    flex-wrap: wrap;
+}

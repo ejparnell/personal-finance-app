@@ -38,4 +38,6 @@
     --color-error: var(--color-red);
     --color-info: var(--color-blue);
     --color-warning: var(--color-yellow);
+
+    --default: var(--beige-100);
 }
