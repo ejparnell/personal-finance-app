@@ -10,7 +10,6 @@ import { ThemeOption, themeOptions } from "@/types/theme";
 import { fetchWrapper } from "@/lib/utils";
 import { useMessage } from "@/context/MessageProvider";
 import Dropdown from "@/components/shared/Dropdown";
-import styles from "./PotsCreate.module.css";
 import SubmitButton from "@/components/shared/SubmitButton";
 
 interface PotsCreateProps {
@@ -89,7 +88,7 @@ export default function PotsCreate({ handleAddPot }: PotsCreateProps) {
                 name: '',
                 target: 0,
                 total: 0,
-                theme: themeOptions[0].name,
+                theme: themeOptions[0].className,
             });
             setSelectedOption(options[0]);
             handleCreateClose();
@@ -102,7 +101,7 @@ export default function PotsCreate({ handleAddPot }: PotsCreateProps) {
             setSelectedOption(selected);
             setFormData((prevData) => ({
                 ...prevData,
-                theme: selected.name,
+                theme: selected.className,
             }));
         }
     }

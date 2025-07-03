@@ -6,14 +6,14 @@ import styles from './DotEditor.module.css';
 
 interface DotEditorProps {
     handleOpenEdit?: () => void;
-    onDelete?: () => void;
+    handleOpenDelete?: () => void;
     name: string;
     side: 'left' | 'right';
 }
 
 export default function DotEditor({
     handleOpenEdit,
-    onDelete,
+    handleOpenDelete,
     name,
     side = 'left',
 }: DotEditorProps) {
@@ -53,8 +53,8 @@ export default function DotEditor({
                             Edit {name}
                         </p>
                     )}
-                    {onDelete && (
-                        <p className={styles.dotEditorText} onClick={onDelete}>
+                    {handleOpenDelete && (
+                        <p className={styles.dotEditorText} onClick={handleOpenDelete}>
                             Delete {name}
                         </p>
                     )}

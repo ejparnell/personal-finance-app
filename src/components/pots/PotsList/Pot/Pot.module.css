@@ -1,0 +1,131 @@
+.potContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-200);
+}
+
+.potTextWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.potTotalLabel {
+    composes: textPreset4 from '../../../../styles/presets.module.css';
+    color: var(--grey-500);
+}
+
+.potTotalValue {
+    composes: textPreset1 from '../../../../styles/presets.module.css';
+    color: var(--grey-900);
+}
+
+.potProgressBar {
+    width: 100%;
+    height: var(--spacing-100);
+    background-color: var(--grey-100);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    position: relative;
+}
+
+.potProgressCurrent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--grey-900);
+}
+
+.potProgressAddition {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--green);
+}
+
+.potProgressWithdrawal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--red);
+}
+
+.potProgressText {
+    composes: textPreset5 from '../../../../styles/presets.module.css';
+    color: var(--grey-500);
+}
+
+.potActions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.deleteBackText {
+    composes: textPreset4 from '../../../../styles/presets.module.css';
+    color: var(--grey-500);
+    text-align: center;
+}
+
+.green {
+    background-color: var(--green);
+}
+
+.yellow {
+    background-color: var(--yellow);
+}
+
+.cyan {
+    background-color: var(--cyan);
+}
+
+.navy {
+    background-color: var(--navy);
+}
+
+.red {
+    background-color: var(--red);
+}
+
+.purple {
+    background-color: var(--purple);
+}
+
+.light-purple {
+    background-color: var(--light-purple);
+}
+
+.turquoise {
+    background-color: var(--turquoise);
+}
+
+.brown {
+    background-color: var(--brown);
+}
+
+.magenta {
+    background-color: var(--magenta);
+}
+
+.blue {
+    background-color: var(--blue);
+}
+
+.navy-grey {
+    background-color: var(--navy-grey);
+}
+
+.army-green {
+    background-color: var(--army-green);
+}
+
+.gold {
+    background-color: var(--gold);
+}
+
+.orange {
+    background-color: var(--orange);
+}

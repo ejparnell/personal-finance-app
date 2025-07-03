@@ -1,0 +1,10 @@
+.editButton {
+    background-color: var(--beige-100);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-200);
+    border: none;
+    cursor: pointer;
+    composes: textPreset4Bold from '../../../styles/presets.module.css';
+    color: var(--grey-900);
+    width: 143px;
+}
