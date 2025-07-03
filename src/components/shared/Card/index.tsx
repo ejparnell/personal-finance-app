@@ -1,5 +1,5 @@
-import DotEditor from "../DotEditor";
-import styles from "./Card.module.css";
+import DotEditor from '../DotEditor';
+import styles from './Card.module.css';
 
 interface CardProps {
     title?: string;
@@ -9,18 +9,28 @@ interface CardProps {
     children?: React.ReactNode;
 }
 
-export default function Card({ title, color, handleOpenEdit, handleOpenDelete, children }: CardProps) {
+export default function Card({
+    title,
+    color,
+    handleOpenEdit,
+    handleOpenDelete,
+    children,
+}: CardProps) {
     return (
         <div className={styles.cardContainer}>
             <div className={styles.cardHeader}>
                 <div className={styles.cardTitleContainer}>
-                    {color && <div className={`${styles.cardIndicator} ${styles[color]}`} />}
+                    {color && (
+                        <div
+                            className={`${styles.cardIndicator} ${styles[color]}`}
+                        />
+                    )}
                     <h2 className={styles.cardTitle}>{title}</h2>
                 </div>
                 <DotEditor
                     handleOpenEdit={handleOpenEdit}
                     handleOpenDelete={handleOpenDelete}
-                    name={title || "Card"}
+                    name={title || 'Card'}
                     side="left"
                 />
             </div>

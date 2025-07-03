@@ -10,5 +10,5 @@ export default function EditButton({ children, handleClick }: EditButtonProps) {
         <button className={styles.editButton} onClick={handleClick}>
             {children}
         </button>
-    )
+    );
 }

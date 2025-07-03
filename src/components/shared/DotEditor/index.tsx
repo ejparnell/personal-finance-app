@@ -54,7 +54,10 @@ export default function DotEditor({
                         </p>
                     )}
                     {handleOpenDelete && (
-                        <p className={styles.dotEditorText} onClick={handleOpenDelete}>
+                        <p
+                            className={styles.dotEditorText}
+                            onClick={handleOpenDelete}
+                        >
                             Delete {name}
                         </p>
                     )}

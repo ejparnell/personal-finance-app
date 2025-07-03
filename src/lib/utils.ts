@@ -1,3 +1,5 @@
+import { ApiResponse } from '@/types/api';
+
 /**
  * Used with Zod to extract client errors from a validation result.
  *
@@ -42,29 +44,21 @@ export function getErrorMessage(error: string) {
 export const toCents = (value: number) => Math.round(value * 100);
 export const fromCents = (value: number) => value / 100;
 
-type ApiResponse<T> =
-    | { success: true; data: T }
-    | { success: false; error: string };
-
-export async function fetchWrapper<T = unknown>(
+export async function fetchWrapper<T>(
     url: string,
     options: RequestInit = {}
 ): Promise<ApiResponse<T>> {
     const res = await fetch(url, {
         ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers,
-        },
+        headers: { 'Content-Type': 'application/json', ...options.headers },
     });
-
-    const json = await res.json();
+    const json = await res.json().catch(() => undefined);
 
     if (!res.ok) {
         return { success: false, error: json?.error ?? 'An error occurred' };
     }
 
-    return { success: true, data: json as T };
+    return { success: true, data: json.data as T };
 }
 
 export function formatCurrency(value: number): string {

@@ -5,9 +5,16 @@ interface DeleteButtonProps {
     handleClick: () => void;
 }
 
-export default function DeleteButton({ children, handleClick }: DeleteButtonProps) {
+export default function DeleteButton({
+    children,
+    handleClick,
+}: DeleteButtonProps) {
     return (
-        <button className={styles.deleteButton} type='button' onClick={handleClick}>
+        <button
+            className={styles.deleteButton}
+            type="button"
+            onClick={handleClick}
+        >
             {children}
         </button>
     );

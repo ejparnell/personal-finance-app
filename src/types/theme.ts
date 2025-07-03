@@ -1,6 +1,6 @@
 export const themeOptions = [
-    {   
-        name: 'Green', 
+    {
+        name: 'Green',
         className: 'green',
     },
     {
@@ -58,11 +58,11 @@ export const themeOptions = [
     {
         name: 'Orange',
         className: 'orange',
-    }
+    },
 ] as const;
 
 export type ThemeOption = {
     name: (typeof themeOptions)[number]['name'];
     className: (typeof themeOptions)[number]['className'];
     selected: boolean;
-}
+};

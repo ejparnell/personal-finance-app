@@ -9,13 +9,13 @@ export const potSchema = z.object({
     target: z
         .number()
         .min(0, { message: 'Target amount must be at least 0' })
-        .max(1_000_000, { message: 'Target amount must be at most 1,000,000' }), 
+        .max(1_000_000, { message: 'Target amount must be at most 1,000,000' }),
     total: z
         .number()
         .min(0, { message: 'Total amount must be at least 0' })
         .max(1_000_000, { message: 'Total amount must be at most 1,000,000' }),
     theme: z.enum(
-        themeOptions.map(option => option.className) as [string, ...string[]],
+        themeOptions.map((option) => option.className) as [string, ...string[]],
         {
             required_error: 'Theme is required',
             invalid_type_error: 'Theme must be a valid option',

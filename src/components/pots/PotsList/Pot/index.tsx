@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { PotType } from '@/types/pot';
-import { formatCurrency, fetchWrapper } from '@/lib/utils';
+import { formatCurrency } from '@/lib/utils';
 import EditButton from '@/components/shared/EditButton';
 import Card from '@/components/shared/Card';
 import Modal from '@/components/shared/Modal';
@@ -10,17 +10,16 @@ import { PotInput } from '@/schemas/pot';
 import Dropdown from '@/components/shared/Dropdown';
 import { ThemeOption, themeOptions } from '@/types/theme';
 import SubmitButton from '@/components/shared/SubmitButton';
-import { useMessage } from '@/context/MessageProvider';
 import DeleteButton from '@/components/shared/DeleteButton';
+import { usePot } from '@/context/PotProvider';
 
 interface PotProps {
     pot: PotType;
-    handleEditPot: (updatedPot: PotType) => void;
-    handleDeletePot: (potId: string) => void;
 }
 
-export default function Pot({ pot, handleEditPot, handleDeletePot }: PotProps) {
-    const { handleSetMessages } = useMessage();
+export default function Pot({ pot }: PotProps) {
+    const { handleEditPot, handleDeletePot, isSubmitting, setIsSubmitting } =
+        usePot();
     const [isEditing, setIsEditing] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [isAddingMoney, setIsAddingMoney] = useState(false);
@@ -33,7 +32,6 @@ export default function Pot({ pot, handleEditPot, handleDeletePot }: PotProps) {
     });
     const [options, setOptions] = useState<ThemeOption[]>([]);
     const [selectedOption, setSelectedOption] = useState<ThemeOption>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [currentPct, setCurrentPct] = useState<number>(0);
     const [addedPct, setAddedPct] = useState<number>(0);
     const [withdrawPct, setWithdrawPct] = useState<number>(0);
@@ -52,7 +50,11 @@ export default function Pot({ pot, handleEditPot, handleDeletePot }: PotProps) {
         }));
         setOptions(formattedOptions);
 
-        setSelectedOption(formattedOptions[0]);
+        const userSelectedOption = formattedOptions.find(
+            (option) => option.className === pot.theme
+        );
+
+        setSelectedOption(userSelectedOption || formattedOptions[0]);
     }, []);
 
     function handleEditClick() {
@@ -97,153 +99,66 @@ export default function Pot({ pot, handleEditPot, handleDeletePot }: PotProps) {
 
     async function handleSaveChanges(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        setIsLoading(true);
+        setIsSubmitting(true);
 
         try {
-            const response = await fetchWrapper(`/api/pots/${pot._id}`, {
-                body: JSON.stringify(formData),
-                method: 'PATCH',
-            });
-
-            if (!response.success) {
-                console.error('Failed to save changes:', response.error);
-                handleSetMessages(
-                    response.error || 'Failed to save changes',
-                    'error'
-                );
-                setIsLoading(false);
-                return;
-            }
-
-            handleSetMessages('Changes saved successfully', 'success');
-            const data = response.data as PotInput;
-            setFormData({
-                name: data.name,
-                target: data.target,
-                total: data.total,
-                theme: data.theme,
-            });
-
-            handleEditPot(response.data as PotType);
-
-            console.log('Changes saved successfully:', response.data);
+            formData.target = parseInt(formData.target.toString());
+            await handleEditPot(pot._id, formData);
         } catch (error) {
             console.error('Error saving changes:', error);
-            handleSetMessages('Failed to save changes', 'error');
         } finally {
-            setIsLoading(false);
+            setIsSubmitting(false);
             setIsEditing(false);
         }
     }
 
     async function handleDelete() {
-        setIsLoading(true);
+        setIsSubmitting(true);
 
         try {
-            const response = await fetchWrapper(`/api/pots/${pot._id}`, {
-                method: 'DELETE',
-            });
-
-            if (!response.success) {
-                console.error('Failed to delete pot:', response.error);
-                handleSetMessages(
-                    response.error || 'Failed to delete pot',
-                    'error'
-                );
-                setIsLoading(false);
-                return;
-            }
-
-            handleDeletePot(pot._id);
-            handleSetMessages('Pot deleted successfully', 'success');
+            await handleDeletePot(pot._id);
         } catch (error) {
             console.error('Error deleting pot:', error);
-            handleSetMessages('Failed to delete pot', 'error');
         } finally {
-            setIsLoading(false);
+            setIsSubmitting(false);
             setIsDeleting(false);
         }
     }
 
     async function handleAddMoney(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        setIsLoading(true);
+        setIsSubmitting(true);
 
         try {
-            const response = await fetchWrapper(`/api/pots/${pot._id}`, {
-                body: JSON.stringify({ total: formData.total }),
-                method: 'PATCH',
+            const formattedTotal = parseInt(formData.total.toString());
+            await handleEditPot(pot._id, {
+                ...formData,
+                total: pot.total + formattedTotal,
             });
-
-            if (!response.success) {
-                console.error('Failed to add money:', response.error);
-                handleSetMessages(
-                    response.error || 'Failed to add money',
-                    'error'
-                );
-                setIsLoading(false);
-                return;
-            }
-
-            handleSetMessages('Money added successfully', 'success');
-            const updatedPot = response.data as PotType;
-            handleEditPot(updatedPot);
-
-            setFormData((prevData) => ({
-                ...prevData,
-                total: 0,
-            }));
         } catch (error) {
             console.error('Error adding money:', error);
-            handleSetMessages('Failed to add money', 'error');
-            setFormData((prevData) => ({
-                ...prevData,
-                total: 0,
-            }));
         } finally {
-            setIsLoading(false);
+            setIsSubmitting(false);
             setIsAddingMoney(false);
         }
     }
 
-    async function handleWithdrawMoney(event: React.FormEvent<HTMLFormElement>) {
+    async function handleWithdrawMoney(
+        event: React.FormEvent<HTMLFormElement>
+    ) {
         event.preventDefault();
-        setIsLoading(true);
+        setIsSubmitting(true);
 
         try {
             const calculatedTotal = Math.max(pot.total - formData.total, 0);
-            const response = await fetchWrapper(`/api/pots/${pot._id}`, {
-                body: JSON.stringify({ total: calculatedTotal }),
-                method: 'PATCH',
+            await handleEditPot(pot._id, {
+                ...formData,
+                total: calculatedTotal,
             });
-
-            if (!response.success) {
-                console.error('Failed to withdraw money:', response.error);
-                handleSetMessages(
-                    response.error || 'Failed to withdraw money',
-                    'error'
-                );
-                setIsLoading(false);
-                return;
-            }
-
-            handleSetMessages('Money withdrawn successfully', 'success');
-            const updatedPot = response.data as PotType;
-            handleEditPot(updatedPot);
-
-            setFormData((prevData) => ({
-                ...prevData,
-                total: 0,
-            }));
         } catch (error) {
             console.error('Error withdrawing money:', error);
-            handleSetMessages('Failed to withdraw money', 'error');
-            setFormData((prevData) => ({
-                ...prevData,
-                total: 0,
-            }));
         } finally {
-            setIsLoading(false);
+            setIsSubmitting(false);
             setIsWithdrawingMoney(false);
         }
     }
@@ -288,7 +203,9 @@ export default function Pot({ pot, handleEditPot, handleDeletePot }: PotProps) {
                     <EditButton handleClick={handleAddMoneyClick}>
                         + Add Money
                     </EditButton>
-                    <EditButton handleClick={handleWithdrawMoneyClick}>Withdraw</EditButton>
+                    <EditButton handleClick={handleWithdrawMoneyClick}>
+                        Withdraw
+                    </EditButton>
                 </div>
             </Card>
 
@@ -326,10 +243,7 @@ export default function Pot({ pot, handleEditPot, handleDeletePot }: PotProps) {
                         handleSelect={handleThemeSelect}
                     />
 
-                    <SubmitButton
-                        disabled={!formData.name || !formData.target}
-                        text="Save Changes"
-                    />
+                    <SubmitButton disabled={isSubmitting} text="Save Changes" />
                 </Modal>
             )}
 
@@ -397,7 +311,7 @@ export default function Pot({ pot, handleEditPot, handleDeletePot }: PotProps) {
                     />
 
                     <SubmitButton
-                        disabled={!formData.total || isLoading}
+                        disabled={isSubmitting}
                         text="Confirm Addition"
                     />
                 </Modal>
@@ -436,7 +350,7 @@ export default function Pot({ pot, handleEditPot, handleDeletePot }: PotProps) {
                             </p>
                         </div>
                     </div>
-                    
+
                     <BaseInput
                         type="number"
                         name="total"
@@ -447,7 +361,7 @@ export default function Pot({ pot, handleEditPot, handleDeletePot }: PotProps) {
                     />
 
                     <SubmitButton
-                        disabled={!formData.total || isLoading}
+                        disabled={isSubmitting}
                         text="Confirm Withdrawal"
                     />
                 </Modal>

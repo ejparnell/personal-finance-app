@@ -64,13 +64,12 @@ export default function Dropdown({
                                     )}
                                     {option.name}
                                 </div>
-                                
                             </div>
                             {options[options.length - 1].name !==
-                                    option.name && (
-                                    <div className={styles.dropdownDivider} />
-                                )}
-                            </div>
+                                option.name && (
+                                <div className={styles.dropdownDivider} />
+                            )}
+                        </div>
                     ))}
                 </div>
             )}
