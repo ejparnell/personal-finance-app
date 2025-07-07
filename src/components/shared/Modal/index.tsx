@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import styles from './Modal.module.css';
+import { useEffect } from 'react';
 
 interface ModalProps {
     isOpen: boolean;
@@ -19,6 +20,25 @@ export default function Modal({
     handleSubmit,
 }: ModalProps) {
     const iconSize = 25;
+
+    function handleClickOutside(event: MouseEvent) {
+        const target = event.target as HTMLElement;
+        if (!target.closest(`.${styles.modalContainer}`)) {
+            handleClose?.();
+        }
+    }
+
+    useEffect(() => {
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     return (

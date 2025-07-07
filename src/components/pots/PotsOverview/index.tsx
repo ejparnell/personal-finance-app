@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import { PotType } from '@/types/pot';
+import { PotLean } from '@/types/pot';
 import ArrowLink from '@/components/shared/ArrowLink';
 import styles from './PotsOverview.module.css';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency } from '@/lib/currencyFunctions';
 
 interface PotsOverviewProps {
-    pots: PotType[];
+    pots: PotLean[];
     error?: string | null;
 }
 

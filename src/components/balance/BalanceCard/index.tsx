@@ -1,4 +1,4 @@
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency } from '@/lib/currencyFunctions';
 import styles from './BalanceCard.module.css';
 
 interface BalanceCardProps {

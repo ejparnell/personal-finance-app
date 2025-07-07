@@ -4,8 +4,15 @@
 
 .dotEditorText {
     composes: textPreset4 from '../../../styles/presets.module.css';
-    color: var(--grey-900);
     cursor: pointer;
+}
+
+.dotEditorEdit {
+    color: var(--grey-900);
+}
+
+.dotEditorDelete {
+    color: var(--red);
 }
 
 .dotEditorMenu {
@@ -28,4 +35,10 @@
 /** Positioning the menu to the right and offset under the menu - even though left:0; */
 .dotEditorRight {
     left: 0;
+}
+
+.dotEditorDivider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--grey-100);
 }

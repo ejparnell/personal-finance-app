@@ -11,13 +11,17 @@
 }
 
 .baseInputField {
-    padding: var(--spacing-150) var(--spacing-250);
+    padding: var(--spacing-150) var(--spacing-200);
     border-radius: var(--border-radius);
     background-color: var(--white);
     border: 1px solid var(--beige-500);
     composes: textPreset4 from '../../../styles/presets.module.css';
     color: var(--grey-900);
     width: 100%;
+}
+
+.baseInputNumber {
+    text-indent: var(--spacing-200);
 }
 
 .baseInputField::placeholder {
@@ -28,4 +32,17 @@
     composes: textPreset5 from '../../../styles/presets.module.css';
     color: var(--grey-500);
     align-self: flex-end;
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.baseInputNumberPrefix {
+    position: absolute;
+    left: var(--spacing-200);
+    composes: textPreset4 from '../../../styles/presets.module.css';
+    color: var(--beige-500);
 }

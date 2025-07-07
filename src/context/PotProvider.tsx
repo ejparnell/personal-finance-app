@@ -5,23 +5,23 @@ import {
     useContext,
     ReactNode,
 } from 'react';
-import { PotType } from '@/types/pot';
+import { PotLean } from '@/types/pot';
 import { useMessage } from '@/context/MessageProvider';
 import { PotInput } from '@/schemas/pot';
 import { createPot, getPots, editPot, deletePot } from '@/services/potServices';
 
 interface PotContextType {
-    pots: PotType[];
+    pots: PotLean[];
     loading?: boolean;
     error?: string | null;
     isSubmitting?: boolean;
-    setPots: (pots: PotType[]) => void;
+    setPots: (pots: PotLean[]) => void;
     setIsSubmitting: (isSubmitting: boolean) => void;
     handleAddPot: (potData: PotInput) => void;
     handleEditPot: (potId: string, potData: PotInput) => void;
     handleDeletePot: (potId: string) => void;
-    // handleAddPot: (pot: PotType) => void;
-    // handleEditPot: (pot: PotType) => void;
+    // handleAddPot: (pot: PotLean) => void;
+    // handleEditPot: (pot: PotLean) => void;
     // handleDeletePot: (potId: string) => void;
 }
 
@@ -39,7 +39,7 @@ const PotContext = createContext<PotContextType>({
 
 export function PotProvider({ children }: { children: ReactNode }) {
     const { handleSetMessages } = useMessage();
-    const [pots, setPots] = useState<PotType[]>([]);
+    const [pots, setPots] = useState<PotLean[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -74,7 +74,7 @@ export function PotProvider({ children }: { children: ReactNode }) {
         try {
             const response = await createPot(potData);
             if (response.success) {
-                setPots((prevPots) => [...prevPots, response.data as PotType]);
+                setPots((prevPots) => [...prevPots, response.data as PotLean]);
                 handleSetMessages('Pot created successfully', 'success');
             } else {
                 console.error('Failed to create pot:', response.error);
@@ -97,7 +97,7 @@ export function PotProvider({ children }: { children: ReactNode }) {
             if (response.success) {
                 setPots((prevPots) =>
                     prevPots.map((pot) =>
-                        pot._id === potId ? (response.data as PotType) : pot
+                        pot._id === potId ? (response.data as PotLean) : pot
                     )
                 );
                 handleSetMessages('Pot updated successfully', 'success');

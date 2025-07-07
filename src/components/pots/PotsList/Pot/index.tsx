@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
-import { PotType } from '@/types/pot';
-import { formatCurrency } from '@/lib/utils';
+import { PotLean } from '@/types/pot';
+import {
+    formatCurrency,
+    fromMinorUnit,
+    toMinorUnit,
+} from '@/lib/currencyFunctions';
 import EditButton from '@/components/shared/EditButton';
 import Card from '@/components/shared/Card';
 import Modal from '@/components/shared/Modal';
@@ -14,7 +18,7 @@ import DeleteButton from '@/components/shared/DeleteButton';
 import { usePot } from '@/context/PotProvider';
 
 interface PotProps {
-    pot: PotType;
+    pot: PotLean;
 }
 
 export default function Pot({ pot }: PotProps) {
@@ -26,8 +30,8 @@ export default function Pot({ pot }: PotProps) {
     const [isWithdrawingMoney, setIsWithdrawingMoney] = useState(false);
     const [formData, setFormData] = useState<PotInput>({
         name: pot.name,
-        target: pot.target,
-        total: pot.total,
+        target: fromMinorUnit(pot.target),
+        total: fromMinorUnit(pot.total),
         theme: pot.theme,
     });
     const [options, setOptions] = useState<ThemeOption[]>([]);
@@ -102,7 +106,8 @@ export default function Pot({ pot }: PotProps) {
         setIsSubmitting(true);
 
         try {
-            formData.target = parseInt(formData.target.toString());
+            formData.target = toMinorUnit(parseInt(formData.target.toString()));
+            formData.total = toMinorUnit(parseInt(formData.total.toString()));
             await handleEditPot(pot._id, formData);
         } catch (error) {
             console.error('Error saving changes:', error);
@@ -130,7 +135,10 @@ export default function Pot({ pot }: PotProps) {
         setIsSubmitting(true);
 
         try {
-            const formattedTotal = parseInt(formData.total.toString());
+            const formattedTotal = toMinorUnit(
+                parseInt(formData.total.toString())
+            );
+            formData.target = toMinorUnit(parseInt(formData.target.toString()));
             await handleEditPot(pot._id, {
                 ...formData,
                 total: pot.total + formattedTotal,
@@ -150,7 +158,9 @@ export default function Pot({ pot }: PotProps) {
         setIsSubmitting(true);
 
         try {
-            const calculatedTotal = Math.max(pot.total - formData.total, 0);
+            const calculatedTotal =
+                pot.total - toMinorUnit(parseInt(formData.total.toString()));
+            formData.target = toMinorUnit(parseInt(formData.target.toString()));
             await handleEditPot(pot._id, {
                 ...formData,
                 total: calculatedTotal,
@@ -182,7 +192,7 @@ export default function Pot({ pot }: PotProps) {
                     <div className={styles.potContent}>
                         <div className={styles.potProgressBar}>
                             <div
-                                className={`${styles.potProgressCurrent} ${styles[pot.theme]}`}
+                                className={`${styles.potProgress} ${styles[pot.theme]}`}
                                 style={{
                                     width: `${currentPct}%`,
                                 }}
@@ -278,13 +288,13 @@ export default function Pot({ pot }: PotProps) {
                     <div className={styles.potContent}>
                         <div className={styles.potProgressBar}>
                             <div
-                                className={`${styles.potProgressCurrent} ${styles[pot.theme]}`}
+                                className={`${styles.potProgressCurrent} ${styles.potProgress}`}
                                 style={{
                                     width: `${(pot.total / pot.target) * 100}%`,
                                 }}
                             />
                             <div
-                                className={styles.potProgressAddition}
+                                className={`${styles.potProgressAddition} ${styles.potProgress}`}
                                 style={{
                                     left: `${currentPct}%`,
                                     width: `${addedPct}%`,
@@ -328,13 +338,13 @@ export default function Pot({ pot }: PotProps) {
                     <div className={styles.potContent}>
                         <div className={styles.potProgressBar}>
                             <div
-                                className={`${styles.potProgressCurrent} ${styles[pot.theme]}`}
+                                className={`${styles.potProgressCurrent} ${styles.potProgress}`}
                                 style={{
                                     width: `${(pot.total / pot.target) * 100}%`,
                                 }}
                             />
                             <div
-                                className={styles.potProgressWithdrawal}
+                                className={`${styles.potProgressWithdrawal} ${styles.potProgress}`}
                                 style={{
                                     left: `${currentPct - withdrawPct}%`,
                                     width: `${withdrawPct}%`,

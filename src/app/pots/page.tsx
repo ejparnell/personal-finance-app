@@ -1,6 +1,7 @@
 import { getPots } from '@/actions/pots';
 import styles from './page.module.css';
-import PotsUI from '@/components/pots/PotsUI';
+import PotsList from '@/components/pots/PotsList';
+import PotsCreate from '@/components/pots/PotsCreate';
 
 export default async function PotsPage() {
     const { pots = [], potError } = await getPots();
@@ -9,7 +10,8 @@ export default async function PotsPage() {
         <div className={styles.potsContainer}>
             <h1 className={styles.potsTitle}>Pots</h1>
 
-            <PotsUI onLoadPots={pots} error={potError} />
+            <PotsList onLoadPots={pots} error={potError} />
+            <PotsCreate />
         </div>
     );
 }

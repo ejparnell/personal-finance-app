@@ -6,13 +6,11 @@ import Modal from '@/components/shared/Modal';
 import BaseInput from '@/components/shared/BaseInput';
 import { PotInput } from '@/schemas/pot';
 import { ThemeOption, themeOptions } from '@/types/theme';
-import { useMessage } from '@/context/MessageProvider';
 import Dropdown from '@/components/shared/Dropdown';
 import SubmitButton from '@/components/shared/SubmitButton';
 import { usePot } from '@/context/PotProvider';
 
 export default function PotsCreate() {
-    const { handleSetMessages } = useMessage();
     const { handleAddPot, isSubmitting, setIsSubmitting } = usePot();
     const charLimit = 30;
     const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
@@ -61,7 +59,6 @@ export default function PotsCreate() {
             await handleAddPot(formData);
         } catch (error) {
             console.error('Error creating pot:', error);
-            handleSetMessages('Failed to create pot', 'error');
         } finally {
             setIsSubmitting(false);
             setFormData({

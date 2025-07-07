@@ -4,8 +4,10 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { encode } from 'next-auth/jwt';
 import { dbConnect } from '@/lib/dbConnect';
-import { User } from '@/models/User';
+import { User, UserDoc } from '@/models/User';
 import { registerSchema } from '@/schemas/user';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
 
 export type RegisterState = {
     error?: string | null;
@@ -65,4 +67,18 @@ export async function registerAndLogin(
     });
 
     redirect('/overview');
+}
+
+// returns the session if the user is logged in, otherwise redirects to the login page
+export async function getSession(): Promise<UserDoc | null> {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        redirect('/login');
+    }
+    await dbConnect();
+    const user = await User.findById(session.user.id);
+    if (!user) {
+        redirect('/login');
+    }
+    return user;
 }

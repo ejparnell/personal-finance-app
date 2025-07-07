@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './DotEditor.module.css';
 
@@ -29,6 +29,24 @@ export default function DotEditor({
         openFun();
     }
 
+    function handleClickOutside(event: MouseEvent) {
+        const target = event.target as HTMLElement;
+        if (!target.closest(`.${styles.dotEditorContainer}`)) {
+            setIsOpen(false);
+        }
+    }
+
+    useEffect(() => {
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen]);
+
     return (
         <div className={styles.dotEditorContainer}>
             <div>
@@ -48,14 +66,19 @@ export default function DotEditor({
                     {handleOpenEdit && (
                         <p
                             onClick={() => handleOpen(handleOpenEdit)}
-                            className={styles.dotEditorText}
+                            className={`${styles.dotEditorText} ${styles.dotEditorEdit}`}
                         >
                             Edit {name}
                         </p>
                     )}
+
+                    {handleOpenDelete && (
+                        <div className={styles.dotEditorDivider} />
+                    )}
+
                     {handleOpenDelete && (
                         <p
-                            className={styles.dotEditorText}
+                            className={`${styles.dotEditorDelete} ${styles.dotEditorText}`}
                             onClick={handleOpenDelete}
                         >
                             Delete {name}

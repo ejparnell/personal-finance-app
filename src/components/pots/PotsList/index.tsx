@@ -1,11 +1,13 @@
+'use client';
+
 import { useEffect } from 'react';
-import { PotType } from '@/types/pot';
+import { PotLean } from '@/types/pot';
 import Pot from './Pot';
 import styles from './PotsList.module.css';
 import { usePot } from '@/context/PotProvider';
 
 interface PotsListProps {
-    onLoadPots?: PotType[];
+    onLoadPots?: PotLean[];
     error?: string | null;
 }
 

@@ -61,9 +61,15 @@ export async function fetchWrapper<T>(
     return { success: true, data: json.data as T };
 }
 
-export function formatCurrency(value: number): string {
-    return new Intl.NumberFormat('en-US', {
+export function formatCurrency(
+    value: number,
+    cutCents: boolean = false,
+    locale: string = 'en-US'
+): string {
+    const formatted = new Intl.NumberFormat(locale, {
         style: 'currency',
         currency: 'USD',
     }).format(value);
+
+    return cutCents ? formatted.replace(/\.00$/, '') : formatted;
 }

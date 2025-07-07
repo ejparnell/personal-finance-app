@@ -1,4 +1,4 @@
-import { Schema, models, model, InferSchemaType } from 'mongoose';
+import { Schema, models, model, InferSchemaType, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const UserSchema = new Schema(
@@ -20,5 +20,5 @@ UserSchema.pre('save', async function () {
     this.password = await bcrypt.hash(this.password as string, 12);
 });
 
-export type UserDoc = InferSchemaType<typeof UserSchema>;
+export type UserDoc = InferSchemaType<typeof UserSchema> & Document;
 export const User = models.User<UserDoc> || model<UserDoc>('User', UserSchema);

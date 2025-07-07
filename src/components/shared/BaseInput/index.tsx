@@ -12,8 +12,6 @@ interface BaseInputProps {
     disabled?: boolean;
     helperText?: string;
     error?: string;
-    prefixImage?: string;
-    suffixImage?: string;
 }
 
 export default function BaseInput({
@@ -32,17 +30,25 @@ export default function BaseInput({
             <label htmlFor={name} className={styles.baseInputLabel}>
                 {label}
             </label>
-            <input
-                type={type}
-                name={name}
-                id={name}
-                value={value}
-                onChange={handleChange}
-                placeholder={placeholder}
-                required={required}
-                disabled={disabled}
-                className={styles.baseInputField}
-            />
+
+            <div className={styles.inputWrapper}>
+                {type === 'number' && (
+                    <p className={styles.baseInputNumberPrefix}>$</p>
+                )}
+
+                <input
+                    type={type}
+                    name={name}
+                    id={name}
+                    value={value}
+                    onChange={handleChange}
+                    placeholder={placeholder}
+                    required={required}
+                    disabled={disabled}
+                    className={`${styles.baseInputField} ${type === 'number' ? styles.baseInputNumber : ''}`}
+                />
+            </div>
+
             {helperText && (
                 <p className={styles.baseInputHelperText}>{helperText}</p>
             )}
